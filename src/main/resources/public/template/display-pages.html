@@ -1,0 +1,10 @@
+<section class="row line reduce-block-six" ng-repeat="page in pages.all">
+	<h2 ng-click="page.open()">[[page.title]]</h2>
+	<div class="row" ng-if="page.opened">
+		<div class="row" ng-if="page.opened">
+			<div bind-html="page.content"></div>
+			<div class="row"></div>
+		</div>
+	</div>
+	<div class="row"></div>
+</section>

@@ -1,0 +1,44 @@
+apply from: "gradle/vertx.gradle"
+
+dependencies {
+	provided "fr.wseduc:processor:$processorVersion"
+	compile "fr.wseduc:web-utils:$webUtilsVersion"
+}
+
+javadoc {
+  options.encoding = 'UTF-8'
+  classpath = configurations.provided
+  classpath += configurations.compile
+}
+
+repositories {
+    maven {
+        url "http://maven.web-education.net:8081/nexus/content/groups/public"
+    }
+}
+
+def configurePom(def pom) {
+	pom.project {
+		description 'Template (ent-core)'
+		inceptionYear '2014'
+		packaging 'zip'
+		url 'http://code.web-education.net/wse/template'
+
+		developers {
+			developer {
+				id 'cwin'
+				name 'Camille Wintz'
+				email 'camille.wintz@web-education.net'
+			}
+		}
+
+		scm {
+			url 'git@code.web-education.net:wse/template.git'
+		}
+
+		properties {
+			setProperty('project.build.sourceEncoding', 'UTF8')
+		}
+	}
+}
+

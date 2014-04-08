@@ -1,0 +1,11 @@
+{
+	"main" : "fr.wseduc.pages.Pages",
+	"port" : 8022,
+	"app-name" : "Pages",
+	"app-address" : "/pages",
+	"app-icon" : "pages-large",
+	"mode": "dev",
+	"integration-mode" : "HTTP",
+	"app-registry.port" : 8012,
+	"entcore.port" : 8009
+}
