@@ -1,25 +1,66 @@
 package fr.wseduc.pages.controllers;
 
-
+import fr.wseduc.rs.Delete;
+import fr.wseduc.rs.Get;
+import fr.wseduc.rs.Post;
+import fr.wseduc.rs.Put;
+import fr.wseduc.security.ActionType;
+import fr.wseduc.security.ResourceFilter;
 import fr.wseduc.security.SecuredAction;
-import fr.wseduc.webutils.Controller;
-import org.vertx.java.core.Vertx;
+import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.core.http.RouteMatcher;
-import org.vertx.java.platform.Container;
 
-import java.util.Map;
+public class PagesController extends MongoDbControllerHelper {
 
-public class PagesController extends Controller {
-
-	public PagesController(Vertx vertx, Container container, RouteMatcher rm,
-			Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
-		super(vertx, container, rm, securedActions);
+	public PagesController() {
+		super("pages");
 	}
 
+	@Get("")
 	@SecuredAction("pages.view")
 	public void view(HttpServerRequest request) {
 		renderView(request);
+	}
+
+	@Get("/list/:filter")
+	@SecuredAction("pages.list")
+	public void list(HttpServerRequest request) {
+		super.list(request);
+	}
+
+	@Post("")
+	@SecuredAction("pages.add")
+	public void add(HttpServerRequest request) {
+		create(request);
+	}
+
+	@Get("/:id")
+	@SecuredAction(value = "page.get", type = ActionType.RESOURCE)
+	public void get(HttpServerRequest request) {
+		retrieve(request);
+	}
+
+	@Put("/:id")
+	@SecuredAction(value = "page.update", type = ActionType.RESOURCE)
+	public void update(HttpServerRequest request) {
+		super.update(request);
+	}
+
+	@Delete("/:id")
+	@ResourceFilter("owner")
+	@SecuredAction(value = "", type = ActionType.RESOURCE)
+	public void delete(HttpServerRequest request) {
+		super.delete(request);
+	}
+
+	@Get("/public/:id")
+	public void getPublic(HttpServerRequest request) {
+		retrieve(request);
+	}
+
+	@Get("/public/list/:filter")
+	public void listPublic(HttpServerRequest request) {
+		list(request);
 	}
 
 }

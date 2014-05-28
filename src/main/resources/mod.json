@@ -5,7 +5,5 @@
 	"app-address" : "/pages",
 	"app-icon" : "pages-large",
 	"mode": "dev",
-	"integration-mode" : "HTTP",
-	"app-registry.port" : 8012,
-	"entcore.port" : 8009
+	"integration-mode" : "HTTP"
 }

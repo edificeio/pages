@@ -2,7 +2,7 @@ apply from: "gradle/vertx.gradle"
 
 dependencies {
 	provided "fr.wseduc:processor:$processorVersion"
-	compile "fr.wseduc:web-utils:$webUtilsVersion"
+	compile "org.entcore:common:$entCoreVersion"
 }
 
 javadoc {
