@@ -53,12 +53,12 @@ public class PagesController extends MongoDbControllerHelper {
 		super.delete(request);
 	}
 
-	@Get("/public/:id")
+	@Get("/pub/:id")
 	public void getPublic(HttpServerRequest request) {
 		retrieve(request);
 	}
 
-	@Get("/public/list/:filter")
+	@Get("/pub/list/:filter")
 	public void listPublic(HttpServerRequest request) {
 		list(request);
 	}
