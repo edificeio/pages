@@ -35,6 +35,7 @@ public class PagesController extends MongoDbControllerHelper {
 	}
 
 	@Get("/:id")
+	@ResourceFilter("pageRead")
 	@SecuredAction(value = "page.get", type = ActionType.RESOURCE)
 	public void get(HttpServerRequest request) {
 		retrieve(request);
@@ -47,7 +48,7 @@ public class PagesController extends MongoDbControllerHelper {
 	}
 
 	@Delete("/:id")
-	@ResourceFilter("owner")
+	@ResourceFilter("ownerOnly")
 	@SecuredAction(value = "", type = ActionType.RESOURCE)
 	public void delete(HttpServerRequest request) {
 		super.delete(request);
@@ -61,6 +62,24 @@ public class PagesController extends MongoDbControllerHelper {
 	@Get("/pub/list/:filter")
 	public void listPublic(HttpServerRequest request) {
 		list(request);
+	}
+
+	@Get("/share/:id")
+	@SecuredAction("page.share")
+	public void share(HttpServerRequest request) {
+		shareJson(request);
+	}
+
+	@Put("/share/:id")
+	@SecuredAction("page.share")
+	public void shareSubmit(HttpServerRequest request) {
+		shareJsonSubmit(request, null);
+	}
+
+	@Put("/share/remove/:id")
+	@SecuredAction("page.share")
+	public void removeShare(HttpServerRequest request) {
+		super.removeShare(request);
 	}
 
 }
