@@ -1,9 +1,0 @@
-<div class="pages-widget">
-	<h1 translate content="widget.title">Pages</h1>
-	<ul class="row">
-		<li ng-repeat="page in widget.pages | orderBy:'modified':true">
-			<a ng-href="/pages#/view/[[page._id]]">[[page.title]]</a>
-		</li>
-		<li ng-if="widget.pages.length === 0" translate content="widget.empty"></li>
-	</ul>
-</div>

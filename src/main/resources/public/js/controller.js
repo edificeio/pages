@@ -1,48 +1,66 @@
 routes.define(function($routeProvider){
 	$routeProvider
-		.when('/view/:pageId', {
+		.when('/view-page/:pageId', {
 			action: 'viewPage'
 		})
-		.when('/list', {
-			action: 'openList'
+		.when('/view-site/:siteId', {
+			action: 'viewSite'
+		})
+		.when('/list-my-sites', {
+			action: 'listMySites'
 		})
 		.otherwise({
-			redirectTo: '/list'
+			redirectTo: '/list-my-sites'
 		})
 });
 
-function PagesController($scope, template, route){
+function PagesController($scope, template, route, model, date){
+	$scope.mySites = model.mySites;
+	$scope.sharedSites = model.sharedSites;
+	$scope.folder = model.mySites;
+
 	$scope.template = template;
+	$scope.date = date;
+
+	$scope.website = new Website();
 
 	route({
-		viewPage: function(params){
-			$scope.template.open('main', 'view-page');
-			$scope.page = new Page({ _id: params.pageId });
-			$scope.page.open();
-			$scope.page.on('change', function(){
-				$scope.$apply('page');
-			});
-		},
-		openList: function(){
-			$scope.template.open('main', 'display-pages');
+		listMySites: function(){
+			$scope.openFolder('mySites');
+			template.open('websites-list', 'websites-table-list');
 		}
 	});
 
-	$scope.newPage = function(){
-		var page = new Page();
-		page.title = "Titre de la page";
-		page.content = "Mon contenu";
-		page.save();
+	$scope.openFolder = function(folder){
+		if(typeof folder === 'string'){
+			folder = model[folder];
+		}
+		folder.sync();
+		folder.one('websites.sync', function(){
+			template.open('main', 'folders');
+		});
+		$scope.folder = folder;
 	};
 
-	$scope.openSingleElement = function(page){
-		model.pages.mixed.closeAll();
-		page.open();
+	$scope.viewSite = function(site){
+		$scope.website = site;
+		template.open('main', 'website-manager');
 	};
 
-	model.on("pages.mixed.change", function(){
-		$scope.$apply();
-	});
+	$scope.removeSite = function(site){
+		site.remove();
+		$scope.openFolder($scope.folder);
+		$scope.website = undefined;
+		$scope.showConfirmRemove = false;
+	};
 
-	$scope.pages = model.pages.mixed;
+	$scope.createSite = function(site){
+		$scope.website.save();
+		template.open('main', 'website-manager');
+	};
+
+	$scope.editPage = function(page){
+		$scope.page = page;
+		template.open('main', 'page-editor');
+	};
 }

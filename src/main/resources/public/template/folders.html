@@ -1,0 +1,51 @@
+<div class="row">
+	<h1 class="four cell">Pages</h1>
+	<div class="contextual-buttons eight cell">
+		<div class="display-buttons">
+			<i class="show-list"
+			   ng-class="{ selected: template.contains('websites-list', 'websites-table-list') }"
+			   ng-click="template.open('websites-list', 'websites-table-list')"></i>
+			<i class="show-icons"
+			   ng-class="{ selected: template.contains('websites-list', 'websites-icons-list') }"
+			   ng-click="template.open('websites-list', 'websites-icons-list')"></i>
+		</div>
+		<div class="action-buttons">
+			<button ng-click="createNewSite = true">Nouveau site</button>
+			<lightbox show="createNewSite" on-close="createNewSite = false">
+				<h2>Créer un nouveau site web</h2>
+				<div class="row">
+						<div class="row">
+							<label class="four cell">Titre</label>
+							<input class="eight cell" type="text" ng-model="website.title" />
+						</div>
+				</div>
+				<div class="row">
+					<input type="button" class="cancel right-magnet" i18n-value="cancel" />
+					<button class="right-magnet" ng-click="createSite()">Créer</button>
+				</div>
+			</lightbox>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<nav class="vertical four cell">
+		<ul>
+			<li>
+				<a ng-class="{ selected: folder === mySites }" ng-click="openFolder('mySites')">
+					Mes sites
+				</a>
+			</li>
+			<li>
+				<a ng-class="{ selected: folder === sharedSites }" ng-click="openFolder('sharedSites')">
+					Sites partagés avec moi
+				</a>
+			</li>
+		</ul>
+	</nav>
+
+	<section class="eight cell">
+		<container template="websites-list"></container>
+	</section>
+</div>
+

@@ -1,0 +1,12 @@
+<table class="twelve">
+	<tr>
+		<th><input type="checkbox" /></th>
+		<th>Titre</th>
+		<th>Propriétaire</th>
+	</tr>
+	<tr ng-repeat="website in folder.websites.all">
+		<td><input type="checkbox" ng-model="website.selected" /></td>
+		<td ng-click="viewSite(website)"><a>[[website.title]]</a></td>
+		<td ng-click="viewSite(website)"><a>[[website.owner.displayName]]</a></td>
+	</tr>
+</table>

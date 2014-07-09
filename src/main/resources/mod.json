@@ -1,6 +1,6 @@
 {
 	"main" : "fr.wseduc.pages.Pages",
-	"port" : 8022,
+	"port" : 8025,
 	"app-name" : "Pages",
 	"app-address" : "/pages",
 	"app-icon" : "pages-large",

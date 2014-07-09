@@ -11,9 +11,7 @@
 <body>
 <portal>
 	<section ng-controller="PagesController" class="reduce-block-six">
-		<a ng-click="template.open('main', 'display-pages')">Afficher toutes les pages</a>
-		<a ng-click="template.open('main', 'creation');">Gérer mes pages</a>
-		<article class="row" ng-include="template.containers.main"></article>
+		<container template="main"></container>
 	</section>
 </portal>
 </body>

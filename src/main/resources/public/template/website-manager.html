@@ -1,0 +1,57 @@
+
+
+<div class="four cell">
+	<h2>[[website.title]]</h2>
+	<div class="row">
+		<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="four cell" ng-change="website.save()"></image-select>
+		<div class="eight cell">
+			<div class="row">
+				<label>Titre</label>
+				<input type="text" ng-model="website.title" complete-change="website.save()" />
+			</div>
+			<div class="row">
+				<select ng-options="title for page in website.pages.all" ng-change="website.save()"></select>
+			</div>
+		</div>
+
+	</div>
+
+
+	<button ng-click="showSharePanel = true">Partager</button>
+	<button ng-click="showConfirmRemove = true">Supprimer</button>
+	<lightbox show="showConfirmRemove" on-close="showConfirmRemove = false">
+		<h2>Supprimer le site</h2>
+
+		<p>Voulez-vous vraiment supprimer votre site web ?</p>
+
+		<div class="row">
+			<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="showConfirmRemove = false" />
+			<button class="right-magnet" ng-click="removeSite(website)">
+				Supprimer
+			</button>
+		</div>
+	</lightbox>
+	<lightbox show="showSharePanel" on-close="showSharePanel = false">
+		<share-panel app-prefix="'pages'" resources="website"></share-panel>
+	</lightbox>
+</div>
+
+<div class="eight cell">
+	<div class="contextual-buttons">
+		<div class="action-buttons">
+			<button>Nouvelle page</button>
+		</div>
+	</div>
+	<table class="twelve">
+		<tr>
+			<th><input type="checkbox" ng-model="display.selectAll" ng-change="switchAllPages()"/></th>
+			<th>Page</th>
+			<th>Dernière modification</th>
+		</tr>
+		<tr ng-repeat="page in website.pages.all">
+			<td><input type="checkbox" ng-model="page.selected" /></td>
+			<td ng-click="editPage(page)">[[page.title]]</td>
+			<td ng-click="editPage(page)">[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</td>
+		</tr>
+	</table>
+</div>

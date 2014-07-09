@@ -1,0 +1,20 @@
+<div class="icons-view">
+	<div ng-repeat="website in folder.websites.all" class="element" ng-class="{ selected: document.selected }" ng-click="viewSite(website)">
+		<a class="img container cell">
+			<div class="twelve cell height-twelve">
+				<div class="clip absolute">
+					<img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" />
+				</div>
+			</div>
+		</a>
+		<input type="checkbox" data-ng-model="website.selected" />
+
+		<legend>
+			<a>
+				<i ng-if="website.shared.length > 0" class="shared inline"></i>
+				[[website.title]]
+			</a>
+			<a><strong>[[website.owner.displayName]]</strong></a>
+		</legend>
+	</div>
+</div>
