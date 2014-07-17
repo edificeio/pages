@@ -23,6 +23,7 @@ function PagesController($scope, template, route, model, date){
 	$scope.date = date;
 
 	$scope.website = new Website();
+	$scope.page = new Page();
 
 	route({
 		listMySites: function(){
@@ -54,9 +55,15 @@ function PagesController($scope, template, route, model, date){
 		$scope.showConfirmRemove = false;
 	};
 
-	$scope.createSite = function(site){
+	$scope.createSite = function(){
 		$scope.website.save();
 		template.open('main', 'website-manager');
+	};
+
+	$scope.createPage = function(){
+		$scope.website.pages.push($scope.page);
+		$scope.website.save();
+		template.open('main', 'page-editor');
 	};
 
 	$scope.editPage = function(page){

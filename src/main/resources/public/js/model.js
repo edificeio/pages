@@ -1,13 +1,37 @@
-function Block(){
-
+function Cell(){
+	this.media = {};
+	this.width = 3;
 }
 
-function Page(data){
-	this.collection(Block);
-	if(data && data.blocks){
-		this.blocks.load(data.blocks);
+function Row(data){
+	this.collection(Cell);
+	if(data && data.cells){
+		this.cells.load(data.cell);
 	}
 }
+
+Row.prototype.addCell = function(){
+	this.cells.push(new Cell());
+};
+
+Row.prototype.hasLeftOvers = function(){
+	var currentWidth = 0;
+	this.cells.forEach(function(cell){
+		currentWidth += cell.width;
+	});
+	return currentWidth < 10;
+};
+
+function Page(data){
+	this.collection(Row);
+	if(data && data.rows){
+		this.rows.load(data.rows);
+	}
+}
+
+Page.prototype.addRow = function(){
+	this.rows.push(new Row());
+};
 
 function Website(data){
 	this.collection(Page);
@@ -23,11 +47,13 @@ Website.prototype.remove = function(){
 };
 
 Website.prototype.createWebsite = function(){
-	http().postJson('/pages', this);
+	http().postJson('/pages', this).done(function(data){
+		this.updateData(data);
+	}.bind(this));
 };
 
 Website.prototype.saveModifications = function(){
-	http().putJson('/pages', this);
+	http().putJson('/pages/' + this._id, this);
 };
 
 Website.prototype.save = function(){
@@ -37,6 +63,14 @@ Website.prototype.save = function(){
 	else{
 		this.createWebsite();
 	}
+};
+
+Website.prototype.toJSON = function(){
+	return {
+		title: this.title,
+		pages: this.pages,
+		icon: this.icon
+	};
 };
 
 function Folder(params){
@@ -50,7 +84,7 @@ function Folder(params){
 }
 
 model.build = function(){
-	this.makeModels([Block, Page, Website, Folder]);
+	this.makeModels([Cell, Row, Page, Website, Folder]);
 
 	this.mySites = new Folder({ filter: 'owner' });
 	this.sharedSites = new Folder({ filter: 'shared' });

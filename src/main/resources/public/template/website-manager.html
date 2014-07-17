@@ -9,8 +9,9 @@
 				<label>Titre</label>
 				<input type="text" ng-model="website.title" complete-change="website.save()" />
 			</div>
-			<div class="row">
-				<select ng-options="title for page in website.pages.all" ng-change="website.save()"></select>
+			<div class="row" ng-if="website.pages.length() > 0">
+				<label>Page d'accueil</label>
+				<select ng-options="page.title for page in website.pages.all" ng-change="website.save()" ng-model="website.startPage"></select>
 			</div>
 		</div>
 
@@ -25,10 +26,11 @@
 		<p>Voulez-vous vraiment supprimer votre site web ?</p>
 
 		<div class="row">
-			<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="showConfirmRemove = false" />
 			<button class="right-magnet" ng-click="removeSite(website)">
 				Supprimer
 			</button>
+			<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="showConfirmRemove = false" />
+
 		</div>
 	</lightbox>
 	<lightbox show="showSharePanel" on-close="showSharePanel = false">
@@ -39,9 +41,22 @@
 <div class="eight cell">
 	<div class="contextual-buttons">
 		<div class="action-buttons">
-			<button>Nouvelle page</button>
+			<button ng-click="createNewPage = true">Nouvelle page</button>
 		</div>
 	</div>
+	<lightbox show="createNewPage" on-close="createNewPage = false">
+		<h2>Nouvelle page</h2>
+		<div class="row">
+			<label>Titre</label>
+			<input type="text" ng-model="page.title" />
+		</div>
+		<div class="row">
+			<button ng-click="createPage()" class="right-magnet">
+				Créer
+			</button>
+			<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="createNewPage = false" />
+		</div>
+	</lightbox>
 	<table class="twelve">
 		<tr>
 			<th><input type="checkbox" ng-model="display.selectAll" ng-change="switchAllPages()"/></th>

@@ -10,8 +10,8 @@
 			   ng-click="template.open('websites-list', 'websites-icons-list')"></i>
 		</div>
 		<div class="action-buttons">
-			<button ng-click="createNewSite = true">Nouveau site</button>
-			<lightbox show="createNewSite" on-close="createNewSite = false">
+			<button ng-click="display.createNewSite = true">Nouveau site</button>
+			<lightbox show="display.createNewSite" on-close="createNewSite = false">
 				<h2>Créer un nouveau site web</h2>
 				<div class="row">
 						<div class="row">
@@ -20,8 +20,9 @@
 						</div>
 				</div>
 				<div class="row">
-					<input type="button" class="cancel right-magnet" i18n-value="cancel" />
 					<button class="right-magnet" ng-click="createSite()">Créer</button>
+					<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.createNewSite = false" />
+
 				</div>
 			</lightbox>
 		</div>

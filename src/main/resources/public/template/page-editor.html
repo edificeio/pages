@@ -1,0 +1,27 @@
+<div drawing-grid>
+	<div class="row" ng-repeat="row in page.rows.all">
+		<grid-cell class="media cell" grid-resizable ng-repeat="cell in row.cells.all" w="cell.width" h="cell.height">
+			<text-editor ng-model="cell.media.content"></text-editor>
+		</grid-cell>
+		<div class="radial-menu" ng-class="{opened: display.openRadialMenu}" ng-click="display.openRadialMenu = !display.openRadialMenu" ng-if="row.hasLeftOvers()">
+
+			<ul class="menu-items">
+				<li><i class="text" ng-click="row.addCell('text')"></i></li>
+				<li><i class="image" ng-click="row.addCell('image')"></i></li>
+				<li><i class="sound" ng-click="row.addCell('sound')"></i></li>
+				<li><i class="video" ng-click="row.addCell('video')"></i></li>
+				<li><i class="dynamic-content" ng-click="row.addCell('dyn')"></i></li>
+			</ul>
+			<button>
+				+
+			</button>
+		</div>
+
+	</div>
+	<div class="row">
+		<button style="margin-left: auto; margin-right: auto;" ng-click="page.addRow()" class="twelve cell">
+			Ajouter une ligne
+		</button>
+
+	</div>
+</div>
