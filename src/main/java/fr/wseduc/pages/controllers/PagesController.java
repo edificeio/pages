@@ -1,9 +1,11 @@
 package fr.wseduc.pages.controllers;
 
+import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
 import fr.wseduc.security.ResourceFilter;
 import fr.wseduc.security.SecuredAction;
+import org.entcore.common.http.filter.OwnerOnly;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.vertx.java.core.http.HttpServerRequest;
 
@@ -36,7 +38,7 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Get("/:id")
 	@ApiDoc("Get page by id.")
-	@ResourceFilter("pageRead")
+	@ResourceFilter(PageReadFilter.class)
 	@SecuredAction(value = "page.get", type = ActionType.RESOURCE)
 	public void get(HttpServerRequest request) {
 		retrieve(request);
@@ -51,7 +53,7 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Delete("/:id")
 	@ApiDoc("Delete page by id.")
-	@ResourceFilter("ownerOnly")
+	@ResourceFilter(OwnerOnly.class)
 	@SecuredAction(value = "", type = ActionType.RESOURCE)
 	public void delete(HttpServerRequest request) {
 		super.delete(request);
