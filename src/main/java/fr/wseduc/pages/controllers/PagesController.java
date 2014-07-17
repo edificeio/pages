@@ -71,21 +71,21 @@ public class PagesController extends MongoDbControllerHelper {
 		list(request);
 	}
 
-	@Get("/share/:id")
+	@Get("/share/json/:id")
 	@ApiDoc("Get share list.")
 	@SecuredAction("page.share")
 	public void share(HttpServerRequest request) {
 		shareJson(request);
 	}
 
-	@Put("/share/:id")
+	@Put("/share/json/:id")
 	@ApiDoc("Share a page.")
 	@SecuredAction("page.share")
 	public void shareSubmit(HttpServerRequest request) {
 		shareJsonSubmit(request, null);
 	}
 
-	@Put("/share/remove/:id")
+	@Put("/share/json/remove/:id")
 	@ApiDoc("Remove share.")
 	@SecuredAction("page.share")
 	public void removeShare(HttpServerRequest request) {

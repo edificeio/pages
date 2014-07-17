@@ -3,15 +3,15 @@
 <div class="four cell">
 	<h2>[[website.title]]</h2>
 	<div class="row">
-		<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="four cell" ng-change="website.save()"></image-select>
-		<div class="eight cell">
+		<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell" ng-change="website.save()"></image-select>
+		<div class="nine cell">
 			<div class="row">
-				<label>Titre</label>
-				<input type="text" ng-model="website.title" complete-change="website.save()" />
+				<label class="five cell">Titre</label>
+				<input class="seven cell" type="text" ng-model="website.title" complete-change="website.save()" />
 			</div>
 			<div class="row" ng-if="website.pages.length() > 0">
-				<label>Page d'accueil</label>
-				<select ng-options="page.title for page in website.pages.all" ng-change="website.save()" ng-model="website.startPage"></select>
+				<label class="five cell">Page d'accueil</label>
+				<select ng-options="page.title for page in website.pages.all" ng-change="website.save()" ng-model="website.startPage" class="seven cell"></select>
 			</div>
 		</div>
 
@@ -42,6 +42,7 @@
 	<div class="contextual-buttons">
 		<div class="action-buttons">
 			<button ng-click="createNewPage = true">Nouvelle page</button>
+			<button ng-click="createNewPage = true">Modifier le site</button>
 		</div>
 	</div>
 	<lightbox show="createNewPage" on-close="createNewPage = false">
@@ -69,4 +70,12 @@
 			<td ng-click="editPage(page)">[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</td>
 		</tr>
 	</table>
+</div>
+
+<div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
+	<div class="row">
+		<button>Utiliser en page d'accueil</button>
+		<button>Modifier</button>
+		<button>Supprimer</button>
+	</div>
 </div>

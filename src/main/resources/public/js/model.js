@@ -1,5 +1,7 @@
-function Cell(){
-	this.media = {};
+function Cell(type){
+	this.media = {
+		type: type
+	};
 	this.width = 3;
 }
 
@@ -10,8 +12,8 @@ function Row(data){
 	}
 }
 
-Row.prototype.addCell = function(){
-	this.cells.push(new Cell());
+Row.prototype.addCell = function(type){
+	this.cells.push(new Cell(type));
 };
 
 Row.prototype.hasLeftOvers = function(){
