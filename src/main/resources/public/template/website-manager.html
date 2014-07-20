@@ -2,24 +2,8 @@
 
 <div class="four cell">
 	<h2>[[website.title]]</h2>
-	<div class="row">
-		<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell" ng-change="website.save()"></image-select>
-		<div class="nine cell">
-			<div class="row">
-				<label class="five cell">Titre</label>
-				<input class="seven cell" type="text" ng-model="website.title" complete-change="website.save()" />
-			</div>
-			<div class="row" ng-if="website.pages.length() > 0">
-				<label class="five cell">Page d'accueil</label>
-				<select ng-options="page.title for page in website.pages.all" ng-change="website.save()" ng-model="website.startPage" class="seven cell"></select>
-			</div>
-		</div>
-
-	</div>
 
 
-	<button ng-click="showSharePanel = true">Partager</button>
-	<button ng-click="showConfirmRemove = true">Supprimer</button>
 	<lightbox show="showConfirmRemove" on-close="showConfirmRemove = false">
 		<h2>Supprimer le site</h2>
 
@@ -38,11 +22,11 @@
 	</lightbox>
 </div>
 
-<div class="eight cell">
+<div class="twelve cell">
 	<div class="contextual-buttons">
 		<div class="action-buttons">
 			<button ng-click="createNewPage = true">Nouvelle page</button>
-			<button ng-click="createNewPage = true">Modifier le site</button>
+			<button ng-click="template.open('main', 'website-properties')">Modifier le site</button>
 		</div>
 	</div>
 	<lightbox show="createNewPage" on-close="createNewPage = false">
@@ -66,8 +50,8 @@
 		</tr>
 		<tr ng-repeat="page in website.pages.all">
 			<td><input type="checkbox" ng-model="page.selected" /></td>
-			<td ng-click="editPage(page)">[[page.title]]</td>
-			<td ng-click="editPage(page)">[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</td>
+			<td ng-click="editPage(page)"><a>[[page.title]]</a></td>
+			<td ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
 		</tr>
 	</table>
 </div>

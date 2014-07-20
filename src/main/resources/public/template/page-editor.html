@@ -1,12 +1,14 @@
 <div drawing-grid>
 	<div class="row" ng-repeat="row in page.rows.all">
-		<grid-cell class="media cell" grid-resizable ng-repeat="cell in row.cells.all" w="cell.width" h="cell.height">
+		<grid-cell class="media cell" grid-resizable grid-draggable ng-repeat="cell in row.cells.all" w="cell.width" h="cell.height" on-index-change="row.setIndex(cell)" index="cell.index">
+
 			<div ng-if="cell.media.type === 'text'">
 				<text-editor ng-model="cell.media.source"></text-editor>
 			</div>
 			<div ng-if="cell.media.type === 'image'">
 				<image-select ng-model="cell.media.source"></image-select>
 			</div>
+			<i class="close" ng-click="row.cells.remove(cell)"></i>
 		</grid-cell>
 		<div class="radial-menu" ng-class="{opened: display.openRadialMenu}" ng-click="display.openRadialMenu = !display.openRadialMenu" ng-if="row.hasLeftOvers()">
 

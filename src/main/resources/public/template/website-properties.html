@@ -1,0 +1,17 @@
+<div class="row">
+	<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell" ng-change="website.save()"></image-select>
+	<div class="nine cell">
+		<div class="row">
+			<label class="five cell">Titre</label>
+			<input class="seven cell" type="text" ng-model="website.title" complete-change="website.save()" />
+		</div>
+	</div>
+<div class="row">
+	<button ng-click="showSharePanel = true">Partager</button>
+	<button ng-click="showConfirmRemove = true">Supprimer</button>
+</div>
+</div>
+		<div class="row">
+			<button>Enregistrer</button>
+			<input class="cancel" i18n-value="cancel" />
+		</div>
