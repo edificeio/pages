@@ -1,27 +1,64 @@
-function Cell(type){
-	this.media = {
-		type: type
-	};
-	this.width = 3;
+function Cell(index){
+	if(typeof index !== 'object'){
+		this.media = {
+		};
+		this.index = index;
+	}
 }
 
 function Row(data){
 	this.collection(Cell);
 	if(data && data.cells){
-		this.cells.load(data.cell);
+		this.cells.load(data.cells);
 	}
 }
 
-Row.prototype.addCell = function(type){
-	this.cells.push(new Cell(type));
+Row.prototype.remainingSpace = function(){
+	var maxSize = 12;
+	var usedSpace = 0;
+	this.cells.forEach(function(cell){
+		usedSpace += cell.width;
+	});
+	return maxSize - usedSpace;
+};
+
+Row.prototype.addCell = function(cell){
+	cell.width = 1;
+	cell.index = this.cells.length();
+	cell.row = this.index;
+
+	var remainingSpace = this.remainingSpace();
+
+	if(remainingSpace === 0){
+		var newSize = parseInt(12 / (this.cells.length() + 1));
+		if(newSize > 3){
+			this.cells.forEach(function(cell){
+				cell.width = newSize;
+			});
+			setTimeout(function(){
+				cell.width = newSize;
+				this.cells.trigger('change');
+			}.bind(this), 50);
+
+			this.cells.push(cell);
+			return cell;
+		}
+		return false;
+	}
+	if(remainingSpace > 0){
+		cell.width = remainingSpace;
+		this.cells.push(cell);
+		return cell;
+	}
 };
 
 Row.prototype.hasLeftOvers = function(){
-	var currentWidth = 0;
-	this.cells.forEach(function(cell){
-		currentWidth += cell.width;
-	});
-	return currentWidth < 10;
+	return this.cells.length() !== 12;
+};
+
+Row.prototype.setIndex = function(cell, index){
+	this.cells.remove(cell);
+	this.cells.insertAt(index, cell);
 };
 
 function Page(data){
@@ -32,8 +69,33 @@ function Page(data){
 }
 
 Page.prototype.addRow = function(){
-	this.rows.push(new Row());
+	var row = new Row();
+	this.rows.push(row);
+	row.index = this.rows.length() - 1;
+	return row;
 };
+
+Page.prototype.addRowAt = function(previousRow){
+	var row = new Row();
+	this.rows.insertAt(this.rows.getIndex(previousRow) + 1, row);
+	row.index = this.rows.getIndex(previousRow) + 1;
+	return row;
+};
+
+Page.prototype.moveCell = function(cell, newIndex){
+	this.rows.find(function(row){
+		return row.cells.all.indexOf(cell) !== -1;
+	}).cells.remove(cell);
+	this.rows.findWhere({ index: newIndex }).cells.insertAt(cell.index, cell);
+};
+
+Page.prototype.toJSON = function(){
+	return {
+		title: this.title,
+		titleLink: this.titleLink,
+		rows: this.rows
+	}
+}
 
 function Website(data){
 	this.collection(Page);
@@ -45,7 +107,7 @@ function Website(data){
 Website.prototype.remove = function(){
 	http().delete('/pages/' + this._id);
 	notify.error('Le site a été supprimé');
-	model.websites.remove(this);
+	model.mySites.websites.remove(this);
 };
 
 Website.prototype.createWebsite = function(){
@@ -56,6 +118,7 @@ Website.prototype.createWebsite = function(){
 
 Website.prototype.saveModifications = function(){
 	http().putJson('/pages/' + this._id, this);
+	notify.info('Modifications enregistrées');
 };
 
 Website.prototype.save = function(){
@@ -67,11 +130,18 @@ Website.prototype.save = function(){
 	}
 };
 
+Website.prototype.sync = function(){
+	http().get('/pages/' + this._id).done(function(data){
+		this.updateData(data);
+	}.bind(this));
+};
+
 Website.prototype.toJSON = function(){
 	return {
 		title: this.title,
 		pages: this.pages,
-		icon: this.icon
+		icon: this.icon,
+		landingPage: this.landingPage
 	};
 };
 
