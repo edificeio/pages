@@ -59,6 +59,9 @@ Row.prototype.hasLeftOvers = function(){
 Row.prototype.setIndex = function(cell, index){
 	this.cells.remove(cell);
 	this.cells.insertAt(index, cell);
+	this.cells.forEach(function(item, index){
+		item.index = index;
+	})
 };
 
 function Page(data){
@@ -95,7 +98,7 @@ Page.prototype.toJSON = function(){
 		titleLink: this.titleLink,
 		rows: this.rows
 	}
-}
+};
 
 function Website(data){
 	this.collection(Page);

@@ -31,6 +31,9 @@ function PagesController($scope, template, route, model, date){
 	$scope.page = new Page();
 	$scope.cell = new Cell();
 
+	template.open('grid', 'grid');
+	template.open('grid-view', 'grid-view');
+
 	function viewSite(siteId, pageLink){
 		model.mySites.websites.on('sync', function(){
 			var website = model.mySites.websites.findWhere({ '_id': siteId });
@@ -125,6 +128,9 @@ function PagesController($scope, template, route, model, date){
 
 	$scope.addCell = function(row, type){
 		$scope.cell.media.type = type;
+		if(type === 'grid'){
+			$scope.cell.media.source = new Page();
+		}
 		if(!row.addCell($scope.cell)){
 			$scope.page.addRowAt(row).addCell($scope.cell);
 		}

@@ -1,59 +1,11 @@
-<div drawing-grid>
-	<div class="row" ng-repeat="row in page.rows.all">
-		<div class="square-menu" ng-class="{opened: display.openRadialMenu}">
-			<button ng-show="!row.openSquareMenu" ng-click="row.openSquareMenu = true">+</button>
-			<ul class="menu-items" ng-show="row.openSquareMenu">
-				<li><i class="text" ng-click="addCell(row, 'text')"></i></li>
-				<li><media-select ng-model="cell.media.source" ng-change="addCell(row, 'image')" class="image" file-format="'img'"></media-select></li>
-				<li><media-select ng-model="cell.media.source" ng-change="addCell(row, 'sound')" class="sound" file-format="'audio'"></media-select></li>
-				<li><i class="video" ng-click="addCell(row, 'video')"></i></li>
-				<li><i class="dynamic-content" ng-click="addCell(row, 'dyn')"></i></li>
-			</ul>
-		</div>
-		<div class="square-menu-actions guide-line">
-			<div class="grid-guides">
-				<div class="row" ng-repeat="i in display.guideRows">
-					<div class="one cell height-one" ng-repeat="i in display.guideCols"></div>
-				</div>
-			</div>
-			<grid-row index="row.index">
-				<grid-cell ng-repeat="cell in row.cells.all" class="media cell" grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
-						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
-					<div ng-if="cell.media.type === 'text'" class="text-wrapper">
-						<text-editor ng-model="cell.media.source"></text-editor>
-					</div>
-					<div ng-if="cell.media.type === 'image'" class="image-container">
-						<image-select ng-model="cell.media.source"></image-select>
-					</div>
-					<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
-						<sound-select ng-model="cell.media.source"></sound-select>
-					</div>
-					<i class="close" ng-click="removeCell(row, cell)"></i>
-					<div ng-if="cell.media.type === 'text' || cell.media.type === 'sound'">
-						<color-select ng-model="cell.className"></color-select>
-					</div>
-				</grid-cell>
-			</grid-row>
-		</div>
-	</div>
-	<div class="row">
-		<div class="square-menu"></div>
-		<div class="square-menu-actions">
-			<button ng-click="page.addRow()" class="grid-add-row">
-				Ajouter une ligne
-			</button>
-		</div>
-	</div>
-	<hr class="row" />
-	<div class="row">
-		<button ng-click="website.save()" class="right-magnet">Enregistrer</button>
-		<button class="right-magnet" ng-click="template.open('main', 'page-viewer')">Aperçu</button>
-		<input type="button" i18n-value="back" class="cancel right-magnet" ng-click="cancelEdit()" />
+<container template="grid"></container>
 
-	</div>
+<div class="row">
+	<button ng-click="website.save()" class="right-magnet">Enregistrer</button>
+	<button class="right-magnet" ng-click="template.open('main', 'page-viewer')">Aperçu</button>
+	<input type="button" i18n-value="back" class="cancel right-magnet" ng-click="cancelEdit()" />
+
 </div>
-
-
 		<lightbox show="display.selectDynamicContent" on-close="display.selectDynamicContent = false">
 			<h2>Templates</h2>
 			<ul>
