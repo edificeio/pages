@@ -13,12 +13,11 @@
 					<sound-select ng-model="cell.media.source"></sound-select>
 				</div>
 				<div ng-if="cell.media.type === 'grid'">
-					<container template="grid-view"></container>
+					<div ng-init="page = cell.media.source">
+						<container template="grid-view"></container>
+					</div>
 				</div>
 			</grid-cell>
 		</grid-row>
-	</div>
-	<div class="row" ng-if="display.showEditButtons">
-		<button ng-click="template.open('main', 'page-editor')" class="right-magnet">Modifier</button>
 	</div>
 </div>
