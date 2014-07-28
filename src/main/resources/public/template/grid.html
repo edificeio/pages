@@ -29,7 +29,7 @@
 					<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
 						<sound-select ng-model="cell.media.source"></sound-select>
 					</div>
-					<div ng-if="cell.media.type === 'grid'" class="grid-wrapper absolute">
+					<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 						<div class="media-container" ng-init="page = cell.media.source">
 							<div ng-if="display.editGrid === page">
 								<container template="grid"></container>
