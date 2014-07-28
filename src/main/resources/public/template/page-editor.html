@@ -1,10 +1,12 @@
 <div ng-if="display.editGrid === page">
 	<container template="grid"></container>
+	<div class="row"></div>
 </div>
 <div ng-if="display.editGrid !== page">
 	<container template="grid-view"></container>
+	<div class="row height-one"></div>
 </div>
-
+<hr class="row" />
 <div class="row">
 	<button ng-click="website.save()" class="right-magnet">Enregistrer</button>
 	<button class="right-magnet" ng-click="template.open('main', 'page-viewer')">Aperçu</button>
@@ -19,3 +21,4 @@
 				<li>Liste d'images</li>
 			</ul>
 		</lightbox>
+

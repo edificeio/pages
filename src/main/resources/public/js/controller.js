@@ -29,7 +29,7 @@ function PagesController($scope, template, route, model, date){
 
 	$scope.website = new Website();
 	$scope.page = new Page();
-	$scope.cell = new Cell();
+	$scope.newCell = new Cell();
 
 	template.open('grid', 'grid');
 	template.open('grid-view', 'grid-view');
@@ -127,15 +127,25 @@ function PagesController($scope, template, route, model, date){
 	};
 
 	$scope.addCell = function(row, type){
-		$scope.cell.media.type = type;
+		$scope.newCell.media.type = type;
 		if(type === 'grid'){
-			$scope.cell.media.source = new Page();
-			$scope.cell.className.push('sub-grid');
+			$scope.newCell.media.source = new Page();
+			$scope.newCell.className.push('sub-grid');
+			$scope.newCell.height = 1;
 		}
-		if(!row.addCell($scope.cell)){
-			$scope.page.addRowAt(row).addCell($scope.cell);
+		if(type === 'video'){
+			$scope.newCell.media.source = $scope.newCell.media.source.replace('http://', 'https://');
+			if($scope.newCell.media.source.indexOf('youtube') !== -1){
+				var sourceSplit = $scope.newCell.media.source.split('" frame');
+				sourceSplit[0] += '?wmode=transparent';
+				$scope.newCell.media.source = sourceSplit.join('" frame');
+			}
+			$scope.newCell.height = 6;
 		}
-		$scope.cell = new Cell();
+		if(!row.addCell($scope.newCell)){
+			$scope.page.addRowAt(row).addCell($scope.newCell);
+		}
+		$scope.newCell = new Cell();
 		row.openSquareMenu = false;
 	};
 

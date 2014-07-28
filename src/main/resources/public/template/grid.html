@@ -4,11 +4,25 @@
 			<button ng-show="!row.openSquareMenu" ng-click="row.openSquareMenu = true">+</button>
 			<ul class="menu-items" ng-show="row.openSquareMenu">
 				<li><i class="text" ng-click="addCell(row, 'text')"></i></li>
-				<li><media-select ng-model="cell.media.source" ng-change="addCell(row, 'image')" class="image" file-format="'img'"></media-select></li>
-				<li><media-select ng-model="cell.media.source" ng-change="addCell(row, 'sound')" class="sound" file-format="'audio'"></media-select></li>
-				<li><i class="video" ng-click="addCell(row, 'video')"></i></li>
+				<li><media-select ng-model="newCell.media.source" ng-change="addCell(row, 'image')" class="image" file-format="'img'"></media-select></li>
+				<li><media-select ng-model="newCell.media.source" ng-change="addCell(row, 'sound')" class="sound" file-format="'audio'"></media-select></li>
+				<li><i class="video" ng-click="display.selectVideoContent = true"></i></li>
 				<li><i class="grid" ng-click="addCell(row, 'grid')"></i></li>
 			</ul>
+			<lightbox show="display.selectVideoContent" on-close="display.selectVideoContent = false">
+				<h2>Insérer une vidéo</h2>
+				<p class="info">
+					Au préalable, votre vidéo doit être enregistrée sur une plateforme de partage (Youtube, Vimeo, etc.).
+					Pour l'insérer ici, copiez le le lien de partage "embed" et collez-le ci-dessous.
+				</p>
+				<div class="row">
+					<textarea ng-model="newCell.media.source"></textarea>
+				</div>
+				<div class="row">
+					<button class="right-magnet" ng-click="addCell(row, 'video')">Ajouter</button>
+					<input type="button" class="cancel right-magnet" i18n-value="cancel" />
+				</div>
+			</lightbox>
 		</div>
 		<div class="square-menu-actions guide-line">
 			<div class="grid-guides">
@@ -20,8 +34,9 @@
 				<grid-cell ng-repeat="cell in row.cells.all" class="media cell"
 						   grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
 						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
-					<div ng-if="cell.media.type === 'text'" class="text-wrapper">
+					<div ng-if="cell.media.type === 'text' || cell.media.type === 'video'" class="text-wrapper">
 						<text-editor ng-model="cell.media.source"></text-editor>
+						<div ng-if="cell.media.type === 'video'" class="absolute"></div>
 					</div>
 					<div ng-if="cell.media.type === 'image'" class="image-container">
 						<image-select ng-model="cell.media.source"></image-select>
@@ -31,10 +46,10 @@
 					</div>
 					<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 						<div class="media-container" ng-init="page = cell.media.source">
-							<div ng-if="display.editGrid === page">
+							<div ng-if="display.editGrid === page" class="absolute ested-grid">
 								<container template="grid"></container>
 							</div>
-							<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)">
+							<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)" class="nested-grid">
 								<container template="grid-view"></container>
 							</div>
 
@@ -45,6 +60,7 @@
 						<color-select ng-model="cell.className[0]"></color-select>
 					</div>
 				</grid-cell>
+				<div class="row" style="min-height: 0"></div>
 			</grid-row>
 		</div>
 	</div>
