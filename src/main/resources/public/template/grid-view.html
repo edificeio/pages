@@ -4,17 +4,22 @@
 			<grid-cell ng-repeat="cell in row.cells.all" class="media cell" w="cell.width" h="cell.height" class-name="cell.className"
 					   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
 				<div ng-if="cell.media.type === 'text'" class="text-wrapper">
-					<text-editor ng-model="cell.media.source"></text-editor>
+					<div ng-if="cell.media.source" bind-html="cell.media.source"></div>
 				</div>
 				<div ng-if="cell.media.type === 'image'" class="image-container">
-					<image-select ng-model="cell.media.source"></image-select>
+					<img ng-src="[[cell.media.source]]" />
 				</div>
 				<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
-					<sound-select ng-model="cell.media.source"></sound-select>
+					<audio ng-src="[[cell.media.source]]" controls></audio>
 				</div>
-				<div ng-if="cell.media.type === 'grid'">
+				<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 					<div ng-init="page = cell.media.source">
-						<container template="grid-view"></container>
+						<div ng-if="display.editGrid === page" ng-click="editGrid(page, $event)">
+							<container template="grid"></container>
+						</div>
+						<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)">
+							<container template="grid-view"></container>
+						</div>
 					</div>
 				</div>
 			</grid-cell>

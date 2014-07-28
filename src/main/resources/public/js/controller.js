@@ -130,6 +130,7 @@ function PagesController($scope, template, route, model, date){
 		$scope.cell.media.type = type;
 		if(type === 'grid'){
 			$scope.cell.media.source = new Page();
+			$scope.cell.className.push('sub-grid');
 		}
 		if(!row.addCell($scope.cell)){
 			$scope.page.addRowAt(row).addCell($scope.cell);
@@ -151,4 +152,9 @@ function PagesController($scope, template, route, model, date){
 		$scope.website.landingPage = $scope.website.pages.selection()[0].titleLink;
 		$scope.website.save();
 	};
+
+	$scope.editGrid = function(page, event){
+		$scope.display.editGrid = page;
+		event.stopPropagation();
+	}
 }

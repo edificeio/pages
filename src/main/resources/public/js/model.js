@@ -3,6 +3,12 @@ function Cell(index){
 		this.media = {
 		};
 		this.index = index;
+		this.className = ['transparent'];
+	}
+	else{
+		if(index.media.type === 'grid'){
+			this.media.source = new Page(index.media.source);
+		}
 	}
 }
 

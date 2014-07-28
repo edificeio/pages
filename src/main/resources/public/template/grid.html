@@ -17,7 +17,8 @@
 				</div>
 			</div>
 			<grid-row index="row.index">
-				<grid-cell ng-repeat="cell in row.cells.all" class="media cell" grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
+				<grid-cell ng-repeat="cell in row.cells.all" class="media cell"
+						   grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
 						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
 					<div ng-if="cell.media.type === 'text'" class="text-wrapper">
 						<text-editor ng-model="cell.media.source"></text-editor>
@@ -28,14 +29,20 @@
 					<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
 						<sound-select ng-model="cell.media.source"></sound-select>
 					</div>
+					<div ng-if="cell.media.type === 'grid'" class="grid-wrapper absolute">
+						<div class="media-container" ng-init="page = cell.media.source">
+							<div ng-if="display.editGrid === page">
+								<container template="grid"></container>
+							</div>
+							<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)">
+								<container template="grid-view"></container>
+							</div>
+
+						</div>
+					</div>
 					<i class="close" ng-click="removeCell(row, cell)"></i>
 					<div ng-if="cell.media.type === 'text' || cell.media.type === 'sound'">
-						<color-select ng-model="cell.className"></color-select>
-					</div>
-					<div ng-if="cell.media.type === 'grid'">
-						<div class="media-container" ng-init="page = cell.media.source">
-							<container template="grid"></container>
-						</div>
+						<color-select ng-model="cell.className[0]"></color-select>
 					</div>
 				</grid-cell>
 			</grid-row>

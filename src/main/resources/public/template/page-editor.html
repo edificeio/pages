@@ -1,4 +1,9 @@
-<container template="grid"></container>
+<div ng-if="display.editGrid === page">
+	<container template="grid"></container>
+</div>
+<div ng-if="display.editGrid !== page">
+	<container template="grid-view"></container>
+</div>
 
 <div class="row">
 	<button ng-click="website.save()" class="right-magnet">Enregistrer</button>
