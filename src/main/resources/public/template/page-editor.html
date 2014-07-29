@@ -1,15 +1,13 @@
 <div ng-if="display.editGrid === page">
 	<container template="grid"></container>
-	<div class="row"></div>
 </div>
-<div ng-if="display.editGrid !== page">
+<div ng-if="display.editGrid !== page" class="editor-view">
 	<container template="grid-view"></container>
-	<div class="row height-one"></div>
 </div>
 <hr class="row" />
 <div class="row">
 	<button ng-click="website.save()" class="right-magnet">Enregistrer</button>
-	<button class="right-magnet" ng-click="template.open('main', 'page-viewer')">Aperçu</button>
+	<button class="right-magnet" ng-click="pagePreview()">Aperçu</button>
 	<input type="button" i18n-value="back" class="cancel right-magnet" ng-click="cancelEdit()" />
 
 </div>

@@ -156,16 +156,24 @@ Website.prototype.toJSON = function(){
 
 function Folder(params){
 	this.collection(Website, {
+		behaviours: 'pages',
 		sync: function(){
 			http().get('/pages/list/' + params.filter).done(function(websites){
 				this.load(websites);
 			}.bind(this));
+		},
+		removeSelected: function(){
+			this.selection().forEach(function(website){
+				website.remove();
+			});
+			this.removeSelection();
 		}
-	})
+	});
 }
 
 model.build = function(){
 	this.makeModels([Cell, Row, Page, Website, Folder]);
+	model.me.workflow.load(['pages']);
 
 	this.mySites = new Folder({ filter: 'owner' });
 	this.sharedSites = new Folder({ filter: 'shared' });

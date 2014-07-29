@@ -39,14 +39,14 @@ public class PagesController extends MongoDbControllerHelper {
 	@Get("/:id")
 	@ApiDoc("Get page by id.")
 	@ResourceFilter(PageReadFilter.class)
-	@SecuredAction(value = "page.get", type = ActionType.RESOURCE)
+	@SecuredAction(value = "page.read", type = ActionType.RESOURCE)
 	public void get(HttpServerRequest request) {
 		retrieve(request);
 	}
 
 	@Put("/:id")
 	@ApiDoc("Update page by id.")
-	@SecuredAction(value = "page.update", type = ActionType.RESOURCE)
+	@SecuredAction(value = "page.contrib", type = ActionType.RESOURCE)
 	public void update(HttpServerRequest request) {
 		super.update(request);
 	}

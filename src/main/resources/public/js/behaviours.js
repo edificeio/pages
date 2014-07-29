@@ -1,15 +1,38 @@
 var pagesBehaviours = {
-
+	workflow: {
+		create: 'fr.wseduc.pages.controllers.PagesController|add',
+		share: 'fr.wseduc.pages.controllers.PagesController|share'
+	}
 };
 
 Behaviours.register('pages', {
 	behaviours: pagesBehaviours,
-	resource: function(resource){
-
-	},
 	workflow: function(){
+		var workflow = { };
+		var pagesWorkflow = pagesBehaviours.workflow;
+		for(var prop in pagesWorkflow){
+			if(model.me.hasWorkflow(pagesWorkflow[prop])){
+				workflow[prop] = true;
+			}
+		}
+
+		return workflow;
 	},
-	resourceRights: function(){
+	resource: function(resource){
+		if(model.me.hasRight(resource, 'fr-wseduc-pages-controllers-PagesController|update')){
+			resource.myRights = {
+				update: true
+			}
+		}
+		if(resource.owner.userId === model.me.userId){
+			resource.myRights = {
+				update: true,
+				remove: true,
+				share: true
+			}
+		}
+
+		return resource;
 	},
 	search: function(searchText, callback){
 		http().get('/pages/list/all').done(function(websites){

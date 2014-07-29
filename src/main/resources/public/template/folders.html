@@ -1,5 +1,5 @@
 <div class="row">
-	<h1 class="four cell">Pages</h1>
+	<h1 class="four cell"><a data-reload>Pages</a></h1>
 	<div class="contextual-buttons eight cell">
 		<div class="display-buttons">
 			<i class="show-list"
@@ -10,18 +10,18 @@
 			   ng-click="template.open('websites-list', 'websites-icons-list')"></i>
 		</div>
 		<div class="action-buttons">
-			<button ng-click="display.createNewSite = true">Nouveau site</button>
+			<button ng-click="display.createNewSite = true" workflow="pages.create">Nouveau site</button>
 			<lightbox show="display.createNewSite" on-close="createNewSite = false">
 				<h2>Créer un nouveau site web</h2>
 				<div class="row">
 						<div class="row">
-							<label class="four cell">Titre</label>
-							<input class="eight cell" type="text" ng-model="website.title" />
+							<label class="three cell">Titre</label>
+							<input class="nine cell" type="text" ng-model="website.title" />
 						</div>
 				</div>
 				<div class="row">
 					<button class="right-magnet" ng-click="createSite()">Créer</button>
-					<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.createNewSite = false" />
+					<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="cancelSiteCreation()" />
 
 				</div>
 			</lightbox>
@@ -50,3 +50,23 @@
 	</section>
 </div>
 
+<div ng-if="display.showSharePanel">
+	<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
+		<share-panel app-prefix="'pages'" resources="folder.websites.selection()"></share-panel>
+	</lightbox>
+</div>
+
+
+<div class="toggle-buttons" ng-class="{ hide: folder.websites.selection().length < 1 }">
+	<div class="row toggle">
+		<behaviour name="share" resource="folder.websites.selection()" class="cell">
+			<button ng-click="display.showSharePanel = true">Partager</button>
+		</behaviour>
+		<behaviour name="update" resource="folder.websites.selection()" class="cell">
+			<button ng-if="folder.websites.selection().length === 1" ng-click="editWebsite()">Modifier</button>
+		</behaviour>
+		<behaviour name="remove" resource="folder.websites.selection()" class="cell">
+			<button ng-click="removeSelectedWebsites()">Supprimer</button>
+		</behaviour>
+	</div>
+</div>

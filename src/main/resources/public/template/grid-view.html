@@ -14,10 +14,10 @@
 				</div>
 				<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 					<div ng-init="page = cell.media.source">
-						<div ng-if="display.editGrid === page" ng-click="editGrid(page, $event)" class="absolute">
+						<div ng-if="display.editGrid === page" ng-click="editGrid(page, $event)">
 							<container template="grid"></container>
 						</div>
-						<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)" class="absolute">
+						<div ng-if="display.editGrid !== page" ng-click="editGrid(page, $event)">
 							<container template="grid-view"></container>
 						</div>
 					</div>

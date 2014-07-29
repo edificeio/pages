@@ -1,4 +1,4 @@
-<h1>Pages</h1>
+<h1><a data-reload>Pages</a></h1>
 <div class="four cell">
 	<h2>[[website.title]]</h2>
 
@@ -16,29 +16,27 @@
 
 		</div>
 	</lightbox>
-	<lightbox show="showSharePanel" on-close="showSharePanel = false">
-		<share-panel app-prefix="'pages'" resources="website"></share-panel>
-	</lightbox>
+
 </div>
 
 <div class="twelve cell">
 	<div class="contextual-buttons">
 		<div class="action-buttons">
-			<button ng-click="createNewPage = true">Nouvelle page</button>
-			<button ng-click="template.open('main', 'website-properties')">Modifier le site</button>
+			<button ng-click="display.createNewPage = true">Nouvelle page</button>
+			<button ng-click="template.open('main', 'website-properties')">Modifier les propriétés</button>
 		</div>
 	</div>
-	<lightbox show="createNewPage" on-close="createNewPage = false">
+	<lightbox show="display.createNewPage" on-close="display.createNewPage = false">
 		<h2>Nouvelle page</h2>
 		<div class="row">
-			<label class="four cell">Titre</label>
-			<input class="eight cell" type="text" ng-model="page.title" />
+			<label class="three cell">Titre</label>
+			<input class="nine cell" type="text" ng-model="page.title" />
 		</div>
 		<div class="row">
 			<button ng-click="createPage()" class="right-magnet">
 				Créer
 			</button>
-			<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="createNewPage = false" />
+			<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />
 		</div>
 	</lightbox>
 	<table class="twelve">
@@ -55,10 +53,13 @@
 	</table>
 </div>
 
+<div class="row">
+	<input type="button" i18n-value="back" class="cancel right-magnet" ng-click="closeWebsite()" />
+</div>
+
 <div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
 	<div class="row toggle">
 		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1">Utiliser en page d'accueil</button>
-		<button>Modifier</button>
 		<button ng-click="removeSelectedPages()">Supprimer</button>
 	</div>
 </div>

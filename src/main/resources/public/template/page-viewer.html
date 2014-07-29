@@ -1,5 +1,8 @@
 <container template="grid-view"></container>
 
 <div class="row" ng-if="display.showEditButtons">
-	<button ng-click="template.open('main', 'page-editor')" class="right-magnet">Modifier</button>
+	<behaviour name="update" resource="website">
+		<button ng-click="template.open('main', 'page-editor')" class="right-magnet">Modifier</button>
+	</behaviour>
+	<input type="button" class="right-magnet cancel" ng-click="cancelView()" i18n-value="back" />
 </div>

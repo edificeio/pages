@@ -87,10 +87,12 @@ function PagesController($scope, template, route, model, date){
 
 	$scope.viewSite = function(site){
 		$scope.website = site;
-		template.open('main', 'website-manager');
+		$scope.page = site.pages.findWhere({ 'titleLink': site.landingPage });
+		template.open('main', 'page-viewer');
 	};
 
 	$scope.cancelEdit = function(){
+		$scope.page = new Page();
 		$scope.website.sync();
 		template.open('main', 'website-manager');
 	};
@@ -103,14 +105,31 @@ function PagesController($scope, template, route, model, date){
 	};
 
 	$scope.createSite = function(){
+		$scope.page = new Page();
+		$scope.display.createNewSite = false;
 		$scope.website.save();
 		template.open('main', 'website-manager');
+	};
+
+	$scope.editWebsite = function(){
+		$scope.website = $scope.folder.websites.selection()[0];
+		$scope.page = new Page();
+		template.open('main', 'website-manager');
+	};
+
+	$scope.cancelPageCreation = function(){
+		$scope.display.createNewPage = false;
+		$scope.page = new Page();
 	};
 
 	$scope.createPage = function(){
 		$scope.page.titleLink = lang.removeAccents($scope.page.title.replace(/\ /g, '-')).toLowerCase();
 		$scope.website.pages.push($scope.page);
+		if($scope.website.pages.length() === 1){
+			$scope.website.landingPage = $scope.page.titleLink;
+		}
 		$scope.website.save();
+		$scope.display.createNewPage = false;
 		template.open('main', 'page-editor');
 	};
 
@@ -164,7 +183,41 @@ function PagesController($scope, template, route, model, date){
 	};
 
 	$scope.editGrid = function(page, event){
+		if(event.target.className.indexOf('cke') !== -1 || template.contains('main', 'page-viewer')){
+			return;
+		}
 		$scope.display.editGrid = page;
 		event.stopPropagation();
-	}
+	};
+
+	$scope.cancelSiteCreation = function(){
+		$scope.display.createNewSite = false;
+		$scope.website = new Website();
+	};
+
+	$scope.pagePreview = function(){
+		template.open('main', 'page-viewer');
+		$scope.display.preview = true;
+	};
+
+	$scope.cancelView = function(){
+		if($scope.display.preview){
+			template.open('main', 'page-editor');
+		}
+		else{
+			template.open('main', 'folders');
+		}
+		$scope.display.preview = false;
+	};
+
+	$scope.removeSelectedWebsites = function(){
+		$scope.folder.websites.removeSelected();
+	};
+
+	$scope.closeWebsite = function(){
+		$scope.website = new Website();
+		model.mySites.sync();
+		model.sharedSites.sync();
+		template.open('main', 'folders');
+	};
 }
