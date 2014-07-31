@@ -12,6 +12,21 @@ function Cell(index){
 	}
 }
 
+Cell.prototype.buildSubGrid = function(){
+	this.media.type = 'grid';
+	var fillingCell = new Cell();
+	fillingCell.media.type = 'text';
+	this.media.source = new Page();
+	this.media.source.addRow();
+	this.media.source.rows.first().addCell(fillingCell);
+	fillingCell = new Cell();
+	fillingCell.media.type = 'text';
+	this.media.source.addRow();
+	this.media.source.rows.all[1].addCell(fillingCell);
+	this.className.push('sub-grid');
+	this.height = 1;
+};
+
 function Row(data){
 	this.collection(Cell);
 	if(data && data.cells){
@@ -171,10 +186,14 @@ function Folder(params){
 	});
 }
 
+function Template(){}
+Template.prototype = Object.create(Page.prototype);
+
 model.build = function(){
-	this.makeModels([Cell, Row, Page, Website, Folder]);
+	this.makeModels([Cell, Row, Page, Website, Folder, Template]);
 	model.me.workflow.load(['pages']);
 
 	this.mySites = new Folder({ filter: 'owner' });
 	this.sharedSites = new Folder({ filter: 'shared' });
+	this.collection(Template)
 };

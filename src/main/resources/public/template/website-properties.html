@@ -1,13 +1,16 @@
+<h1>Pages</h1>
+<h2>[[website.title]]</h2>
+
 <div class="row">
-	<image-select ng-model="website.icon" default="/img/illustrations/blog.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell" ng-change="website.save()"></image-select>
+	<image-select ng-model="website.icon" default="/img/illustrations/pages.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell"></image-select>
 	<div class="ten cell">
 		<div class="row">
 			<label class="two cell">Titre</label>
-			<input class="nine cell" type="text" ng-model="website.title" complete-change="website.save()" />
+			<input class="ten cell" type="text" ng-model="website.title" />
+		</div>
+		<div class="row bottom-locked">
+			<button class="right-magnet" ng-click="website.save(); editWebsite(website)">Enregistrer</button>
+			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="editWebsite(website)" />
 		</div>
 	</div>
-</div>
-<div class="row">
-	<button class="right-magnet">Enregistrer</button>
-	<input type="button" class="cancel right-magnet" i18n-value="cancel" />
 </div>

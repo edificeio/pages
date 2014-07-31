@@ -2,7 +2,7 @@
 	"main" : "fr.wseduc.pages.Pages",
 	"port" : 8025,
 	"app-name" : "Pages",
-	"app-address" : "/pages",
+	"app-address" : "/pages#/list-my-sites",
 	"app-icon" : "pages-large",
 	"mode": "dev",
 	"integration-mode" : "HTTP"

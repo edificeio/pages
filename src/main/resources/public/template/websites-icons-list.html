@@ -3,7 +3,8 @@
 		<a class="img container cell">
 			<div class="twelve cell height-twelve">
 				<div class="clip absolute">
-					<img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" />
+					<img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" />
+					<img skin-src="/img/illustrations/pages.png" alt="thumbnail" ng-if="!website.icon" />
 				</div>
 			</div>
 		</a>
