@@ -40,16 +40,20 @@
 		</div>
 	</lightbox>
 	<table class="twelve">
-		<tr>
-			<th><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
-			<th>Page</th>
-			<th>Dernière modification</th>
-		</tr>
-		<tr ng-repeat="page in website.pages.all">
-			<td><input type="checkbox" ng-model="page.selected" /></td>
-			<td ng-click="editPage(page)"><a>[[page.title]]</a></td>
-			<td ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
-		</tr>
+		<thead>
+			<tr>
+				<th class="icon"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
+				<th class="content">Page</th>
+				<th class="date">Dernière modification</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="page in website.pages.all">
+				<td class="icon"><input type="checkbox" ng-model="page.selected" /></td>
+				<td class="content" ng-click="editPage(page)"><a>[[page.title]]</a></td>
+				<td class="date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
+			</tr>
+		</tbody>
 	</table>
 </div>
 
