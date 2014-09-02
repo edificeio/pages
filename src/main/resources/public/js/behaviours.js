@@ -1,5 +1,4 @@
 Behaviours.register('pages', {
-	behaviours: pagesBehaviours,
 	rights: {
 		workflow: {
 			create: 'fr.wseduc.pages.controllers.PagesController|add',
