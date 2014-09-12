@@ -13,7 +13,7 @@ javadoc {
 
 repositories {
     maven {
-        url "http://maven.web-education.net:8081/nexus/content/groups/public"
+        url "http://maven.web-education.net/nexus/content/groups/public"
     }
 }
 
