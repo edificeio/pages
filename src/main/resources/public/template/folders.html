@@ -57,16 +57,4 @@
 </div>
 
 
-<div class="toggle-buttons" ng-class="{ hide: folder.websites.selection().length < 1 }">
-	<div class="row toggle">
-		<behaviour name="share" resource="folder.websites.selection()" class="cell">
-			<button ng-click="display.showSharePanel = true">Partager</button>
-		</behaviour>
-		<behaviour name="update" resource="folder.websites.selection()" class="cell">
-			<button ng-if="folder.websites.selection().length === 1" ng-click="editWebsite()">Modifier</button>
-		</behaviour>
-		<behaviour name="remove" resource="folder.websites.selection()" class="cell">
-			<button ng-click="removeSelectedWebsites()">Supprimer</button>
-		</behaviour>
-	</div>
-</div>
+

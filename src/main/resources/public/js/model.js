@@ -121,12 +121,27 @@ Page.prototype.toJSON = function(){
 	}
 };
 
+Page.prototype.url = function(website){
+	return window.location.origin + '/pages#/website/' + website._id + '/' + this.titleLink;
+};
+
+Page.prototype.applyTemplate = function(template){
+	this.rows.load(template.rows.all);
+};
+
 function Website(data){
 	this.collection(Page);
 	if(data && data.pages){
 		this.pages.load(data.pages);
 	}
 }
+
+Website.prototype.url = function(){
+	if(!this._id){
+		return '';
+	}
+	return window.location.origin + '/pages#/website/' + this._id;
+};
 
 Website.prototype.remove = function(){
 	http().delete('/pages/' + this._id);
@@ -165,35 +180,34 @@ Website.prototype.toJSON = function(){
 		title: this.title,
 		pages: this.pages,
 		icon: this.icon,
-		landingPage: this.landingPage
+		landingPage: this.landingPage,
+		description: this.description
 	};
 };
 
-function Folder(params){
+function Template(){
+	this.collection(Row);
+	if(data && data.rows){
+		this.rows.load(data.rows);
+	}
+}
+
+model.build = function(){
+	this.makeModels([Cell, Row, Page, Website, Template]);
+
 	this.collection(Website, {
 		behaviours: 'pages',
 		sync: function(){
-			http().get('/pages/list/' + params.filter).done(function(websites){
+			http().get('/pages/list/all').done(function(websites){
 				this.load(websites);
 			}.bind(this));
 		},
-		removeSelected: function(){
+		removeSelection: function(){
 			this.selection().forEach(function(website){
 				website.remove();
 			});
-			this.removeSelection();
+			Collection.prototype.removeSelection.call(this);
 		}
 	});
-}
-
-function Template(){}
-Template.prototype = Object.create(Page.prototype);
-
-model.build = function(){
-	this.makeModels([Cell, Row, Page, Website, Folder, Template]);
-	model.me.workflow.load(['pages']);
-
-	this.mySites = new Folder({ filter: 'owner' });
-	this.sharedSites = new Folder({ filter: 'shared' });
 	this.collection(Template)
 };

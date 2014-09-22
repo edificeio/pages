@@ -1,0 +1,43 @@
+<div class="contextual-buttons">
+	<div class="action-buttons">
+		<button ng-click="display.createNewPage = true">Nouvelle page</button>
+	</div>
+</div>
+<lightbox show="display.createNewPage" on-close="display.createNewPage = false">
+	<h2>Nouvelle page</h2>
+	<div class="row">
+		<label class="three cell">Titre</label>
+		<input class="nine cell" type="text" ng-model="page.title" />
+	</div>
+	<div class="row">
+		<button ng-click="createPage()" class="right-magnet">
+			Créer
+		</button>
+		<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />
+	</div>
+</lightbox>
+<table class="twelve">
+	<thead>
+	<tr>
+		<th class="icon"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
+		<th class="content">Page</th>
+		<th class="content">URL</th>
+		<th class="date">Dernière modification</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="page in website.pages.all">
+		<td class="icon"><input type="checkbox" ng-model="page.selected" /></td>
+		<td class="content" ng-click="editPage(page)"><a>[[page.title]]</a></td>
+		<td class="content" ng-click="editPage(page)">[[page.url(website)]]</td>
+		<td class="date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
+	</tr>
+	</tbody>
+</table>
+
+<div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
+	<div class="row toggle">
+		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1">Utiliser en page d'accueil</button>
+		<button ng-click="removeSelectedPages()">Supprimer</button>
+	</div>
+</div>

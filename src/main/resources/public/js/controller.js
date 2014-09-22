@@ -8,26 +8,26 @@ routes.define(function($routeProvider){
 			action: 'viewPage',
 			reloadOnSearch: false
 		})
-		.when('/list-my-sites', {
-			action: 'listMySites',
+		.when('/list-sites', {
+			action: 'listSites',
 			reloadOnSearch: false
 		})
 		.otherwise({
-			redirectTo: '/list-my-sites'
+			redirectTo: '/list-sites'
 		});
 });
 
-function PagesController($scope, template, route, model, date){
-	$scope.mySites = model.mySites;
-	$scope.sharedSites = model.sharedSites;
-	$scope.folder = model.mySites;
-
+function PagesController($scope, template, route, model, date, $location){
+	$scope.websites = model.websites;
 	$scope.template = template;
 	$scope.date = date;
 	$scope.display = {
 		guideCols: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 		guideRows: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-		showEditButtons: true
+		showEditButtons: true,
+		search: '',
+		mineOnly: false,
+		snipletStep: 1
 	};
 
 	$scope.website = new Website();
@@ -38,8 +38,8 @@ function PagesController($scope, template, route, model, date){
 	template.open('grid-view', 'grid-view');
 
 	function viewSite(siteId, pageLink){
-		model.mySites.websites.on('sync', function(){
-			var website = model.mySites.websites.findWhere({ '_id': siteId });
+		model.websites.on('sync', function(){
+			var website = model.websites.findWhere({ '_id': siteId });
 			if(website === undefined){
 				return;
 			}
@@ -47,35 +47,23 @@ function PagesController($scope, template, route, model, date){
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
 		});
-
-		model.sharedSites.websites.on('sync', function(){
-			var website = model.sharedSites.websites.findWhere({ '_id': siteId });
-			if(website === undefined){
-				return;
-			}
-			$scope.website = website;
-			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
-			template.open('main', 'page-viewer');
-		});
-		$scope.display.showEditButtons = false;
 	}
 
 	route({
-		listMySites: function(){
-			$scope.openFolder('mySites');
-			template.open('websites-list', 'websites-table-list');
+		listSites: function(){
+			template.open('main', 'websites-list');
 		},
 		viewSite: function(params){
 			viewSite(params.siteId);
-			model.mySites.websites.sync();
-			model.sharedSites.websites.sync();
 		},
 		viewPage: function(params){
 			viewSite(params.siteId, params.pageLink);
-			model.mySites.websites.sync();
-			model.sharedSites.websites.sync();
 		}
 	});
+
+	$scope.mine = function(element){
+		return !$scope.display.mineOnly || element.owner.userId === model.me.userId;
+	};
 
 	$scope.openFolder = function(folder){
 		if(typeof folder === 'string'){
@@ -88,20 +76,15 @@ function PagesController($scope, template, route, model, date){
 		$scope.folder = folder;
 	};
 
-	$scope.switchSelectAllWebsites = function(){
-		if($scope.display.selectAllWebsites){
-			$scope.folder.websites.selectAll();
-		}
-		else{
-			$scope.folder.websites.deselectAll();
-		}
+	$scope.searchMatch = function(element){
+		return lang.removeAccents(element.title.toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
 	};
 
 	$scope.viewSite = function(site){
 		$scope.website = site;
 		$scope.page = site.pages.findWhere({ 'titleLink': site.landingPage });
 		template.open('main', 'page-viewer');
-		window.location.hash = '/website/' + $scope.website._id;
+		$location.path('/website/' + $scope.website._id);
 	};
 
 	$scope.cancelEdit = function(){
@@ -127,12 +110,12 @@ function PagesController($scope, template, route, model, date){
 	$scope.editWebsite = function(website){
 		$scope.website = website;
 		if(!website){
-			$scope.website = $scope.folder.websites.selection()[0];
+			$scope.website = $scope.websites.selection()[0];
 		}
 
 		$scope.page = new Page();
 		template.open('main', 'website-manager');
-		window.location.hash = '/website/' + $scope.website._id;
+		template.open('edit-view', 'pages-list');
 	};
 
 	$scope.switchSelectAllPages = function(){
@@ -150,7 +133,7 @@ function PagesController($scope, template, route, model, date){
 	};
 
 	$scope.createPage = function(){
-		$scope.page.titleLink = lang.removeAccents($scope.page.title.replace(/\ /g, '-')).toLowerCase();
+		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-')).toLowerCase());
 		$scope.website.pages.push($scope.page);
 		if($scope.website.pages.length() === 1){
 			$scope.website.landingPage = $scope.page.titleLink;
@@ -164,7 +147,6 @@ function PagesController($scope, template, route, model, date){
 	$scope.editPage = function(page){
 		$scope.page = page;
 		template.open('main', 'page-editor');
-		window.location.hash = '/website/' + $scope.website._id + '/' + page.titleLink;
 	};
 
 	$scope.removeCell = function(row, cell){
@@ -193,6 +175,32 @@ function PagesController($scope, template, route, model, date){
 		}
 		$scope.newCell = new Cell();
 		row.openSquareMenu = false;
+	};
+
+	$scope.sniplet = {};
+
+	$scope.selectSnipletSource = function(template, application){
+		$scope.sniplet = {
+			template: template,
+			application: application
+		};
+		$scope.display.snipletStep = 2;
+	};
+
+	$scope.addSniplet = function(row){
+		$scope.newCell.media.type = 'sniplet';
+		$scope.newCell.media.source = {
+			template: $scope.sniplet.template,
+			application: $scope.sniplet.application,
+			source: $scope.sniplet.source
+		};
+		if(!row.addCell($scope.newCell)){
+			$scope.page.addRowAt(row).addCell($scope.newCell);
+		}
+		$scope.display.snipletStep = 1;
+		$scope.newCell = new Cell();
+		row.openSquareMenu = false;
+		$scope.display.selectSniplet = false;
 	};
 
 	$scope.setRow = function(cell, rowIndex){
@@ -232,7 +240,7 @@ function PagesController($scope, template, route, model, date){
 			template.open('main', 'page-editor');
 		}
 		else{
-			template.open('main', 'folders');
+			template.open('main', 'websites-list');
 		}
 		$scope.display.preview = false;
 	};
@@ -243,8 +251,7 @@ function PagesController($scope, template, route, model, date){
 
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
-		model.mySites.sync();
-		model.sharedSites.sync();
-		template.open('main', 'folders');
+		model.websites.sync();
+		template.open('main', 'websites-list');
 	};
 }

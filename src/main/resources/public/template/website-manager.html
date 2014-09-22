@@ -1,69 +1,28 @@
-<h1><a data-reload>Pages</a></h1>
-<div class="four cell">
-	<h2>[[website.title]]</h2>
+<div class="three cell">
+	<h1><a data-reload>Pages</a></h1>
 
-
-	<lightbox show="showConfirmRemove" on-close="showConfirmRemove = false">
-		<h2>Supprimer le site</h2>
-
-		<p>Voulez-vous vraiment supprimer votre site web ?</p>
-
-		<div class="row">
-			<button class="right-magnet" ng-click="removeSite(website)">
-				Supprimer
-			</button>
-			<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="showConfirmRemove = false" />
-
-		</div>
-	</lightbox>
-
+	<nav class="vertical">
+		<h2>Sites web</h2>
+		<ul>
+			<li>
+				<a ng-click="closeWebsite()">Parcourir les sites</a>
+			</li>
+		</ul>
+		<h2>[[website.title]]</h2>
+		<ul>
+			<li>
+				<a ng-click="template.open('edit-view', 'pages-list')">Modifier les pages</a>
+			</li>
+			<li>
+				<a ng-click="template.open('edit-view', 'website-properties')">Propriétés</a>
+			</li>
+		</ul>
+	</nav>
 </div>
 
-<div class="twelve cell">
-	<div class="contextual-buttons">
-		<div class="action-buttons">
-			<button ng-click="display.createNewPage = true">Nouvelle page</button>
-			<button ng-click="template.open('main', 'website-properties')">Modifier les propriétés</button>
-		</div>
-	</div>
-	<lightbox show="display.createNewPage" on-close="display.createNewPage = false">
-		<h2>Nouvelle page</h2>
-		<div class="row">
-			<label class="three cell">Titre</label>
-			<input class="nine cell" type="text" ng-model="page.title" />
-		</div>
-		<div class="row">
-			<button ng-click="createPage()" class="right-magnet">
-				Créer
-			</button>
-			<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />
-		</div>
-	</lightbox>
-	<table class="twelve">
-		<thead>
-			<tr>
-				<th class="icon"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
-				<th class="content">Page</th>
-				<th class="date">Dernière modification</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="page in website.pages.all">
-				<td class="icon"><input type="checkbox" ng-model="page.selected" /></td>
-				<td class="content" ng-click="editPage(page)"><a>[[page.title]]</a></td>
-				<td class="date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+<div class="nine cell">
+	<container template="edit-view">
 
-<div class="row">
-	<input type="button" i18n-value="back" class="cancel right-magnet" ng-click="closeWebsite()" />
-</div>
+	</container>
 
-<div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
-	<div class="row toggle">
-		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1">Utiliser en page d'accueil</button>
-		<button ng-click="removeSelectedPages()">Supprimer</button>
-	</div>
 </div>
