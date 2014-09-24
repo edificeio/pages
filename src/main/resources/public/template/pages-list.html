@@ -10,9 +10,13 @@
 		<input class="nine cell" type="text" ng-model="page.title" />
 	</div>
 	<div class="row">
-		<button ng-click="createPage()" class="right-magnet">
-			Créer
-		</button>
+		<h2>Modèles</h2>
+		<ul>
+			<li ng-click="page.useTemplate(website, 'navigationAndBlog');createPage();">Articles et navigation</li>
+			<li ng-click="page.useTemplate(website, 'navigationAndContent');createPage();">Navigation et contenu</li>
+		</ul>
+	</div>
+	<div class="row">
 		<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />
 	</div>
 </lightbox>
@@ -22,7 +26,7 @@
 		<th class="icon"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
 		<th class="content">Page</th>
 		<th class="content">URL</th>
-		<th class="date">Dernière modification</th>
+		<th class="date">Date</th>
 	</tr>
 	</thead>
 	<tbody>

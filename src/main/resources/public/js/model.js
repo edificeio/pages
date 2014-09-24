@@ -15,16 +15,13 @@ function Cell(index){
 Cell.prototype.buildSubGrid = function(){
 	this.media.type = 'grid';
 	var fillingCell = new Cell();
-	fillingCell.media.type = 'text';
 	this.media.source = new Page();
 	this.media.source.addRow();
 	this.media.source.rows.first().addCell(fillingCell);
 	fillingCell = new Cell();
-	fillingCell.media.type = 'text';
 	this.media.source.addRow();
 	this.media.source.rows.all[1].addCell(fillingCell);
 	this.className.push('sub-grid');
-	this.height = 1;
 };
 
 function Row(data){
@@ -125,8 +122,117 @@ Page.prototype.url = function(website){
 	return window.location.origin + '/pages#/website/' + website._id + '/' + this.titleLink;
 };
 
-Page.prototype.applyTemplate = function(template){
-	this.rows.load(template.rows.all);
+Page.prototype.useTemplate = function(website, templateName){
+	var cells = {
+		content: function(row){
+			var content = new Cell();
+			content.media.type = 'text';
+			content.media.source = '<h1>Votre page personnelle</h1>' +
+			'<p>Vous pouvez entrer ici les informations que vous voulez : cliquez sur l\'encart de texte pour en modifier le contenu. ' +
+			'Vous pouvez aussi modifier l\'image ci-dessus (ou la supprimer en cliquant sur la petite croix en haut à droite).' +
+			'La navigation de gauche sera complétée automatiquement au fur et à mesure que vous ajouterez des pages.</p>' +
+			'<h1>Publier votre page</h1>' +
+			'<p>Afin de publier votre page, vous devez publier le site web qui la contient. Vous pouvez le faire dans la partie "propriétés" de l\'espace de gestion de votre site.' +
+			'Lors de la publication de votre site, pensez à vérifier que tous les contenus que vous utilisez soient bien visibles des autres utilisateurs (blogs, liens, ...).</p>';
+			row.addCell(content)
+		},
+		navigation: function(row){
+			var navigation = new Cell();
+			navigation.media.type = 'sniplet';
+			navigation.media.source = {
+				template: 'navigation',
+				application: 'pages',
+				source: { _id: website._id }
+			};
+			row.addCell(navigation);
+			navigation.width = 3;
+		},
+		image: function(row, width, height){
+			var image = new Cell();
+			image.width = width;
+			image.height = height;
+			image.media.type = 'image';
+			image.media.source = '/pages/public/filler-images/' + width + 'x' + height + '.png';
+			row.addCell(image);
+		},
+		blog: function(row, width, website, callback){
+			var blog = new Cell();
+			blog.media.type = 'sniplet';
+
+			var blogCaller = {
+				blog: {},
+				snipletResource: website,
+				setSnipletSource: function(newBlog){
+					blog.media.source = {
+						template: 'articles',
+						application: 'blog',
+						source: newBlog
+					};
+					row.addCell(blog);
+					blog.width = width;
+					if(typeof callback === 'function'){
+						callback();
+					}
+					website.trigger('change');
+				}
+			};
+			var blogSniplet = _.findWhere(sniplets.sniplets, { application: 'blog', template: 'articles' });
+			blogSniplet.sniplet.controller.createBlog.call(blogCaller);
+		},
+		smallNote: function(row){
+			var smallNote = new Cell();
+			smallNote.media.type = 'text';
+			smallNote.media.source = '<h2>A propos...</h2><p>Vous pouvez ajouter facilement de petits encarts ' +
+			'de texte en créant un bloc de texte et en changeant la couleur de fond avec le pinceau.</p>';
+			smallNote.className = ['black'];
+			smallNote.width = 2;
+			row.addCell(smallNote);
+		},
+		welcomeMessage: function(row){
+			var welcome = new Cell();
+			welcome.media.type = 'text';
+			welcome.media.source = '<h1>Titre de mon site</h1>';
+			row.addCell(welcome);
+			welcome.width = 10;
+			welcome.height = 1;
+			var illustration = new Cell();
+			illustration.media.type = 'image';
+			illustration.media.source = '/pages/public/filler-images/2x1.png';
+			illustration.height = 1;
+			illustration.width = 2;
+			row.addCell(illustration);
+		},
+		footpage: function(row){
+			var footpage = new Cell();
+			footpage.media.type = 'text';
+			footpage.media.source = '<em class="low-importance centered-text twelve cell">pied de page - ajoutez ici vos informations de contact</em>';
+			row.addCell(footpage);
+		}
+	};
+
+	var templates = {
+		navigationAndContent: function(){
+			var row = this.addRow();
+			cells.image(row, 12, 1);
+			row = this.addRow();
+			cells.navigation(row);
+			cells.content(row);
+			row = this.addRow();
+			cells.footpage(row)
+		},
+		navigationAndBlog: function(website){
+			var row = this.addRow();
+			cells.welcomeMessage(row);
+			row = this.addRow();
+			cells.navigation(row);
+			cells.blog(row, 7, website, function(){
+				cells.smallNote(row);
+				website.save();
+			});
+
+		}
+	};
+	templates[templateName].call(this, website);
 };
 
 function Website(data){
@@ -145,8 +251,7 @@ Website.prototype.url = function(){
 
 Website.prototype.remove = function(){
 	http().delete('/pages/' + this._id);
-	notify.error('Le site a été supprimé');
-	model.mySites.websites.remove(this);
+	model.websites.remove(this);
 };
 
 Website.prototype.createWebsite = function(){
@@ -157,7 +262,6 @@ Website.prototype.createWebsite = function(){
 
 Website.prototype.saveModifications = function(){
 	http().putJson('/pages/' + this._id, this);
-	notify.info('Modifications enregistrées');
 };
 
 Website.prototype.save = function(){
@@ -185,15 +289,8 @@ Website.prototype.toJSON = function(){
 	};
 };
 
-function Template(){
-	this.collection(Row);
-	if(data && data.rows){
-		this.rows.load(data.rows);
-	}
-}
-
 model.build = function(){
-	this.makeModels([Cell, Row, Page, Website, Template]);
+	this.makeModels([Cell, Row, Page, Website]);
 
 	this.collection(Website, {
 		behaviours: 'pages',
@@ -206,8 +303,7 @@ model.build = function(){
 			this.selection().forEach(function(website){
 				website.remove();
 			});
-			Collection.prototype.removeSelection.call(this);
+			notify.info('Les sites web ont été supprimés');
 		}
 	});
-	this.collection(Template)
 };

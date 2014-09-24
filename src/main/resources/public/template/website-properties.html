@@ -1,9 +1,8 @@
-<h1>Pages</h1>
 <h2>[[website.title]]</h2>
 
 <div class="row">
 	<image-select ng-model="website.icon" default="/img/illustrations/pages-default.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell"></image-select>
-	<div class="ten cell">
+	<article class="ten cell">
 		<div class="row">
 			<label class="two cell">Titre</label>
 			<input class="ten cell" type="text" ng-model="website.title" />
@@ -13,11 +12,29 @@
 			<textarea i18n-placeholder="description" class="ten cell" ng-model="website.description"></textarea>
 		</div>
 		<div class="row">
-			<button>Partager</button>
-		</div>
-		<div class="row">
 			<button class="right-magnet" ng-click="website.save(); editWebsite(website)">Enregistrer</button>
 			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="editWebsite(website)" />
 		</div>
+	</article>
+</div>
+
+<h2>Publication</h2>
+
+<div class="row">
+	<h3>Partager dans l'ENT</h3>
+	<button class="cell right-magnet">Partager dans l'ENT</button>
+</div>
+
+<div class="row">
+	<h3>Ajouter dans les applications</h3>
+	<div class="switch-button"></div>
+</div>
+
+<div class="row">
+	<h3>Publier sur internet</h3>
+	<p>Adresse publique</p>
+	<strong>adresse</strong>
+	<div class="switch-button">
+
 	</div>
 </div>

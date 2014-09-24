@@ -12,6 +12,9 @@
 				<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
 					<audio ng-src="[[cell.media.source]]" controls></audio>
 				</div>
+				<div ng-if="cell.media.type === 'sniplet'">
+					<sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>
+				</div>
 				<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 					<div ng-init="page = cell.media.source">
 						<div ng-if="display.editGrid === page" ng-click="editGrid(page, $event)">

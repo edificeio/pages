@@ -1,0 +1,26 @@
+<nav class="vertical twelve cell">
+	<ul>
+		<li ng-repeat="link in links">
+			<a ng-href="[[link.href]]" data-reload>
+				[[link.text]]
+				<i ng-if="link.custom" class="remove" ng-click="removeLink($index)"></i>
+			</a>
+		</li>
+	</ul>
+	<a class="classic-link" ng-click="snipletDisplay.enterLink = true;" ng-if="custom">Ajouter un lien</a>
+</nav>
+
+<lightbox show="snipletDisplay.enterLink" on-close="snipletDisplay.enterLink = false;">
+	<h2>Ajouter un lien</h2>
+	<div class="row">
+		<input type="text" ng-model="newLink.href" class="twelve cell" placeholder="http://mon-lien.nnn" />
+	</div>
+	<div class="row">
+		<input type="text" ng-model="newLink.text" class="twelve cell" placeholder="Texte à afficher" />
+	</div>
+	<div class="row">
+		<button class="right-magnet" ng-click="addLink();">Ajouter</button>
+		<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="snipletDisplay.enterLink = false;" />
+
+	</div>
+</lightbox>

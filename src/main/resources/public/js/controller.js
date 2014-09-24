@@ -17,7 +17,7 @@ routes.define(function($routeProvider){
 		});
 });
 
-function PagesController($scope, template, route, model, date, $location){
+function PagesController($scope, template, route, model, date, $location, $timeout){
 	$scope.websites = model.websites;
 	$scope.template = template;
 	$scope.date = date;
@@ -29,6 +29,10 @@ function PagesController($scope, template, route, model, date, $location){
 		mineOnly: false,
 		snipletStep: 1
 	};
+
+	sniplets.load(function(){
+		$scope.sniplets = sniplets.sniplets;
+	});
 
 	$scope.website = new Website();
 	$scope.page = new Page();
@@ -65,23 +69,13 @@ function PagesController($scope, template, route, model, date, $location){
 		return !$scope.display.mineOnly || element.owner.userId === model.me.userId;
 	};
 
-	$scope.openFolder = function(folder){
-		if(typeof folder === 'string'){
-			folder = model[folder];
-		}
-		folder.sync();
-		folder.one('websites.sync', function(){
-			template.open('main', 'folders');
-		});
-		$scope.folder = folder;
-	};
-
 	$scope.searchMatch = function(element){
 		return lang.removeAccents(element.title.toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
 	};
 
 	$scope.viewSite = function(site){
 		$scope.website = site;
+		$scope.snipletResource = $scope.website;
 		$scope.page = site.pages.findWhere({ 'titleLink': site.landingPage });
 		template.open('main', 'page-viewer');
 		$location.path('/website/' + $scope.website._id);
@@ -104,7 +98,9 @@ function PagesController($scope, template, route, model, date, $location){
 		$scope.page = new Page();
 		$scope.display.createNewSite = false;
 		$scope.website.save();
+		$scope.snipletResource = $scope.website;
 		template.open('main', 'website-manager');
+		template.open('edit-view', 'website-properties');
 	};
 
 	$scope.editWebsite = function(website){
@@ -112,6 +108,7 @@ function PagesController($scope, template, route, model, date, $location){
 		if(!website){
 			$scope.website = $scope.websites.selection()[0];
 		}
+		$scope.snipletResource = $scope.website;
 
 		$scope.page = new Page();
 		template.open('main', 'website-manager');
@@ -156,25 +153,30 @@ function PagesController($scope, template, route, model, date, $location){
 		}
 	};
 
-	$scope.addCell = function(row, type){
-		$scope.newCell.media.type = type;
+	$scope.setType = function(cell, type){
+		cell.media.type = type;
 		if(type === 'grid'){
-			$scope.newCell.buildSubGrid();
+			cell.buildSubGrid();
 		}
 		if(type === 'video'){
-			$scope.newCell.media.source = $scope.newCell.media.source.replace('http://', 'https://');
-			if($scope.newCell.media.source.indexOf('youtube') !== -1){
-				var sourceSplit = $scope.newCell.media.source.split('" frame');
+			cell.media.source = cell.media.source.replace('http://', 'https://');
+			if(cell.media.source.indexOf('youtube') !== -1){
+				var sourceSplit = cell.media.source.split('" frame');
 				sourceSplit[0] += '?wmode=transparent';
-				$scope.newCell.media.source = sourceSplit.join('" frame');
+				cell.media.source = sourceSplit.join('" frame');
 			}
-			$scope.newCell.height = 6;
+			cell.height = 6;
 		}
+		if(type === 'text'){
+			cell.media.source = '<p>Entrez ici votre texte... </p>'
+		}
+	};
+
+	$scope.addCell = function(row){
 		if(!row.addCell($scope.newCell)){
 			$scope.page.addRowAt(row).addCell($scope.newCell);
 		}
 		$scope.newCell = new Cell();
-		row.openSquareMenu = false;
 	};
 
 	$scope.sniplet = {};
@@ -187,24 +189,23 @@ function PagesController($scope, template, route, model, date, $location){
 		$scope.display.snipletStep = 2;
 	};
 
-	$scope.addSniplet = function(row){
-		$scope.newCell.media.type = 'sniplet';
-		$scope.newCell.media.source = {
+	$scope.addSniplet = function(cell){
+		cell.media.type = 'sniplet';
+		cell.media.source = {
 			template: $scope.sniplet.template,
 			application: $scope.sniplet.application,
 			source: $scope.sniplet.source
 		};
-		if(!row.addCell($scope.newCell)){
-			$scope.page.addRowAt(row).addCell($scope.newCell);
-		}
 		$scope.display.snipletStep = 1;
-		$scope.newCell = new Cell();
-		row.openSquareMenu = false;
 		$scope.display.selectSniplet = false;
 	};
 
 	$scope.setRow = function(cell, rowIndex){
 		$scope.display.editGrid.moveCell(cell, rowIndex);
+	};
+
+	$scope.home = function(){
+		$location.path('/');
 	};
 
 	$scope.removeSelectedPages = function(){
@@ -245,13 +246,15 @@ function PagesController($scope, template, route, model, date, $location){
 		$scope.display.preview = false;
 	};
 
-	$scope.removeSelectedWebsites = function(){
-		$scope.folder.websites.removeSelected();
-	};
-
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
 		model.websites.sync();
 		template.open('main', 'websites-list');
 	};
+
+	$scope.saveModifications = function(){
+		$timeout(function(){
+			$scope.website.save();
+		}, 500);
+	}
 }

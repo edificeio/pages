@@ -11,5 +11,6 @@
 	"group.class.Teacher" : "Tous les enseignants de la classe {0}.",
 	"group.class.Student" : "Tous les élèves de la classe {0}.",
 	"group.class.Relative" : "Tous les parents de la classe {0}.",
-	"filters.mine": "Mes sites"
+	"filters.mine": "Mes sites",
+	"description": "Description de mon site web"
 }

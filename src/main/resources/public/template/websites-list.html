@@ -1,5 +1,5 @@
 <div class="row">
-	<button ng-click="display.createNewSite = true" workflow="pages.create">Nouveau site</button>
+	<button ng-click="display.createNewSite = true" workflow="pages.create">Nouveau site web</button>
 	<lightbox show="display.createNewSite" on-close="createNewSite = false">
 		<h2>Créer un nouveau site web</h2>
 		<div class="row">
@@ -42,7 +42,8 @@
 					<h1 ng-click="viewSite(website)" class="twelve cell">[[website.title]]</h1>
 				</div>
 				<div class="row">
-					<input type="checkbox" ng-model="website.selected" /><em>Par [[website.owner.displayName]]</em> - <a ng-href="[[website.url()]]" target="_blank"><strong>[[website.url()]]</strong></a>
+					<behaviour name="update" resource="website" class="cell"><input type="checkbox" ng-model="website.selected" /></behaviour>
+					<em>Par [[website.owner.displayName]]</em> - <a ng-href="[[website.url()]]" target="_blank"><strong>[[website.url()]]</strong></a>
 					<p>[[website.description]]</p>
 				</div>
 			</div>
