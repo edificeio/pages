@@ -3,9 +3,9 @@ package fr.wseduc.pages.controllers;
 import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
-import fr.wseduc.security.ResourceFilter;
 import fr.wseduc.security.SecuredAction;
 import org.entcore.common.http.filter.OwnerOnly;
+import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.vertx.java.core.http.HttpServerRequest;
 
