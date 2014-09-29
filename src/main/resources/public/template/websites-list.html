@@ -1,7 +1,7 @@
 <div class="row">
 	<button ng-click="display.createNewSite = true" workflow="pages.create">Nouveau site web</button>
 	<lightbox show="display.createNewSite" on-close="createNewSite = false">
-		<h2>Créer un nouveau site web</h2>
+		<h2><i18n>website.addForm.title</i18n></h2>
 		<div class="row">
 			<div class="row">
 				<label class="three cell">Titre</label>
@@ -39,10 +39,17 @@
 			</div>
 			<div class="content">
 				<div class="row">
-					<h1 ng-click="viewSite(website)" class="twelve cell">[[website.title]]</h1>
+					<h1 ng-click="viewSite(website)" class="nine cell">[[website.title]]</h1>
+					<div class="three cell">
+						<behaviour name="update" resource="website" class="cell right-magnet">
+							<button ng-click="editWebsite(website)"><i18n>edit</i18n></button>
+						</behaviour>
+						<behaviour name="remove" resource="website" class="cell right-magnet">
+							<button ng-click="website.remove();"><i18n>remove</i18n></button>
+						</behaviour>
+					</div>
 				</div>
 				<div class="row">
-					<behaviour name="update" resource="website" class="cell"><input type="checkbox" ng-model="website.selected" /></behaviour>
 					<em>Par [[website.owner.displayName]]</em> - <a ng-href="[[website.url()]]" target="_blank"><strong>[[website.url()]]</strong></a>
 					<p>[[website.description]]</p>
 				</div>
@@ -50,23 +57,6 @@
 		</li>
 	</ul>
 </nav>
-
-
-<section class="toggle-buttons" ng-class="{ hide: websites.selection().length === 0 }">
-	<div class="toggle">
-		<div class="row">
-			<behaviour name="update" resource="websites.selection()" class="cell">
-				<button ng-click="editWebsite()" ng-if="websites.selection().length === 1"><i18n>edit</i18n></button>
-			</behaviour>
-			<behaviour name="remove" resource="websites.selection()" class="cell">
-				<button ng-click="websites.removeSelection()"><i18n>remove</i18n></button>
-			</behaviour>
-			<behaviour name="share" resource="websites.selection()" class="cell">
-				<button ng-click="display.showSharePanel = true;"><i18n>share</i18n></button>
-			</behaviour>
-		</div>
-	</div>
-</section>
 
 <lightbox show="showConfirmRemove" on-close="showConfirmRemove = false">
 	<h2>Supprimer le site</h2>
@@ -81,9 +71,3 @@
 
 	</div>
 </lightbox>
-
-<div ng-if="display.showSharePanel">
-	<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
-		<share-panel app-prefix="'pages'" resources="websites.selection()"></share-panel>
-	</lightbox>
-</div>

@@ -147,6 +147,13 @@ Page.prototype.useTemplate = function(website, templateName){
 			row.addCell(navigation);
 			navigation.width = 3;
 		},
+		empty: function(row, width, height){
+			var empty = new Cell();
+			empty.media.type = 'text';
+			row.addCell(empty);
+			empty.width = width;
+			empty.height = height;
+		},
 		image: function(row, width, height){
 			var image = new Cell();
 			image.width = width;
@@ -177,6 +184,7 @@ Page.prototype.useTemplate = function(website, templateName){
 				}
 			};
 			var blogSniplet = _.findWhere(sniplets.sniplets, { application: 'blog', template: 'articles' });
+			blogCaller.copyRights = blogSniplet.sniplet.controller.copyRights;
 			blogSniplet.sniplet.controller.createBlog.call(blogCaller);
 		},
 		smallNote: function(row){
@@ -205,7 +213,7 @@ Page.prototype.useTemplate = function(website, templateName){
 		footpage: function(row){
 			var footpage = new Cell();
 			footpage.media.type = 'text';
-			footpage.media.source = '<em class="low-importance centered-text twelve cell">pied de page - ajoutez ici vos informations de contact</em>';
+			footpage.media.source = '<em class="low-importance centered-text twelve cell">pied de page<br />ajoutez ici vos informations de contact</em>';
 			row.addCell(footpage);
 		}
 	};
@@ -218,7 +226,8 @@ Page.prototype.useTemplate = function(website, templateName){
 			cells.navigation(row);
 			cells.content(row);
 			row = this.addRow();
-			cells.footpage(row)
+			cells.empty(row, 3, 1);
+			cells.footpage(row);
 		},
 		navigationAndBlog: function(website){
 			var row = this.addRow();
@@ -256,7 +265,9 @@ Website.prototype.remove = function(){
 
 Website.prototype.createWebsite = function(){
 	http().postJson('/pages', this).done(function(data){
+		data.owner = { displayName: model.me.username, userId: model.me.userId };
 		this.updateData(data);
+		model.websites.push(this);
 	}.bind(this));
 };
 
@@ -287,6 +298,23 @@ Website.prototype.toJSON = function(){
 		landingPage: this.landingPage,
 		description: this.description
 	};
+};
+
+Website.prototype.copyRightsToSniplets = function(data){
+	var website = this;
+	this.pages.forEach(function(page){
+		page.rows.forEach(function(row){
+			row.cells.forEach(function(cell){
+				if(cell.media.type !== 'sniplet'){
+					return;
+				}
+				var sniplet = _.findWhere(sniplets.sniplets, { application: cell.media.source.application, template: cell.media.source.template });
+				if(typeof sniplet.sniplet.controller.copyRights === 'function'){
+					sniplet.sniplet.controller.copyRights(data, cell.media.source.source);
+				}
+			});
+		});
+	});
 };
 
 model.build = function(){

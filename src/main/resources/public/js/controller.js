@@ -17,7 +17,7 @@ routes.define(function($routeProvider){
 		});
 });
 
-function PagesController($scope, template, route, model, date, $location, $timeout){
+function PagesController($scope, template, route, model, date, $location, $timeout, $rootScope){
 	$scope.websites = model.websites;
 	$scope.template = template;
 	$scope.date = date;
@@ -29,6 +29,10 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		mineOnly: false,
 		snipletStep: 1
 	};
+
+	$rootScope.$on('share-updated', function(event, changes){
+		$scope.website.copyRightsToSniplets(changes);
+	});
 
 	sniplets.load(function(){
 		$scope.sniplets = sniplets.sniplets;
@@ -129,7 +133,12 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.page = new Page();
 	};
 
-	$scope.createPage = function(){
+	$scope.createPage = function(templateName){
+		if(!$scope.page.title){
+			notify.error('Votre page doit avoir un titre');
+			return;
+		}
+		$scope.page.useTemplate($scope.website, templateName);
 		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-')).toLowerCase());
 		$scope.website.pages.push($scope.page);
 		if($scope.website.pages.length() === 1){
@@ -144,6 +153,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.editPage = function(page){
 		$scope.page = page;
 		template.open('main', 'page-editor');
+		$scope.display.editGrid = page;
 	};
 
 	$scope.removeCell = function(row, cell){
@@ -205,6 +215,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.home = function(){
+		$scope.website = new Website();
 		$location.path('/');
 	};
 
@@ -215,6 +226,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	$scope.setLandingPage = function(){
 		$scope.website.landingPage = $scope.website.pages.selection()[0].titleLink;
+		notify.info('landingPage.changed');
 		$scope.website.save();
 	};
 
@@ -249,7 +261,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
 		model.websites.sync();
-		template.open('main', 'websites-list');
+		$location.path('/list-sites');
 	};
 
 	$scope.saveModifications = function(){

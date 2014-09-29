@@ -6,15 +6,36 @@
 <lightbox show="display.createNewPage" on-close="display.createNewPage = false">
 	<h2>Nouvelle page</h2>
 	<div class="row">
-		<label class="three cell">Titre</label>
-		<input class="nine cell" type="text" ng-model="page.title" />
+		<input class="twelve cell" placeholder="Titre de la nouvelle page" required type="text" ng-model="page.title" />
 	</div>
 	<div class="row">
 		<h2>Modèles</h2>
-		<ul>
-			<li ng-click="page.useTemplate(website, 'navigationAndBlog');createPage();">Articles et navigation</li>
-			<li ng-click="page.useTemplate(website, 'navigationAndContent');createPage();">Navigation et contenu</li>
-		</ul>
+			<ul class="thought-out-actions">
+				<li ng-click="createPage('navigationAndBlog');">
+					<div class="row">
+						<div class="three cell">
+							<img src="/pages/public/templates-images/navigationAndBlog.png" />
+						</div>
+						<div class="nine cell">
+							<h2>Articles et navigation</h2>
+							<p>Les articles d'un blog sont affichés au centre, et une navigation est présente sur la gauche.</p>
+
+						</div>
+					</div>
+				</li>
+				<li ng-click="createPage('navigationAndContent');">
+					<div class="row">
+						<div class="three cell">
+							<img src="/pages/public/templates-images/navigationAndContent.png" />
+						</div>
+						<div  class="nine cell">
+							<h2>Texte et navigation</h2>
+							<p>Le contenu de la page est au centre, et une navigation est présente sur la gauche.</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</nav>
 	</div>
 	<div class="row">
 		<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />

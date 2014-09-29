@@ -85,7 +85,7 @@ public class PagesController extends MongoDbControllerHelper {
 		shareJsonSubmit(request, null);
 	}
 
-	@Put("/share/json/remove/:id")
+	@Put("/share/remove/:id")
 	@ApiDoc("Remove share.")
 	@SecuredAction("page.share")
 	public void removeShare(HttpServerRequest request) {

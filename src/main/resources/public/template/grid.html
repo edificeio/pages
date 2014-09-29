@@ -16,8 +16,8 @@
 					<div ng-if="!cell.media.type">
 						<ul class="menu-items">
 							<li ng-click="setType(cell, 'text')"><i class="text"></i>Ajouter du texte</li>
-							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'image')" class="image" value="Ajouter une image" file-format="'img'"></media-select></li>
-							<li><media-select ng-model="cell.media.source" ng-change="setType(row, 'sound')" class="sound" file-format="'audio'" value="Ajouter du son"></media-select></li>
+							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'image')" class="image" label="Ajouter une image" file-format="'img'"></media-select></li>
+							<li><media-select ng-model="cell.media.source" ng-change="setType(row, 'sound')" class="sound" file-format="'audio'" label="Ajouter du son"></media-select></li>
 							<li ng-click="display.selectVideoContent = true"><i class="video"></i>Ajouter une vidéo</li>
 							<li ng-click="display.selectSniplet = true;"><i class="sniplet"></i>Ajouter un sniplet (navigation, documents à télécharger...)</li>
 							<li ng-click="setType(cell, 'grid')"><i class="grid"></i>Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)</li>
@@ -43,14 +43,6 @@
 									<li ng-repeat="sniplet in sniplets" ng-click="selectSnipletSource(sniplet.template, sniplet.application)">
 										<h2>[[sniplet.sniplet.title]]</h2>
 										<p>[[sniplet.sniplet.description]]</p>
-									</li>
-									<li ng-click="selectSnipletSource('documents', 'workspace')">
-										<h2>Documents</h2>
-										<p>Cet outil propose des documents à télécharger à vos visiteurs.</p>
-									</li>
-									<li ng-click="selectSnipletSource('trombi', 'pages')">
-										<h2>Trombinoscope</h2>
-										<p>Le trombinoscope affiche toutes les photos des utilisateurs de votre site.</p>
 									</li>
 								</ul>
 							</div>

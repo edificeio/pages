@@ -20,21 +20,15 @@
 
 <h2>Publication</h2>
 
-<div class="row">
-	<h3>Partager dans l'ENT</h3>
-	<button class="cell right-magnet">Partager dans l'ENT</button>
-</div>
+<behaviour name="share" resource="website" class="cell">
+		<button class="cell" ng-click="display.showSharePanel = true">Partager dans l'ENT</button>
+		<div ng-if="display.showSharePanel">
+			<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
+				<share-panel app-prefix="'pages'" resources="website"></share-panel>
+			</lightbox>
+		</div>
+</behaviour>
 
-<div class="row">
-	<h3>Ajouter dans les applications</h3>
-	<div class="switch-button"></div>
-</div>
-
-<div class="row">
-	<h3>Publier sur internet</h3>
-	<p>Adresse publique</p>
-	<strong>adresse</strong>
-	<div class="switch-button">
-
-	</div>
+<div class="cell">
+	<button>Ajouter dans les applications</button>
 </div>
