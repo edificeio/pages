@@ -260,8 +260,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
-		model.websites.sync();
-		$location.path('/list-sites');
+		$location.path('/');
 	};
 
 	$scope.saveModifications = function(){
