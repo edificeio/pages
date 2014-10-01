@@ -7,7 +7,9 @@
 			</a>
 		</li>
 	</ul>
-	<a class="classic-link" ng-click="snipletDisplay.enterLink = true;" ng-if="custom">Ajouter un lien</a>
+	<behaviour name="update" resource="snipletResource">
+		<a class="classic-link" ng-click="snipletDisplay.enterLink = true;" ng-if="custom">Ajouter un lien</a>
+	</behaviour>
 </nav>
 
 <lightbox show="snipletDisplay.enterLink" on-close="snipletDisplay.enterLink = false;">

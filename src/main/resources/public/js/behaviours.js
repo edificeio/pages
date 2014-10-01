@@ -52,6 +52,7 @@ Behaviours.register('pages', {
 			controller: {
 				init: function(){
 					var source = this.source;
+					this.me = model.me;
 					if(source.customLinks){
 						this.links = source.customLinks;
 						this.custom = true;
@@ -103,6 +104,9 @@ Behaviours.register('pages', {
 				addLink: function(){
 					this.source.customLinks.push(this.newLink);
 					this.snipletDisplay.enterLink = false;
+					if(this.snipletResource && typeof this.snipletResource.save === 'function'){
+						this.snipletResource.save();
+					}
 				}
 			}
 

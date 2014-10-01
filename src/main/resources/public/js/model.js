@@ -267,6 +267,7 @@ Website.prototype.createWebsite = function(){
 	http().postJson('/pages', this).done(function(data){
 		data.owner = { displayName: model.me.username, userId: model.me.userId };
 		this.updateData(data);
+		this.behaviours('pages');
 		model.websites.push(this);
 	}.bind(this));
 };
