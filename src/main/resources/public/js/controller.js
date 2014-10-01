@@ -99,6 +99,10 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.createSite = function(){
+		if(!$scope.website.title){
+			notify.error('site.empty.title');
+			return;
+		}
 		$scope.page = new Page();
 		$scope.display.createNewSite = false;
 		$scope.website.save();

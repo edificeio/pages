@@ -18,5 +18,6 @@
     "sniplet.addLink": "Ajouter un lien",
     "sniplet.form.displayText": "Texte à afficher",
     "website.addForm.title": "Créer un nouveau site web",
-    "landingPage.changed": "Votre page d'accueil a été modifiée"
+    "landingPage.changed": "Votre page d'accueil a été modifiée",
+	"site.empty.title": "Votre site web doit avoir un titre"
 }
