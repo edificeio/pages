@@ -3,7 +3,7 @@
 		<grid-row index="row.index">
 			<grid-cell ng-repeat="cell in row.cells.all" class="media cell" w="cell.width" h="cell.height" class-name="cell.className"
 					   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
-				<div ng-if="cell.media.type === 'text'" class="text-wrapper">
+				<div ng-if="cell.media.type === 'text' || cell.media.type === 'video'" class="text-wrapper">
 					<div ng-if="cell.media.source" bind-html="cell.media.source"></div>
 				</div>
 				<div ng-if="cell.media.type === 'image'" class="image-container">
