@@ -17,17 +17,14 @@
 						<ul class="menu-items">
 							<li ng-click="setType(cell, 'text')"><i class="text"></i>Ajouter du texte</li>
 							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'image')" class="image" label="Ajouter une image" file-format="'img'"></media-select></li>
-							<li><media-select ng-model="cell.media.source" ng-change="setType(row, 'sound')" class="sound" file-format="'audio'" label="Ajouter du son"></media-select></li>
+							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'sound')" class="sound" file-format="'audio'" label="Ajouter du son"></media-select></li>
 							<li ng-click="display.selectVideoContent = true"><i class="video"></i>Ajouter une vidéo</li>
 							<li ng-click="display.selectSniplet = true;"><i class="sniplet"></i>Ajouter un sniplet (navigation, documents à télécharger...)</li>
 							<li ng-click="setType(cell, 'grid')"><i class="grid"></i>Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)</li>
 						</ul>
 						<lightbox show="display.selectVideoContent" on-close="display.selectVideoContent = false">
 							<h2>Insérer une vidéo</h2>
-							<p class="info">
-								Au préalable, votre vidéo doit être enregistrée sur une plateforme de partage (Youtube, Vimeo, etc.).
-								Pour l'insérer ici, copiez le le lien de partage "embed" et collez-le ci-dessous.
-							</p>
+							<p class="info"><i18n>info.video.embed</i18n></p>
 							<div class="row">
 								<textarea ng-model="cell.media.source"></textarea>
 							</div>
