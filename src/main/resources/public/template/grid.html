@@ -12,7 +12,7 @@
 			<grid-row index="row.index">
 				<grid-cell ng-repeat="cell in row.cells.all" class="media cell"
 						   grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
-						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row">
+						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row" ng-mousedown="editGrid(cell.media.source, $event)">
 					<div ng-if="!cell.media.type">
 						<ul class="menu-items">
 							<li ng-click="setType(cell, 'text')"><i class="text"></i>Ajouter du texte</li>
@@ -33,7 +33,7 @@
 							</div>
 							<div class="row">
 								<button class="right-magnet" ng-click="setType(cell, 'video')">Ajouter</button>
-								<input type="button" class="cancel right-magnet" i18n-value="cancel" />
+								<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.selectVideoContent = false;" />
 							</div>
 						</lightbox>
 						<lightbox show="display.selectSniplet" on-close="display.selectSniplet = false">

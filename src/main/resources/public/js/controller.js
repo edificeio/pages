@@ -171,6 +171,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		cell.media.type = type;
 		if(type === 'grid'){
 			cell.buildSubGrid();
+			$scope.display.editGrid = cell.media.source;
 		}
 		if(type === 'video'){
 			cell.media.source = cell.media.source.replace('http://', 'https://');
@@ -235,7 +236,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.editGrid = function(page, event){
-		if(event.target.className.indexOf('cke') !== -1 || template.contains('main', 'page-viewer')){
+		if(event.target.className.indexOf('cke') !== -1 || template.contains('main', 'page-viewer') || !page.rows){
 			return;
 		}
 		$scope.display.editGrid = page;

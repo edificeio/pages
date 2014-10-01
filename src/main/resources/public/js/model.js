@@ -215,6 +215,7 @@ Page.prototype.useTemplate = function(website, templateName){
 			footpage.media.type = 'text';
 			footpage.media.source = '<em class="low-importance centered-text twelve cell">pied de page<br />ajoutez ici vos informations de contact</em>';
 			row.addCell(footpage);
+			footpage.height = 1;
 		}
 	};
 
