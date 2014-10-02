@@ -52,9 +52,11 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 				return;
 			}
 			$scope.website = website;
+			$scope.snipletResource = website;
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
 		});
+		model.websites.sync();
 	}
 
 	route({
@@ -266,6 +268,10 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
 		$location.path('/');
+	};
+
+	$scope.redirect = function(path){
+		$location.path(path.href.split('#')[1])
 	};
 
 	$scope.saveModifications = function(){

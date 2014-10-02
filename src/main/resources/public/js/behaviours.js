@@ -102,12 +102,20 @@ Behaviours.register('pages', {
 					this.source.customLinks.splice(index, 1);
 				},
 				addLink: function(){
+					this.newLink.external = true;
+					if(this.newLink.href.indexOf('http') === -1 && this.newLink.indexOf('/pages') !== -1){
+						this.newLink.external = false;
+					}
+
 					this.source.customLinks.push(this.newLink);
 					this.snipletDisplay.enterLink = false;
 					this.newLink = {};
 					if(this.snipletResource && typeof this.snipletResource.save === 'function'){
 						this.snipletResource.save();
 					}
+				},
+				currentLink: function(link){
+					return link.href.split('#')[1] === window.location.hash.split('#')[1];
 				}
 			}
 
