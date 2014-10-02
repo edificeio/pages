@@ -145,7 +145,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			return;
 		}
 		$scope.page.useTemplate($scope.website, templateName);
-		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-')).toLowerCase());
+		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-').replace(/\?/g, '')).toLowerCase());
 		$scope.website.pages.push($scope.page);
 		if($scope.website.pages.length() === 1){
 			$scope.website.landingPage = $scope.page.titleLink;
