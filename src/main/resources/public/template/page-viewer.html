@@ -1,9 +1,13 @@
 <container template="grid-view"></container>
 <div class="page-markers">
 	<div class="marker">
-		<div class="content" ng-click="home()">Retour</div>
+		<div class="content" ng-click="home()">Accueil</div>
 	</div>
+
 	<div class="marker">
-		<div class="content" ng-click="editPage(page)">Modifier</div>
+		<behaviour name="update" resource="website">
+			<div class="content" ng-click="editPage(page)">Modifier</div>
+		</behaviour>
 	</div>
+
 </div>

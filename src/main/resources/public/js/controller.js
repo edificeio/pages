@@ -56,7 +56,6 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
 		});
-		model.websites.sync();
 	}
 
 	route({
@@ -91,6 +90,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.page = new Page();
 		$scope.website.sync();
 		template.open('main', 'website-manager');
+		template.open('edit-view', 'website-properties');
 	};
 
 	$scope.removeSite = function(site){
@@ -268,10 +268,12 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.closeWebsite = function(){
 		$scope.website = new Website();
 		$location.path('/');
+		model.websites.sync();
 	};
 
 	$scope.redirect = function(path){
-		$location.path(path.href.split('#')[1])
+		$location.path(path.href.split('#')[1]);
+		model.websites.sync();
 	};
 
 	$scope.saveModifications = function(){
