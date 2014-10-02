@@ -104,6 +104,7 @@ Behaviours.register('pages', {
 				addLink: function(){
 					this.source.customLinks.push(this.newLink);
 					this.snipletDisplay.enterLink = false;
+					this.newLink = {};
 					if(this.snipletResource && typeof this.snipletResource.save === 'function'){
 						this.snipletResource.save();
 					}
