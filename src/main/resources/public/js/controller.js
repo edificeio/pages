@@ -145,7 +145,11 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	$scope.createPage = function(templateName){
 		if(!$scope.page.title){
-			notify.error('Votre page doit avoir un titre');
+			notify.error('page.needs.title');
+			return;
+		}
+		if($scope.website.pages.findWhere({ title: $scope.page.title })){
+			notify.error('page.already.exists');
 			return;
 		}
 		$scope.page.useTemplate($scope.website, templateName);
