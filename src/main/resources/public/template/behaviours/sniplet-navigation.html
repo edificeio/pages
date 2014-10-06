@@ -1,7 +1,7 @@
 <nav class="vertical twelve cell">
 	<ul>
 		<li ng-repeat="link in links">
-			<a ng-href="[[link.href]]" ng-if="link.external">
+			<a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
 				[[link.text]]
 				<i ng-if="link.custom" class="remove" ng-click="removeLink($index)"></i>
 			</a>
