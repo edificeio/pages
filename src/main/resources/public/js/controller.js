@@ -79,7 +79,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.searchMatch = function(element){
-		return lang.removeAccents(element.title.toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
+		return lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
 	};
 
 	$scope.viewSite = function(site){
@@ -246,7 +246,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.editGrid = function(page, event){
-		if(event.target.className.indexOf('cke') !== -1 || template.contains('main', 'page-viewer') || !page.rows){
+		if(!page || event.target.className.indexOf('cke') !== -1 || template.contains('main', 'page-viewer') || !page.rows){
 			return;
 		}
 		$scope.display.editGrid = page;
