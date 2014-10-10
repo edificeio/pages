@@ -43,6 +43,8 @@ Behaviours.register('pages', {
 					});
 				});
 			})
+			this.resources = pages;
+			callback(this.resources);
 		}.bind(this));
 	},
 	sniplets: {
