@@ -1,15 +1,15 @@
 <div class="row">
-	<button ng-click="display.createNewSite = true" workflow="pages.create">Nouveau site web</button>
+	<button ng-click="display.createNewSite = true" workflow="pages.create"><i18n>website.addForm.title</i18n></button>
 	<lightbox show="display.createNewSite" on-close="createNewSite = false">
 		<h2><i18n>website.addForm.title</i18n></h2>
 		<div class="row">
 			<div class="row">
-				<label class="three cell">Titre</label>
+				<label class="three cell"><i18n>title</i18n></label>
 				<input class="nine cell" type="text" ng-model="website.title" />
 			</div>
 		</div>
 		<div class="row">
-			<button class="right-magnet" ng-click="createSite()">Créer</button>
+			<button class="right-magnet" ng-click="createSite()"><i18n>create</i18n></button>
 			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="cancelSiteCreation()" />
 
 		</div>

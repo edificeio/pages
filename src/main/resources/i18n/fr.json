@@ -18,7 +18,7 @@
 	"description": "Description de mon site web",
     "sniplet.addLink": "Ajouter un lien",
     "sniplet.form.displayText": "Texte à afficher",
-    "website.addForm.title": "Créer un nouveau site web",
+    "website.addForm.title": "Créer un site web",
     "landingPage.changed": "Votre page d'accueil a été modifiée",
 	"site.empty.title": "Votre site web doit avoir un titre",
     "page.already.exists": "Une page porte déjà ce nom",
