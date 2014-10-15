@@ -231,7 +231,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	$scope.home = function(){
 		$scope.website = new Website();
-		$location.path('/');
+		template.open('main', 'websites-list');
+		$location.path('/list-sites');
 	};
 
 	$scope.removeSelectedPages = function(){
