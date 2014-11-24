@@ -302,6 +302,70 @@ Website.prototype.toJSON = function(){
 	};
 };
 
+Website.prototype.makeApplication = function(structure, cb){
+	http().postJson('/appregistry/application/external?structureId=' + structure.id, {
+			grantType: "authorization_code",
+			displayName: this.title,
+			secret: "",
+			address: this.url(),
+			icon: this.icon || "",
+			target: "",
+			scope: "",
+			name: this.title
+	})
+	.done(function(newApp){
+		http().postJson('/appregistry/role?structureId=' + structure.id, {
+				role: this.title,
+				actions: [this.title + "|address"]
+			})
+			.done(function(newRole){
+				this.published[structure.id] = {
+					role: newRole
+				};
+				if(typeof cb === 'function'){
+					cb();
+				}
+			}.bind(this))
+		}.bind(this));
+};
+
+Website.prototype.addRoleForGroup = function(structure, group){
+	group.roles.push(this.published[structure.id].role.id);
+	http().postJson('/appregistry/authorize/group?structureId=' + structure.id, {
+		groupId: group.id,
+		roles: group.roles
+	});
+};
+
+Website.prototype.removeRoleForGroup = function(structure, group){
+	var rolesList = [];
+	group.roles.forEach(function(role){
+		if(role.id !== this.published[structure.id].role.id){
+			rolesList.push(role);
+		}
+	});
+
+	group.roles = rolesList;
+	http().post('/appregistry/authorize/group?structureId=' + structure.id, {
+		groupId: group.id,
+		roles: group.roles
+	});
+};
+
+Website.prototype.publish = function(structure, group){
+	if(!this.published){
+		this.published = {};
+	}
+	if(!this.published[structure.id]){
+		this.makeApplication(structure, function(){
+			this.addRoleForGroup(structure, group)
+		}.bind(this));
+	}
+	else{
+		this.addRoleForGroup(structure, group);
+	}
+};
+
 Website.prototype.copyRightsToSniplets = function(data){
 	var website = this;
 	this.pages.forEach(function(page){
@@ -319,8 +383,36 @@ Website.prototype.copyRightsToSniplets = function(data){
 	});
 };
 
+function Group(data){
+
+}
+
+function Structure(data){
+	var that = this;
+	this.collection(Group, {
+		sync: function(){
+			http().get('/appregistry/groups/roles?structureId=' + that.id).done(function(groups){
+				this.load(groups);
+			}.bind(this))
+		}
+	});
+	this.groups.sync();
+}
+
+function LocalAdmin(data){
+	this.collection(Structure, {
+		sync: function(){
+			if(model.me.functions.ADMIN_LOCAL){
+				this.load(_.map(model.me.functions.ADMIN_LOCAL.scope, function(id){
+					return { id: id };
+				}));
+			}
+		}
+	})
+}
+
 model.build = function(){
-	this.makeModels([Cell, Row, Page, Website]);
+	this.makeModels([Cell, Row, Page, Website, Group, LocalAdmin, Structure]);
 
 	this.collection(Website, {
 		behaviours: 'pages',
@@ -336,4 +428,6 @@ model.build = function(){
 			notify.info('Les sites web ont été supprimés');
 		}
 	});
+
+	this.localAdmin = new LocalAdmin();
 };

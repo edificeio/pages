@@ -19,6 +19,7 @@ routes.define(function($routeProvider){
 
 function PagesController($scope, template, route, model, date, $location, $timeout, $rootScope){
 	$scope.websites = model.websites;
+	$scope.localAdmin = model.localAdmin;
 	$scope.template = template;
 	$scope.date = date;
 	$scope.display = {
@@ -27,7 +28,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		showEditButtons: true,
 		search: '',
 		mineOnly: false,
-		snipletStep: 1
+		snipletStep: 1,
+		maxResults: 5
 	};
 
 	$rootScope.$on('share-updated', function(event, changes){
@@ -44,6 +46,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	template.open('grid', 'grid');
 	template.open('grid-view', 'grid-view');
+	template.open('publish', 'publish');
 
 	function viewSite(siteId, pageLink){
 		model.websites.on('sync', function(){
@@ -289,5 +292,18 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$timeout(function(){
 			$scope.website.save();
 		}, 500);
-	}
+	};
+
+	$scope.openPublish = function(){
+		$scope.display.showPublish = true;
+		model.localAdmin.structures.sync();
+	};
+
+	$scope.matchSearch = function(element){
+		return $scope.display.search && lang.removeAccents(element.name.toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
+	};
+
+	$scope.publishForGroup = function(structure, group){
+		$scope.website.publish(structure, group);
+	};
 }

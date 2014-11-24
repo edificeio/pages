@@ -1,0 +1,40 @@
+<div class="share">
+	<div class="row line">
+		<h2><i18n>pages.publish.title</i18n></h2>
+		<div class="groups-list">
+			<table>
+				<thead>
+				<th>Lister dans les applications</th>
+				</thead>
+				<tbody>
+				<tr ng-repeat="group in sharingModel.edited | orderBy:'index':true | limitTo:maxEdit">
+					<td>[[item.name]][[item.firstName]] [[item.lastName]]</td>
+					<td class="drop-line" ng-click="remove(item)"></td>
+				</tr>
+				</tbody>
+			</table>
+			<a ng-click="displayMore()" ng-if="sharingModel.edited.length > maxEdit" class="display-more">[[translate('share.more')]]</a>
+		</div>
+
+
+	</div>
+	<div class="row">
+		<h2><i18n>search</i18n></h2>
+		<input type="text" ng-model="display.search" i18n-placeholder="share.search.placeholder" />
+		<div class="found-users-list">
+			<div ng-repeat="structure in localAdmin.structures.all">
+				<div ng-repeat="group in structure.groups.all | limitTo:display.maxResults | orderBy:'name' | filter:matchSearch" class="row autocomplete">
+					<em ng-click="publishForGroup(structure, group)" class="row">
+						<span class="cell reduce-block-two">[[group.name]]</span>
+					</em>
+				</div>
+			</div>
+
+			<div class="row">
+				<a ng-click="addResults()" ng-if="found.length > maxResults" class="right-magnet reduce-block-four">
+					[[translate('seemore')]]
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
