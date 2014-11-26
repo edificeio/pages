@@ -24,5 +24,8 @@
 	"site.empty.title": "Votre site web doit avoir un titre",
     "page.already.exists": "Une page porte déjà ce nom",
     "page.needs.title": "Votre page doit avoir un titre",
-    "post.date": "le"
+    "post.date": "le",
+	"pages.publish.title": "Afficher dans les applications",
+	"cell.add.text": "Ajouter du texte",
+	"website.title": "Titre"
 }

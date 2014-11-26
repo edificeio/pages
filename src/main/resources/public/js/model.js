@@ -87,7 +87,7 @@ function Page(data){
 	if(data && data.rows){
 		this.rows.load(data.rows);
 	}
-}
+};
 
 Page.prototype.addRow = function(){
 	var row = new Row();
@@ -101,6 +101,14 @@ Page.prototype.addRowAt = function(previousRow){
 	this.rows.insertAt(this.rows.getIndex(previousRow) + 1, row);
 	row.index = this.rows.getIndex(previousRow) + 1;
 	return row;
+};
+
+Page.prototype.moveRowUp = function(row){
+	this.rows.moveUp(row);
+};
+
+Page.prototype.moveRowDown = function(row){
+	this.rows.moveDown(row);
 };
 
 Page.prototype.moveCell = function(cell, newIndex){
@@ -252,11 +260,16 @@ function Website(data){
 	}
 }
 
-Website.prototype.url = function(){
+Website.prototype.url = function(params){
 	if(!this._id){
 		return '';
 	}
-	return window.location.origin + '/pages#/website/' + this._id;
+	if(!params || !params.relative){
+		return window.location.origin + '/pages#/website/' + this._id;
+	}
+	else{
+		return '/pages#/website/' + this._id;
+	}
 };
 
 Website.prototype.remove = function(){
@@ -275,6 +288,24 @@ Website.prototype.createWebsite = function(){
 
 Website.prototype.saveModifications = function(){
 	http().putJson('/pages/' + this._id, this);
+};
+
+Website.prototype.updateApplication = function(){
+	if(model.me.functions.ADMIN_LOCAL && this.published){
+		for(var structureId in this.published){
+			http().putJson('/appregistry/application/conf/' + this.published[structureId].application.id, {
+				grantType: "authorization_code",
+				displayName: this.title,
+				secret: "",
+				address: this.url({ relative: true }),
+				icon: this.icon + '?thumbnail=150x150' || "/img/illustrations/pages-default.png",
+				target: "",
+				scope: "",
+				name: this.title
+			});
+		}
+
+	}
 };
 
 Website.prototype.save = function(){
@@ -298,7 +329,8 @@ Website.prototype.toJSON = function(){
 		pages: this.pages,
 		icon: this.icon,
 		landingPage: this.landingPage,
-		description: this.description
+		description: this.description,
+		published: this.published
 	};
 };
 
@@ -307,8 +339,8 @@ Website.prototype.makeApplication = function(structure, cb){
 			grantType: "authorization_code",
 			displayName: this.title,
 			secret: "",
-			address: this.url(),
-			icon: this.icon || "",
+			address: this.url({ relative: true }),
+			icon: this.icon + '?thumbnail=150x150' || "/img/illustrations/pages-default.png",
 			target: "",
 			scope: "",
 			name: this.title
@@ -320,7 +352,9 @@ Website.prototype.makeApplication = function(structure, cb){
 			})
 			.done(function(newRole){
 				this.published[structure.id] = {
-					role: newRole
+					role: newRole,
+					groups: [],
+					application: newApp
 				};
 				if(typeof cb === 'function'){
 					cb();
@@ -333,23 +367,38 @@ Website.prototype.addRoleForGroup = function(structure, group){
 	group.roles.push(this.published[structure.id].role.id);
 	http().postJson('/appregistry/authorize/group?structureId=' + structure.id, {
 		groupId: group.id,
-		roles: group.roles
-	});
+		roleIds: group.roles
+	})
+	.done(function(){
+		this.trigger('change');
+		}.bind(this));
+	this.published[structure.id].groups.push(group);
+	this.save();
 };
 
 Website.prototype.removeRoleForGroup = function(structure, group){
+	var that = this;
 	var rolesList = [];
 	group.roles.forEach(function(role){
-		if(role.id !== this.published[structure.id].role.id){
+		if(role.id !== that.published[structure.id].role.id){
 			rolesList.push(role);
 		}
 	});
-
 	group.roles = rolesList;
-	http().post('/appregistry/authorize/group?structureId=' + structure.id, {
+
+	http().postJson('/appregistry/authorize/group?structureId=' + structure.id, {
 		groupId: group.id,
-		roles: group.roles
+		roleIds: group.roles
 	});
+
+	var groups = [];
+	this.published[structure.id].groups.forEach(function(grp){
+		if(grp.id !== group.id){
+			groups.push(grp);
+		}
+	});
+	this.published[structure.id].groups = groups;
+	this.save();
 };
 
 Website.prototype.publish = function(structure, group){

@@ -3,11 +3,10 @@
 		<li ng-repeat="link in links">
 			<a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
 				[[link.text]]
-				<i ng-if="link.custom" class="remove" ng-click="removeLink($index)"></i>
+				<i ng-if="link.external" class="close" ng-click="removeLink($index, $event)"></i>
 			</a>
 			<a ng-click="redirect(link)" ng-if="!link.external" ng-class="{ selected: currentLink(link) }">
 				[[link.text]]
-				<i ng-if="link.custom" class="close" ng-click="removeLink($index)"></i>
 			</a>
 		</li>
 	</ul>

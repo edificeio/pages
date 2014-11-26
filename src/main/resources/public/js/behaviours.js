@@ -100,7 +100,8 @@ Behaviours.register('pages', {
 						});
 					}
 				},
-				removeLink: function(index){
+				removeLink: function(index, $event){
+					$event.preventDefault();
 					this.source.customLinks.splice(index, 1);
 				},
 				addLink: function(){

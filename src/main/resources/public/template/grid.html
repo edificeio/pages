@@ -1,7 +1,12 @@
 <div drawing-grid class="editor" ng-class="{ 'edit-grid': page === display.editGrid, 'blur-grid': page !== display.editGrid }">
 	<div class="row" ng-repeat="row in page.rows.all">
 		<div class="square-menu">
-			<button ng-click="addCell(row)">+</button>
+			<button complete-click="addCell(row)">+</button>
+			<div class="buttons-line">
+				<button complete-click="page.moveRowUp(row)" ng-if="page.rows.length() > 1" ng-disabled="$index === 0">&#8593;</button>
+				<button complete-click="page.moveRowDown(row)" ng-if="page.rows.length() > 1" ng-disabled="$index === page.rows.length() - 1">&#8595;</button>
+			</div>
+
 		</div>
 		<div class="square-menu-actions guide-line">
 			<div class="grid-guides">
@@ -12,10 +17,10 @@
 			<grid-row index="row.index">
 				<grid-cell ng-repeat="cell in row.cells.all" class="media cell"
 						   grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
-						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row" ng-mousedown="editGrid(cell.media.source, $event)">
+						   on-index-change="row.setIndex(cell, cell.index)" on-row-change="setRow(cell, cell.row)" index="cell.index" row="cell.row" complete-click="editGrid(cell.media.source, $event)">
 					<div ng-if="!cell.media.type">
 						<ul class="menu-items">
-							<li ng-click="setType(cell, 'text')"><i class="text"></i>Ajouter du texte</li>
+							<li ng-click="setType(cell, 'text')"><i class="text"></i><i18n>cell.add.text</i18n></li>
 							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'image')" class="image" label="Ajouter une image" file-format="'img'"></media-select></li>
 							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'sound')" class="sound" file-format="'audio'" label="Ajouter du son"></media-select></li>
 							<li ng-click="display.selectVideoContent = true"><i class="video"></i>Ajouter une vidéo</li>
@@ -63,15 +68,14 @@
 					</div>
 					<div ng-if="cell.media.type === 'grid'" class="grid-wrapper">
 						<div class="nested-grid" ng-init="page = cell.media.source">
-							<container template="grid" ng-mousedown="editGrid(page, $event)"></container>
+							<container template="grid" complete-click="editGrid(page, $event)"></container>
 						</div>
 					</div>
-					<i class="close" ng-click="removeCell(row, cell)"></i>
+					<i class="close" complete-click="removeCell(row, cell)"></i>
 					<div ng-if="cell.media.type === 'text' || cell.media.type === 'sound'">
 						<color-select ng-model="cell.className[0]"></color-select>
 					</div>
 				</grid-cell>
-				<div class="row" style="min-height: 0"></div>
 			</grid-row>
 		</div>
 	</div>

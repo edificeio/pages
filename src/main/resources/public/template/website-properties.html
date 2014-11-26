@@ -4,7 +4,7 @@
 	<image-select ng-model="website.icon" default="/img/illustrations/pages-default.png" thumbnails="[{ width: 150, height: 150 }]" class="two cell"></image-select>
 	<article class="ten cell">
 		<div class="row">
-			<label class="two cell">Titre</label>
+			<label class="two cell"><i18n>website.title</i18n></label>
 			<input class="ten cell" type="text" ng-model="website.title" />
 		</div>
 		<div class="row">
@@ -12,7 +12,7 @@
 			<textarea i18n-placeholder="description" class="ten cell" ng-model="website.description"></textarea>
 		</div>
 		<div class="row">
-			<button class="right-magnet" ng-click="website.save(); editWebsite(website)">Enregistrer</button>
+			<button class="right-magnet" ng-click="website.save(); website.updateApplication(); editWebsite(website)">Enregistrer</button>
 			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="editWebsite(website)" />
 		</div>
 	</article>

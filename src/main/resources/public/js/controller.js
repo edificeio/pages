@@ -29,7 +29,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		search: '',
 		mineOnly: false,
 		snipletStep: 1,
-		maxResults: 5
+		maxResults: 5,
+		maxEdit: 5
 	};
 
 	$rootScope.$on('share-updated', function(event, changes){
