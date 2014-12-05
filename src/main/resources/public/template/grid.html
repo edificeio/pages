@@ -53,9 +53,12 @@
 							</div>
 						</lightbox>
 					</div>
-					<div ng-if="cell.media.type === 'text' || cell.media.type === 'video'" class="text-wrapper">
+					<div ng-if="cell.media.type === 'text'" class="text-wrapper">
 						<text-editor ng-model="cell.media.source"></text-editor>
-						<div ng-if="cell.media.type === 'video'" class="absolute"></div>
+
+					</div>
+					<div ng-if="cell.media.type === 'video'" class="text-wrapper">
+						<div class="absolute" bind-html="cell.media.source" style="pointer-events: none;"></div>
 					</div>
 					<div ng-if="cell.media.type === 'image'" class="image-container">
 						<image-select ng-model="cell.media.source"></image-select>
