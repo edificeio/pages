@@ -98,7 +98,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.page = new Page();
 		$scope.website.sync();
 		template.open('main', 'website-manager');
-		template.open('edit-view', 'website-properties');
+		template.open('edit-view', 'pages-list');
 	};
 
 	$scope.removeSite = function(site){
@@ -266,6 +266,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.pagePreview = function(){
 		template.open('main', 'page-viewer');
 		$scope.display.preview = true;
+		$scope.website.save();
 	};
 
 	$scope.cancelView = function(){

@@ -27,5 +27,8 @@
     "post.date": "le",
 	"pages.publish.title": "Afficher dans les applications",
 	"cell.add.text": "Ajouter du texte",
-	"website.title": "Titre"
+	"website.title": "Titre",
+  "pages.marker.websites": "Les sites",
+  "pages.marker.preview": "Afficher",
+  "pages.marker.nav": "Liste des pages"
 }
