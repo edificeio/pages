@@ -265,6 +265,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 
 	$scope.pagePreview = function(){
 		template.open('main', 'page-viewer');
+		$scope.display.editGrid = undefined;
 		$scope.display.preview = true;
 		$scope.website.save();
 	};
