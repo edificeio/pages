@@ -22,6 +22,7 @@
 
 <behaviour name="share" resource="website" class="cell">
 		<button class="cell" ng-click="display.showSharePanel = true">Partager dans l'ENT</button>
+</behaviour>
 		<button class="cell" ng-click="openPublish()" user-role="ADMIN_LOCAL">Publier dans les applications</button>
 		<div ng-if="display.showSharePanel">
 			<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
@@ -31,4 +32,3 @@
 		<lightbox show="display.showPublish" on-close="display.showPublish = false">
 			<container template="publish"></container>
 		</lightbox>
-</behaviour>
