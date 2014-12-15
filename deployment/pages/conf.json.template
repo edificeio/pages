@@ -1,0 +1,16 @@
+    {
+      "name": "fr.wseduc~pages~0.4-SNAPSHOT",
+      "config": {
+        "main" : "fr.wseduc.pages.Pages",
+        "port" : 8025,
+        "app-name" : "Pages",
+        "app-address" : "/pages",
+        "app-icon" : "pages-large",
+        "host": "${host}",
+        "ssl" : $ssl,
+        "auto-redeploy": false,
+        "userbook-host": "${host}",
+        "integration-mode" : "HTTP",
+        "mode" : "${mode}"
+      }
+    }
