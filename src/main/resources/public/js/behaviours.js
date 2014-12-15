@@ -193,13 +193,38 @@ Behaviours.register('pages', {
 			};
 
 			this.Website.prototype.toJSON = function(){
+				var referencedResources = {};
+				function getPagesReferencedResources(page){
+					page.rows.forEach(function(row){
+						row.cells.forEach(function(cell){
+							if(cell.media.type === 'sniplet'){
+								if(!referencedResources[cell.media.source.application]){
+									referencedResources[cell.media.source.application] = [];
+								}
+								var sniplet = _.findWhere(sniplets.sniplets, { application: cell.media.source.application, template: cell.media.source.template });
+								if(typeof sniplet.sniplet.controller.getReferencedResources === 'function'){
+									referencedResources[cell.media.source.application] = referencedResources[cell.media.source.application].concat(
+										sniplet.sniplet.controller.getReferencedResources(cell.media.source.source)
+									);
+								}
+							}
+							if(cell.media.type === 'grid'){
+								getPagesReferencedResources(cell.media.source);
+							}
+						});
+					});
+				}
+
+				this.pages.forEach(getPagesReferencedResources);
+
 				return {
 					title: this.title,
 					pages: this.pages,
 					icon: this.icon,
 					landingPage: this.landingPage,
 					description: this.description,
-					published: this.published
+					published: this.published,
+					referencedResources: referencedResources
 				};
 			};
 
@@ -332,6 +357,11 @@ Behaviours.register('pages', {
 				},
 				currentLink: function(link){
 					return link.href.split('#')[1] === window.location.hash.split('#')[1];
+				},
+				getReferencedResources: function(source){
+					if(source._id){
+						return [source._id];
+					}
 				}
 			}
 
