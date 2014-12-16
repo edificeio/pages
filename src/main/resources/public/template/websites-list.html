@@ -40,12 +40,12 @@
 				<div class="row">
 					<h1 ng-click="viewSite(website)" class="eight cell">[[website.title]]</h1>
 					<div class="four cell right-magnet">
-						<behaviour name="update" resource="website" class="cell right-magnet">
+						<resource-right name="update" resource="website" class="cell right-magnet">
 							<button ng-click="editWebsite(website)"><i18n>properties</i18n></button>
-						</behaviour>
-						<behaviour name="remove" resource="website" class="cell right-magnet">
+						</resource-right>
+						<resource-right name="remove" resource="website" class="cell right-magnet">
 							<button ng-click="website.remove();"><i18n>remove</i18n></button>
-						</behaviour>
+						</resource-right>
 					</div>
 				</div>
 				<div class="row">
