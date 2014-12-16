@@ -5,7 +5,6 @@ import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
 import fr.wseduc.security.SecuredAction;
-import org.entcore.common.http.filter.OwnerOnly;
 import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.user.UserInfos;
@@ -62,8 +61,7 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Delete("/:id")
 	@ApiDoc("Delete page by id.")
-	@ResourceFilter(OwnerOnly.class)
-	@SecuredAction(value = "", type = ActionType.RESOURCE)
+	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
 	public void delete(HttpServerRequest request) {
 		super.delete(request);
 	}
