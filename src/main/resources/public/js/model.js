@@ -89,8 +89,8 @@ model.build = function(){
 					}
 				};
 				var blogSniplet = _.findWhere(sniplets.sniplets, { application: 'blog', template: 'articles' });
-				blogCaller.copyRights = blogSniplet.sniplet.controller.copyRights;
 				blogSniplet.sniplet.controller.createBlog.call(blogCaller);
+				website.synchronizeRights();
 			},
 			smallNote: function(row){
 				var smallNote = new Cell();

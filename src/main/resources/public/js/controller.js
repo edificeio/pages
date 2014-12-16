@@ -34,7 +34,11 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$rootScope.$on('share-updated', function(event, changes){
-		$scope.website.copyRightsToSniplets(changes);
+		$scope.website.saveModifications(function(){
+			$scope.website.sync(function(){
+				$scope.website.synchronizeRights();
+			});
+		});
 	});
 
 	sniplets.load(function(){

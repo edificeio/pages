@@ -173,22 +173,29 @@ Behaviours.register('pages', {
 				}.bind(this));
 			};
 
-			this.Website.prototype.saveModifications = function(){
-				http().putJson('/pages/' + this._id, this);
+			this.Website.prototype.saveModifications = function(cb){
+				http().putJson('/pages/' + this._id, this).done(function(){
+					if(typeof cb === 'function'){
+						cb();
+					}
+				});
 			};
 
-			this.Website.prototype.save = function(){
+			this.Website.prototype.save = function(cb){
 				if(this._id){
-					this.saveModifications();
+					this.saveModifications(cb);
 				}
 				else{
 					this.createWebsite();
 				}
 			};
 
-			this.Website.prototype.sync = function(){
+			this.Website.prototype.sync = function(cb){
 				http().get('/pages/' + this._id).done(function(data){
 					this.updateData(data);
+					if(typeof cb === 'function'){
+						cb();
+					}
 				}.bind(this));
 			};
 
@@ -228,21 +235,20 @@ Behaviours.register('pages', {
 				};
 			};
 
-			this.Website.prototype.copyRightsToSniplets = function(data){
-				var website = this;
-				this.pages.forEach(function(page){
-					page.rows.forEach(function(row){
-						row.cells.forEach(function(cell){
-							if(cell.media.type !== 'sniplet'){
-								return;
-							}
-							var sniplet = _.findWhere(sniplets.sniplets, { application: cell.media.source.application, template: cell.media.source.template });
-							if(typeof sniplet.sniplet.controller.copyRights === 'function'){
-								sniplet.sniplet.controller.copyRights(data, cell.media.source.source);
-							}
-						});
+			this.Website.prototype.synchronizeRights = function(){
+				var referencedResources = JSON.parse(JSON.stringify(this)).referencedResources;
+				for(var application in referencedResources){
+					Behaviours.copyRights({
+						provider: {
+							application: 'pages',
+							resource: this
+						},
+						target: {
+							application: application,
+							resources: referencedResources[application]
+						}
 					});
-				});
+				}
 			};
 
 			model.makeModels(Behaviours.applicationsBehaviours.pages.model);
