@@ -1,5 +1,6 @@
 package fr.wseduc.pages.controllers;
 
+import fr.wseduc.bus.BusAddress;
 import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
@@ -7,7 +8,15 @@ import fr.wseduc.security.SecuredAction;
 import org.entcore.common.http.filter.OwnerOnly;
 import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
+import org.entcore.common.user.UserInfos;
+import org.entcore.common.user.UserUtils;
+import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.core.json.JsonObject;
+
+import java.util.List;
+
+import static org.entcore.common.bus.BusResponseHandler.busResponseHandler;
 
 public class PagesController extends MongoDbControllerHelper {
 
@@ -90,6 +99,37 @@ public class PagesController extends MongoDbControllerHelper {
 	@SecuredAction("page.share")
 	public void removeShare(HttpServerRequest request) {
 		super.removeShare(request);
+	}
+
+	@BusAddress("pages")
+	public void busApi(Message<JsonObject> message) {
+		String action = message.body().getString("action", "");
+		final String pageId = message.body().getString("pageId");
+		switch (action) {
+			case "create" :
+				UserInfos user = UserUtils.sessionToUserInfos(message.body().getObject("user"));
+				JsonObject page = message.body().getObject("page");
+				crudService.create(page, user, busResponseHandler(message));
+				break;
+			case "share" :
+				String userId = message.body().getString("userId");
+				String groupId = message.body().getString("groupId");
+				List<String> actions = message.body().getArray("actions").toList();
+				shareService.groupShare(userId, groupId, pageId, actions, busResponseHandler(message));
+				break;
+			case "delete" :
+				crudService.delete(pageId, busResponseHandler(message));
+				break;
+			case "get" :
+				crudService.retrieve(pageId, busResponseHandler(message));
+				break;
+			case "update" :
+				crudService.update(pageId, message.body().getObject("page"), busResponseHandler(message));
+				break;
+			default:
+				message.reply(new JsonObject().putString("status", "error")
+						.putString("message", "invalid.action"));
+		}
 	}
 
 }
