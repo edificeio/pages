@@ -173,12 +173,16 @@ model.build = function(){
 	};
 
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.makeApplication = function(structure, cb){
+		var icon = "/img/illustrations/pages-default.png"
+		if(this.icon){
+			icon = this.icon + '?thumbnail=150x150'
+		}
 		http().postJson('/appregistry/application/external?structureId=' + structure.id, {
 			grantType: "authorization_code",
 			displayName: this.title,
 			secret: "",
 			address: this.url({ relative: true }),
-			icon: this.icon + '?thumbnail=150x150' || "/img/illustrations/pages-default.png",
+			icon: icon,
 			target: "",
 			scope: "",
 			name: this.title
