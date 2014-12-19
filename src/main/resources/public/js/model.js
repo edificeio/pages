@@ -153,12 +153,16 @@ model.build = function(){
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.updateApplication = function(){
 		if(model.me.functions.ADMIN_LOCAL && this.published){
 			for(var structureId in this.published){
+				var icon = "/img/illustrations/pages-default.png"
+				if(this.icon){
+					icon = this.icon + '?thumbnail=150x150'
+				}
 				http().putJson('/appregistry/application/conf/' + this.published[structureId].application.id, {
 					grantType: "authorization_code",
 					displayName: this.title,
 					secret: "",
 					address: this.url({ relative: true }),
-					icon: this.icon + '?thumbnail=150x150' || "/img/illustrations/pages-default.png",
+					icon: icon,
 					target: "",
 					scope: "",
 					name: this.title
