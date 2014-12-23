@@ -44,8 +44,8 @@
 								<h2>Choisir un contenu dynamique</h2>
 								<ul class="thought-out-actions">
 									<li ng-repeat="sniplet in sniplets" ng-click="selectSnipletSource(sniplet.template, sniplet.application)">
-										<h2>[[sniplet.sniplet.title]]</h2>
-										<p>[[sniplet.sniplet.description]]</p>
+										<h2>[[lang.translate(sniplet.sniplet.title)]]</h2>
+										<p>[[lang.translate(sniplet.sniplet.description)]]</p>
 									</li>
 								</ul>
 							</div>

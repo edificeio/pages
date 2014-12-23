@@ -20,6 +20,7 @@ routes.define(function($routeProvider){
 function PagesController($scope, template, route, model, date, $location, $timeout, $rootScope){
 	$scope.websites = model.websites;
 	$scope.localAdmin = model.localAdmin;
+	$scope.lang = lang;
 	$scope.template = template;
 	$scope.date = date;
 	$scope.display = {
