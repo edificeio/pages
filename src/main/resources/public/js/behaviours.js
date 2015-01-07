@@ -231,7 +231,8 @@ Behaviours.register('pages', {
 					landingPage: this.landingPage,
 					description: this.description,
 					published: this.published,
-					referencedResources: referencedResources
+					referencedResources: referencedResources,
+					markups: this.markups
 				};
 			};
 

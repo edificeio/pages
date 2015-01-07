@@ -5,7 +5,7 @@
 <hr class="row" />
 <hr class="row" />
 
-<div class="page-markers">
+<div class="page-markers" ng-if="website.markups.edit === undefined">
 	<div class="marker">
 		<div class="content" ng-click="home()"><i18n>pages.marker.websites</i18n></div>
 	</div>
@@ -16,5 +16,11 @@
 	</div>
 	<div class="marker">
 		<div class="content" ng-click="cancelEdit()"><i18n>pages.marker.nav</i18n></div>
+	</div>
+</div>
+
+<div class="page-markers" ng-if="website.markups.edit !== undefined">
+	<div class="marker" ng-repeat="markup in website.markups.edit">
+		<a ng-href="[[markup.href]]" translate content="[[markup.label]]" class="content"></a>
 	</div>
 </div>
