@@ -9,6 +9,7 @@ import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.user.UserInfos;
 import org.entcore.common.user.UserUtils;
+import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.json.JsonObject;
@@ -88,8 +89,26 @@ public class PagesController extends MongoDbControllerHelper {
 	@Put("/share/json/:id")
 	@ApiDoc("Share a page.")
 	@SecuredAction("page.share")
-	public void shareSubmit(HttpServerRequest request) {
-		shareJsonSubmit(request, null);
+	public void shareSubmit(final HttpServerRequest request) {
+		UserUtils.getUserInfos(eb, request, new Handler<UserInfos>() {
+			@Override
+			public void handle(final UserInfos user) {
+				if (user != null) {
+					final String id = request.params().get("id");
+					if(id == null || id.trim().isEmpty()) {
+						badRequest(request, "invalid.id");
+						return;
+					}
+
+					JsonObject params = new JsonObject()
+							.putString("uri", "/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
+							.putString("username", user.getUsername())
+							.putString("pageUri", "/pages#/website/" + id);
+
+					shareJsonSubmit(request, "notify-shared.html", true, params, "title");
+				}
+			}
+		});
 	}
 
 	@Put("/share/remove/:id")
