@@ -20,24 +20,24 @@ Behaviours.register('pages', {
 			}
 			else{
 				if(index.media.type === 'grid'){
-					this.media.source = new Page(index.media.source);
+					this.media.source = new Behaviours.applicationsBehaviours.pages.model.Page(index.media.source);
 				}
 			}
 		},
 		Row: function(data){
-			this.collection(Cell);
+			this.collection(Behaviours.applicationsBehaviours.pages.model.Cell);
 			if(data && data.cells){
 				this.cells.load(data.cells);
 			}
 		},
 		Page: function(data){
-			this.collection(Row);
+			this.collection(Behaviours.applicationsBehaviours.pages.model.Row);
 			if(data && data.rows){
 				this.rows.load(data.rows);
 			}
 		},
 		Website: function(data){
-			this.collection(Page);
+			this.collection(Behaviours.applicationsBehaviours.pages.model.Page);
 			if(data && data.pages){
 				this.pages.load(data.pages);
 			}
@@ -45,11 +45,11 @@ Behaviours.register('pages', {
 		register: function(){
 			this.Cell.prototype.buildSubGrid = function(){
 				this.media.type = 'grid';
-				var fillingCell = new Cell();
-				this.media.source = new Page();
+				var fillingCell = new Behaviours.applicationsBehaviours.pages.model.Cell();
+				this.media.source = new Behaviours.applicationsBehaviours.pages.model.Page();
 				this.media.source.addRow();
 				this.media.source.rows.first().addCell(fillingCell);
-				fillingCell = new Cell();
+				fillingCell = new Behaviours.applicationsBehaviours.pages.model.Cell();
 				this.media.source.addRow();
 				this.media.source.rows.all[1].addCell(fillingCell);
 				this.className.push('sub-grid');
@@ -107,14 +107,14 @@ Behaviours.register('pages', {
 			};
 
 			this.Page.prototype.addRow = function(){
-				var row = new Row();
+				var row = new Behaviours.applicationsBehaviours.pages.model.Row();
 				this.rows.push(row);
 				row.index = this.rows.length() - 1;
 				return row;
 			};
 
 			this.Page.prototype.addRowAt = function(previousRow){
-				var row = new Row();
+				var row = new Behaviours.applicationsBehaviours.pages.model.Row();
 				this.rows.insertAt(this.rows.getIndex(previousRow) + 1, row);
 				row.index = this.rows.getIndex(previousRow) + 1;
 				return row;
