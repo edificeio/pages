@@ -40,7 +40,6 @@ public class PageReadFilter implements ResourcesProvider {
 
 	@Override
 	public void authorize(HttpServerRequest request, Binding binding, UserInfos user, Handler<Boolean> handler) {
-		System.out.println(">>>>>>> filter <<<<<<<<");
 		String sharedMethod = binding.getServiceMethod().replaceAll("\\.", "-");
 		String id = request.params().get(conf.getResourceIdLabel());
 		if (id != null && !id.trim().isEmpty()) {
