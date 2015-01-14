@@ -1,28 +1,30 @@
-<div class="three cell">
-	<h1 ng-click="home()"><i class="pages"></i>Pages</h1>
+<div class="row rigid-grid">
+	<div class="three cell">
+		<h1 ng-click="home()"><i class="pages"></i>Pages</h1>
 
-	<nav class="vertical">
-		<h2>Sites web</h2>
-		<ul>
-			<li>
-				<a ng-click="home()">Parcourir les sites</a>
-			</li>
-		</ul>
-		<h2>[[website.title]]</h2>
-		<ul>
-			<li>
-				<a ng-click="template.open('edit-view', 'pages-list')" ng-class="{ selected: template.contains('edit-view', 'pages-list') }">Modifier les pages</a>
-			</li>
-			<li>
-				<a ng-click="template.open('edit-view', 'website-properties')" ng-class="{ selected: template.contains('edit-view', 'website-properties') }">Propriétés</a>
-			</li>
-		</ul>
-	</nav>
-</div>
+		<nav class="vertical">
+			<h2>Sites web</h2>
+			<ul>
+				<li>
+					<a ng-click="home()">Parcourir les sites</a>
+				</li>
+			</ul>
+			<h2>[[website.title]]</h2>
+			<ul>
+				<li>
+					<a ng-click="template.open('edit-view', 'pages-list')" ng-class="{ selected: template.contains('edit-view', 'pages-list') }">Modifier les pages</a>
+				</li>
+				<li>
+					<a ng-click="template.open('edit-view', 'website-properties')" ng-class="{ selected: template.contains('edit-view', 'website-properties') }">Propriétés</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 
-<div class="nine cell">
-	<container template="edit-view">
+	<div class="margin-three">
+		<container template="edit-view">
 
-	</container>
+		</container>
 
+	</div>
 </div>
