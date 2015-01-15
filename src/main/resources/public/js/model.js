@@ -70,9 +70,10 @@ model.build = function(){
 			blog: function(row, width, website, callback){
 				var blog = new Cell();
 				blog.media.type = 'sniplet';
+				Behaviours.applicationsBehaviours.blog.model.register();
 
 				var blogCaller = {
-					blog: {},
+					blog: new Behaviours.applicationsBehaviours.blog.model.Blog(),
 					snipletResource: website,
 					setSnipletSource: function(newBlog){
 						blog.media.source = {
