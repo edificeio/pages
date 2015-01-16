@@ -15,6 +15,7 @@
 	"group.AdminLocal": "Tous les administrateurs locaux",
     "page.read": "Consulter",
     "page.contrib": "Contribuer",
+  "page.manager": "Gérer",
 	"filters.mine": "Mes sites",
 	"description": "Description de mon site web",
     "sniplet.addLink": "Ajouter un lien",
