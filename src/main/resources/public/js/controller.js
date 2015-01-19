@@ -88,7 +88,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.searchMatch = function(element){
-		return lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
+		return (lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1) && !element.hideInPages;
 	};
 
 	$scope.viewSite = function(site){
