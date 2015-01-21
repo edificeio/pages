@@ -366,9 +366,7 @@ Behaviours.register('pages', {
 					return link.href.split('#')[1] === window.location.hash.split('#')[1];
 				},
 				getReferencedResources: function(source){
-					if(source._id){
-						return [source._id];
-					}
+					return [];
 				}
 			}
 
