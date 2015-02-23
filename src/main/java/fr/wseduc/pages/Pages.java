@@ -2,6 +2,7 @@ package fr.wseduc.pages;
 
 import fr.wseduc.pages.controllers.PagesController;
 import fr.wseduc.pages.filters.PagesFilter;
+import fr.wseduc.pages.service.impl.PagesRepositoryEvents;
 import fr.wseduc.rs.ApiPrefixDoc;
 import org.entcore.common.http.BaseServer;
 import org.entcore.common.http.filter.MongoAppFilter;
@@ -17,6 +18,7 @@ public class Pages extends BaseServer {
 		super.start();
 		MongoDbConf.getInstance().setCollection("pages");
 		setDefaultResourceFilter(new ShareAndOwner());
+		setRepositoryEvents(new PagesRepositoryEvents());
 		addController(new PagesController());
 	}
 
