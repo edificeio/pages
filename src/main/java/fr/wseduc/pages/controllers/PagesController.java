@@ -81,14 +81,14 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Get("/share/json/:id")
 	@ApiDoc("Get share list.")
-	@SecuredAction("page.share")
+	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
 	public void share(HttpServerRequest request) {
-		shareJson(request);
+		shareJson(request, false);
 	}
 
 	@Put("/share/json/:id")
 	@ApiDoc("Share a page.")
-	@SecuredAction("page.share")
+	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
 	public void shareSubmit(final HttpServerRequest request) {
 		UserUtils.getUserInfos(eb, request, new Handler<UserInfos>() {
 			@Override
@@ -105,7 +105,7 @@ public class PagesController extends MongoDbControllerHelper {
 							.putString("username", user.getUsername())
 							.putString("pageUri", "/pages#/website/" + id);
 
-					shareJsonSubmit(request, "notify-shared.html", true, params, "title");
+					shareJsonSubmit(request, "notify-shared.html", false, params, "title");
 				}
 			}
 		});
@@ -113,9 +113,9 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Put("/share/remove/:id")
 	@ApiDoc("Remove share.")
-	@SecuredAction("page.share")
+	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
 	public void removeShare(HttpServerRequest request) {
-		super.removeShare(request);
+		super.removeShare(request, false);
 	}
 
 	@BusAddress("pages")
