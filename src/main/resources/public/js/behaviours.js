@@ -139,7 +139,8 @@ Behaviours.register('pages', {
 				return {
 					title: this.title,
 					titleLink: this.titleLink,
-					rows: this.rows
+					rows: this.rows,
+					index: this.index
 				}
 			};
 
@@ -311,7 +312,8 @@ Behaviours.register('pages', {
 						this.links = _.map(model.websites.findWhere({ _id: source._id }).pages.all, function(page){
 							return {
 								text: page.title,
-								href: '/pages#/website/' + source._id + '/' + page.titleLink
+								href: '/pages#/website/' + source._id + '/' + page.titleLink,
+								index: page.index
 							}
 						});
 

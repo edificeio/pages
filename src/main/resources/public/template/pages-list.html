@@ -41,31 +41,54 @@
 		<input type="button" i18n-value="cancel" class="right-magnet cancel" ng-click="cancelPageCreation()" />
 	</div>
 </lightbox>
+<lightbox show="display.rename" on-close="display.rename = false">
+	<form ng-submit="rename()">
+		<h2><i18n>rename</i18n></h2>
+		<input type="text" i18n-placeholder="title" ng-model="display.newTitle" class="twelve cell" required />
+		<div class="row">
+			<button class="right-magnet"><i18n>save</i18n></button>
+			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.rename = false" />
+		</div>
+	</form>
+
+</lightbox>
+<lightbox show="display.duplicate" on-close="display.duplicate = false">
+	<form ng-submit="display.duplicate = false">
+		<h2><i18n>duplicate</i18n></h2>
+		<input type="text" i18n-placeholder="title" ng-model="page.title" class="twelve cell" required />
+		<div class="row">
+			<button ng-click="duplicate()" class="right-magnet"><i18n>duplicate</i18n></button>
+			<input type="button" class="cancel right-magnet" i18n-value="cancel" />
+		</div>
+	</form>
+
+</lightbox>
 <div class="twelve cell">
-	<table class="twelve list-view">
-		<thead>
-		<tr>
-			<th class="icon"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></th>
-			<th class="content">Page</th>
-			<th class="content">URL</th>
-			<th class="date">Date</th>
-		</tr>
-		</thead>
-		<tbody>
-		<tr ng-repeat="page in website.pages.all">
-			<td class="icon"><input type="checkbox" ng-model="page.selected" /></td>
-			<td class="content" ng-click="editPage(page)"><a>[[page.title]]</a></td>
-			<td class="content" ng-click="editPage(page)">[[page.url(website)]]</td>
-			<td class="date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></td>
-		</tr>
-		</tbody>
-	</table>
+	<ul class="twelve list-view row" sortable-list>
+		<li class="head">
+			<div class="one cell"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></div>
+			<div class="three cell">Page</div>
+			<div class="five cell">URL</div>
+			<div class="three cell date">Date</div>
+		</li>
+		<li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index" ng-change="website.save()">
+			<div class="one cell">
+				<i class="drag-anchor"></i>
+				<input type="checkbox" ng-model="page.selected" />
+			</div>
+			<div class="three cell" ng-click="editPage(page)"><a>[[page.title]]</a></div>
+			<div class="five cell" ng-click="editPage(page)">[[page.url(website)]]</div>
+			<div class="three cell date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></div>
+		</li>
+	</ul>
 </div>
 
 
 <div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
 	<div class="row toggle">
-		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1">Utiliser en page d'accueil</button>
-		<button ng-click="removeSelectedPages()">Supprimer</button>
+		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1"><i18n>mainpage</i18n></button>
+		<button ng-click="display.rename = true"><i18n>rename</i18n></button>
+		<button ng-click="display.duplicate = true" ng-if="website.pages.selection().length === 1"><i18n>duplicate</i18n></button>
+		<button ng-click="removeSelectedPages()"><i18n>remove</i18n></button>
 	</div>
 </div>

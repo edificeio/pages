@@ -171,6 +171,22 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.display.createNewPage = false;
 		template.open('main', 'page-editor');
 		window.location.hash = '/website/' + $scope.website._id + '/' + $scope.page.titleLink;
+		$scope.page = new Page();
+	};
+
+	$scope.rename = function(){
+		$scope.website.save();
+		$scope.display.rename = false;
+		$scope.website.pages.selection()[0].title = $scope.display.newTitle;
+	};
+
+	$scope.duplicate = function(){
+		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-').replace(/\?/g, '')).toLowerCase());
+		$scope.page.rows.load(JSON.parse(JSON.stringify($scope.website.pages.selection()[0].rows)));
+		$scope.website.pages.push($scope.page);
+		$scope.website.save();
+		$scope.display.duplicate = false;
+		$scope.page = new Page();
 	};
 
 	$scope.editPage = function(page){

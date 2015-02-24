@@ -1,5 +1,6 @@
 <div class="row">
-	<button ng-click="display.createNewSite = true" workflow="pages.create"><i18n>website.addForm.title</i18n></button>
+	<button ng-click="display.createNewSite = true" workflow="pages.create.personal"><i18n>website.addForm.personal.title</i18n></button>
+	<button ng-click="display.createNewSite = true" workflow="pages.create.public"><i18n>website.addForm.public.title</i18n></button>
 	<lightbox show="display.createNewSite" on-close="createNewSite = false">
 		<h2><i18n>website.addForm.title</i18n></h2>
 		<div class="row">
@@ -21,6 +22,16 @@
 		<label>
 			<i class="mine type" tooltip="filters.mine"></i>
 			<input type="checkbox" ng-model="display.mineOnly" />
+		</label>
+	</li>
+	<li ng-class="{ selected: display.app }">
+		<label>
+
+		</label>
+	</li>
+	<li ng-class="{ selected: display.public }">
+		<label>
+
 		</label>
 	</li>
 </filters>

@@ -1,6 +1,6 @@
 <nav class="vertical twelve cell">
 	<ul>
-		<li ng-repeat="link in links">
+		<li ng-repeat="link in links | orderBy:'index'">
 			<a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
 				[[link.text]]
 				<behaviour name="update" resource="snipletResource">

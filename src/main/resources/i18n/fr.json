@@ -34,5 +34,8 @@
 	"website.title": "Titre",
   "pages.marker.websites": "Les sites",
   "pages.marker.preview": "Afficher",
-  "pages.marker.nav": "Liste des pages"
+  "pages.marker.nav": "Liste des pages",
+	"rename": "Renommer",
+	"duplicate": "Dupliquer",
+	"mainpage": "Utiliser en page d'accueil"
 }
