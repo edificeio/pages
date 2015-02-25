@@ -107,10 +107,15 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.removeSite = function(site){
-		site.remove();
+		$scope.website.remove();
 		$scope.openFolder($scope.folder);
-		$scope.website = undefined;
+		$scope.website = new Website();
 		$scope.showConfirmRemove = false;
+	};
+
+	$scope.openConfirmRemove = function(site){
+		$scope.display.showConfirmRemove = true;
+		$scope.website = site;
 	};
 
 	$scope.createSite = function(){

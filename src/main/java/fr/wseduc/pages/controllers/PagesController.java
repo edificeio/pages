@@ -31,6 +31,11 @@ public class PagesController extends MongoDbControllerHelper {
 		renderView(request);
 	}
 
+	@Get("/p/website")
+	public void websiteView(HttpServerRequest request) {
+		renderView(request, null, "website.html", null);
+	}
+
 	@Get("/list/:filter")
 	@ApiDoc("List all authorized pages.")
 	@SecuredAction("pages.list")

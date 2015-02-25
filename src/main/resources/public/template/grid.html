@@ -22,10 +22,29 @@
 					<div ng-if="!cell.media.type">
 						<ul class="menu-items" vertical-lock>
 							<li ng-click="setType(cell, 'text')"><i class="text"></i><i18n>cell.add.text</i18n></li>
-							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'image')" class="image" label="Ajouter une image" file-format="'img'"></media-select></li>
-							<li><media-select ng-model="cell.media.source" ng-change="setType(cell, 'sound')" class="sound" file-format="'audio'" label="Ajouter du son"></media-select></li>
+							<li>
+								<media-select
+										ng-model="cell.media.source"
+										visibility="website.visibility"
+										ng-change="setType(cell, 'image')"
+										class="image"
+										label="Ajouter une image"
+										file-format="'img'">
+										</media-select></li>
+							<li>
+								<media-select
+										ng-model="cell.media.source"
+										visibility="website.visibility"
+										ng-change="setType(cell, 'sound')"
+										class="sound"
+										file-format="'audio'"
+										label="Ajouter du son">
+										</media-select>
+							</li>
 							<li ng-click="display.selectVideoContent = true"><i class="video"></i>Ajouter une vidéo</li>
-							<li ng-click="display.selectSniplet = true;"><i class="sniplet"></i>Ajouter un sniplet (navigation, documents à télécharger...)</li>
+							<li ng-click="display.selectSniplet = true;" ng-if="website.visibility !== 'PUBLIC'">
+								<i class="sniplet"></i>Ajouter un sniplet (navigation, documents à télécharger...)
+							</li>
 							<li ng-click="setType(cell, 'grid')"><i class="grid"></i>Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)</li>
 						</ul>
 						<lightbox show="display.selectVideoContent" on-close="display.selectVideoContent = false">
@@ -62,10 +81,10 @@
 						<div class="absolute" bind-html="cell.media.source" style="pointer-events: none;"></div>
 					</div>
 					<div ng-if="cell.media.type === 'image'" class="image-container">
-						<image-select ng-model="cell.media.source"></image-select>
+						<image-select ng-model="cell.media.source" visibility="website.visibility"></image-select>
 					</div>
 					<div ng-if="cell.media.type === 'sound'" class="text-wrapper">
-						<sound-select ng-model="cell.media.source"></sound-select>
+						<sound-select ng-model="cell.media.source" visibility="website.visibility"></sound-select>
 					</div>
 					<div ng-if="cell.media.type === 'sniplet'">
 						<sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>

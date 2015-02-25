@@ -1,6 +1,15 @@
 <div class="row">
-	<button ng-click="display.createNewSite = true" workflow="pages.create.personal"><i18n>website.addForm.personal.title</i18n></button>
-	<button ng-click="display.createNewSite = true" workflow="pages.create.public"><i18n>website.addForm.public.title</i18n></button>
+	<drop-down-button class="cell">
+		<label class="opener"><i18n>website.create</i18n></label>
+		<opts>
+			<li ng-click="display.createNewSite = true" workflow="pages.create">
+				<i18n>website.addForm.personal.title</i18n>
+			</li>
+			<li ng-click="display.createNewSite = true; website.visibility = 'PUBLIC';" workflow="pages.create">
+				<i18n>website.addForm.public.title</i18n>
+			</li>
+		</opts>
+	</drop-down-button>
 	<lightbox show="display.createNewSite" on-close="createNewSite = false">
 		<h2><i18n>website.addForm.title</i18n></h2>
 		<div class="row">
@@ -12,7 +21,6 @@
 		<div class="row">
 			<button class="right-magnet" ng-click="createSite()"><i18n>create</i18n></button>
 			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="cancelSiteCreation()" />
-
 		</div>
 	</lightbox>
 </div>
@@ -24,7 +32,7 @@
 			<input type="checkbox" ng-model="display.mineOnly" />
 		</label>
 	</li>
-	<li ng-class="{ selected: display.app }">
+	<li ng-class="{ selected: display.internal }">
 		<label>
 
 		</label>
@@ -49,13 +57,14 @@
 			</div>
 			<div class="content">
 				<div class="row">
-					<h1 ng-click="viewSite(website)" class="eight cell">[[website.title]]</h1>
+					<h1 ng-click="viewSite(website)" class="eight cell" ng-if="website.visibility !== 'PUBLIC'">[[website.title]]</h1>
+					<h1 class="eight cell" ng-if="website.visibility === 'PUBLIC'"><a target="_blank" ng-href="/pages/p/website#/website/[[website._id]]">[[website.title]]</a></h1>
 					<div class="four cell right-magnet">
 						<resource-right name="update" resource="website" class="cell right-magnet">
 							<button ng-click="editWebsite(website)"><i18n>properties</i18n></button>
 						</resource-right>
 						<resource-right name="remove" resource="website" class="cell right-magnet">
-							<button ng-click="website.remove();"><i18n>remove</i18n></button>
+							<button ng-click="openRemoveConfirm()"><i18n>remove</i18n></button>
 						</resource-right>
 					</div>
 				</div>
@@ -68,14 +77,14 @@
 	</ul>
 </nav>
 
-<lightbox show="showConfirmRemove" on-close="showConfirmRemove = false">
-	<h2>Supprimer le site</h2>
+<lightbox show="display.showConfirmRemove" on-close="display.showConfirmRemove = false">
+	<h2><i18n>remove</i18n></h2>
 
-	<p>Voulez-vous vraiment supprimer votre site web ?</p>
+	<p><i18n>remove.confirm</i18n></p>
 
 	<div class="row">
-		<button class="right-magnet" ng-click="removeSite(website)">
-			Supprimer
+		<button class="right-magnet" ng-click="removeWebsite()">
+			<i18n>remove</i18n>
 		</button>
 		<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="showConfirmRemove = false" />
 

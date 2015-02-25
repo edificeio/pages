@@ -265,13 +265,14 @@ model.build = function(){
 	window.Page = Behaviours.applicationsBehaviours.pages.model.Page;
 	window.Website = Behaviours.applicationsBehaviours.pages.model.Website;
 
+	var syncPath = '/pages/list/all';
+	if(!model.me){
+		syncPath = '/pages/pub/list/all'
+	}
+
 	this.collection(Website, {
 		behaviours: 'pages',
-		sync: function(){
-			http().get('/pages/list/all').done(function(websites){
-				this.load(websites);
-			}.bind(this));
-		},
+		sync: syncPath,
 		removeSelection: function(){
 			this.selection().forEach(function(website){
 				website.remove();

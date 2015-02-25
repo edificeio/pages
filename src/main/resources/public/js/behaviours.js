@@ -228,12 +228,12 @@ Behaviours.register('pages', {
 				return {
 					title: this.title,
 					pages: this.pages,
-					icon: this.icon,
 					landingPage: this.landingPage,
 					description: this.description,
 					published: this.published,
 					referencedResources: referencedResources,
-					markups: this.markups
+					markups: this.markups,
+					visibility: this.visibility
 				};
 			};
 
