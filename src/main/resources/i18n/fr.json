@@ -52,5 +52,5 @@
 	"templates.blog.title": "Articles et navigation",
 	"templates.blog.desc": "Les articles d'un blog sont affichés au centre, et une navigation est présente sur la gauche.",
 	"templates.nav.title": "Texte et navigation",
-	"templates.nav.text": "Le contenu de la page est au centre, et une navigation est présente sur la gauche."
+	"templates.nav.desc": "Le contenu de la page est au centre, et une navigation est présente sur la gauche."
 }
