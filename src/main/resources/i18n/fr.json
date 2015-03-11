@@ -41,5 +41,16 @@
 	"website.create": "Créer un site",
 	"website.addForm.personal.title": "Site interne",
 	"website.addForm.public.title": "Site public",
-  "remove.confirm": "Voulez-vous vraiment supprimer le site web ?"
+  "remove.confirm": "Voulez-vous vraiment supprimer le site web ?",
+	"page.form.title": "Titre de la nouvelle page",
+	"page.create.title": "Nouvelle page",
+	"templates.title": "Modèles",
+	"templates.oneColumn.title": "Une colonne",
+	"templates.oneColumn.desc": "Le texte est affiché dans une colonne.",
+	"templates.twoColumns.title": "Deux colonnes",
+	"templates.twoColumns.desc": "Le texte est affiché dans deux colonnes.",
+	"templates.blog.title": "Articles et navigation",
+	"templates.blog.desc": "Les articles d'un blog sont affichés au centre, et une navigation est présente sur la gauche.",
+	"templates.nav.title": "Texte et navigation",
+	"templates.nav.text": "Le contenu de la page est au centre, et une navigation est présente sur la gauche."
 }

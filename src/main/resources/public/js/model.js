@@ -39,9 +39,21 @@ model.build = function(){
 				'<h1>Publier votre page</h1>' +
 				'<p>Afin de publier votre page, vous devez publier le site web qui la contient. Vous pouvez le faire dans la partie "propriétés" de l\'espace de gestion de votre site.' +
 				'Lors de la publication de votre site, pensez à vérifier que tous les contenus que vous utilisez soient bien visibles des autres utilisateurs (blogs, liens, ...).</p>';
-				row.addCell(content)
+				row.addCell(content);
 			},
-			navigation: function(row){
+			column: function(row, width){
+				var content = new Cell();
+				content.width = width;
+				content.media.type = 'text';
+				content.media.source = '<h2>Une colonne</h2>' +
+					'<p>Cette colonne de texte vous permet d\'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite' +
+					'ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>';
+				row.addCell(content);
+			},
+			navigation: function(row, width){
+				if(!width){
+					width = 3;
+				}
 				var navigation = new Cell();
 				navigation.media.type = 'sniplet';
 				navigation.media.source = {
@@ -50,7 +62,7 @@ model.build = function(){
 					source: { _id: website._id }
 				};
 				row.addCell(navigation);
-				navigation.width = 3;
+				navigation.width = width;
 			},
 			empty: function(row, width, height){
 				var empty = new Cell();
@@ -145,7 +157,20 @@ model.build = function(){
 					cells.smallNote(row);
 					website.save();
 				});
-
+			},
+			oneColumn: function(){
+				var row = this.addRow();
+				cells.welcomeMessage(row);
+				row = this.addRow();
+				cells.content(row);
+			},
+			twoColumns: function(){
+				var row = this.addRow();
+				cells.welcomeMessage(row);
+				row = this.addRow();
+				cells.navigation(row, 2);
+				cells.column(row, 5);
+				cells.column(row, 5);
 			}
 		};
 		templates[templateName].call(this, website);

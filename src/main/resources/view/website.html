@@ -8,9 +8,12 @@
 	<script src="/pages/public/js/controller.js" type="text/javascript"></script>
 </head>
 <script type="text/ng-template" id="empty"></script>
-<body ng-click="editGrid(page, $event)" ng-controller="PagesController">
+<body ng-click="editGrid(page, $event)" ng-controller="PagesController" class="public">
+	<div class="logo"></div>
 	<default-styles>
-		<container template="main"></container>
+		<section class="main">
+			<container template="main"></container>
+		</section>
 	</default-styles>
 </body>
 </html>
