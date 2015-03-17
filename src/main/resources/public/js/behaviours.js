@@ -145,18 +145,30 @@ Behaviours.register('pages', {
 			};
 
 			this.Page.prototype.url = function(website){
-				return window.location.origin + '/pages#/website/' + website._id + '/' + this.titleLink;
+				var path = window.location.origin + '/pages#/website/';
+				if(website.visibility === 'PUBLIC'){
+					path = window.location.origin + '/pages/p/website#/website/';
+				}
+				return path + website._id + '/' + this.titleLink;
 			};
 
 			this.Website.prototype.url = function(params){
 				if(!this._id){
 					return '';
 				}
+				var path = window.location.origin + '/pages#/website/';
+				if(this.visibility === 'PUBLIC'){
+					path = window.location.origin + '/pages/p/website#/website/';
+				}
 				if(!params || !params.relative){
-					return window.location.origin + '/pages#/website/' + this._id;
+					return path + this._id;
 				}
 				else{
-					return '/pages#/website/' + this._id;
+					path = '/pages#/website/';
+					if(this.visibility === 'PUBLIC'){
+						path = '/pages/p/website#/website/';
+					}
+					return path + this._id;
 				}
 			};
 
