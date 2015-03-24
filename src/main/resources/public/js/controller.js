@@ -91,6 +91,11 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		return (lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1) && !element.hideInPages;
 	};
 
+	$scope.cancelSniplet = function(){
+		$scope.display.selectSniplet = false;
+		$scope.display.snipletStep = 1;
+	};
+
 	$scope.viewSite = function(site){
 		$scope.website = site;
 		$scope.snipletResource = $scope.website;

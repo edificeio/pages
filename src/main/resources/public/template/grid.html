@@ -58,7 +58,7 @@
 								<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.selectVideoContent = false;" />
 							</div>
 						</lightbox>
-						<lightbox show="display.selectSniplet" on-close="display.selectSniplet = false">
+						<lightbox show="display.selectSniplet" on-close="cancelSniplet()">
 							<div ng-if="display.snipletStep === 1">
 								<h2>Choisir un contenu dynamique</h2>
 								<ul class="thought-out-actions">
