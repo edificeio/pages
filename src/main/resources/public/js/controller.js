@@ -111,11 +111,13 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		template.open('edit-view', 'pages-list');
 	};
 
-	$scope.removeSite = function(site){
-		$scope.website.remove();
-		$scope.openFolder($scope.folder);
+	$scope.removeWebsite = function(site){
+		if(!site){
+			site = $scope.website;
+		}
+		site.remove();
 		$scope.website = new Website();
-		$scope.showConfirmRemove = false;
+		$scope.display.showConfirmRemove = false;
 	};
 
 	$scope.openRemoveConfirm = function(site){
