@@ -118,7 +118,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.showConfirmRemove = false;
 	};
 
-	$scope.openConfirmRemove = function(site){
+	$scope.openRemoveConfirm = function(site){
 		$scope.display.showConfirmRemove = true;
 		$scope.website = site;
 	};
