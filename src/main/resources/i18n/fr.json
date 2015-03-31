@@ -55,5 +55,6 @@
 	"templates.blog.title": "Articles et navigation",
 	"templates.blog.desc": "Les articles d'un blog sont affichés au centre, et une navigation est présente sur la gauche.",
 	"templates.nav.title": "Texte et navigation",
-	"templates.nav.desc": "Le contenu de la page est au centre, et une navigation est présente sur la gauche."
+	"templates.nav.desc": "Le contenu de la page est au centre, et une navigation est présente sur la gauche.",
+	"public.info": "Ce site est public : il peut être consulté par des visiteurs qui ne sont pas inscrits sur l'ENT."
 }

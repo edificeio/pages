@@ -58,7 +58,7 @@
 			<div class="content">
 				<div class="row">
 					<h1 ng-click="viewSite(website)" class="eight cell" ng-if="website.visibility !== 'PUBLIC'">[[website.title]]</h1>
-					<h1 class="eight cell" ng-if="website.visibility === 'PUBLIC'"><a target="_blank" ng-href="/pages/p/website#/website/[[website._id]]">[[website.title]]</a></h1>
+					<h1 class="eight cell" ng-if="website.visibility === 'PUBLIC'"><i class="public"></i><a target="_blank" ng-href="/pages/p/website#/website/[[website._id]]">[[website.title]]</a></h1>
 					<div class="four cell right-magnet">
 						<resource-right name="update" resource="website" class="cell right-magnet">
 							<button ng-click="editWebsite(website)"><i18n>properties</i18n></button>

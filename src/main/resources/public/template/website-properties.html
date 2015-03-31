@@ -26,6 +26,10 @@
 
 <h2>Publication</h2>
 
+		<article class="info row" ng-if="website.visibility === 'PUBLIC'">
+			<i18n>public.info</i18n>
+		</article>
+
 <resource-right name="share" resource="website" class="cell">
 		<button class="cell" ng-click="display.showSharePanel = true">Partager dans l'ENT</button>
 </resource-right>
