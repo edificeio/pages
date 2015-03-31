@@ -245,7 +245,8 @@ Behaviours.register('pages', {
 					published: this.published,
 					referencedResources: referencedResources,
 					markups: this.markups,
-					visibility: this.visibility
+					visibility: this.visibility,
+					icon: this.icon
 				};
 			};
 
