@@ -187,9 +187,9 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.rename = function(){
-		$scope.website.save();
 		$scope.display.rename = false;
 		$scope.website.pages.selection()[0].title = $scope.display.newTitle;
+		$scope.website.save();
 	};
 
 	$scope.duplicate = function(){
