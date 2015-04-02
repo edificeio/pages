@@ -98,7 +98,9 @@
 				<i class="drag-anchor"></i>
 				<input type="checkbox" ng-model="page.selected" />
 			</div>
-			<div class="three cell" ng-click="editPage(page)"><a>[[page.title]]</a></div>
+			<div class="three cell" ng-click="editPage(page)">
+				<a><i ng-if="website.landingPage === page.titleLink" class="home"></i>[[page.title]]</a>
+			</div>
 			<div class="five cell" ng-click="editPage(page)">[[page.url(website)]]</div>
 			<div class="three cell date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></div>
 		</li>
