@@ -7,7 +7,8 @@ Behaviours.register('pages', {
 		resource: {
 			update: { right: 'fr-wseduc-pages-controllers-PagesController|update' },
 			remove: { right: 'fr-wseduc-pages-controllers-PagesController|delete' },
-			share: { right: 'fr-wseduc-pages-controllers-PagesController|share' }
+			share: { right: 'fr-wseduc-pages-controllers-PagesController|share' },
+			read: { right: 'fr-wseduc-pages-controllers-PagesController|get' }
 		}
 	},
 	model: {
