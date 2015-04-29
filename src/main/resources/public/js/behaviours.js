@@ -1,3 +1,5 @@
+console.log('pages behaviours file')
+
 Behaviours.register('pages', {
 	rights: {
 		workflow: {
@@ -367,7 +369,8 @@ Behaviours.register('pages', {
 				},
 				addLink: function(){
 					this.newLink.external = true;
-					if(this.newLink.href.indexOf('http') === -1 && this.newLink.indexOf('/pages') !== -1){
+
+					if(this.newLink.href.indexOf('http') === -1 && this.newLink.href.indexOf('/pages') !== -1){
 						this.newLink.external = false;
 					}
 
