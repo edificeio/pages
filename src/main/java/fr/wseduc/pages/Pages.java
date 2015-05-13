@@ -1,12 +1,9 @@
 package fr.wseduc.pages;
 
 import fr.wseduc.pages.controllers.PagesController;
-import fr.wseduc.pages.filters.PagesFilter;
 import fr.wseduc.pages.service.impl.PagesRepositoryEvents;
 import fr.wseduc.rs.ApiPrefixDoc;
 import org.entcore.common.http.BaseServer;
-import org.entcore.common.http.filter.MongoAppFilter;
-import org.entcore.common.http.filter.ResourceProviderFilter;
 import org.entcore.common.http.filter.ShareAndOwner;
 import org.entcore.common.mongodb.MongoDbConf;
 

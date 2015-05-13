@@ -46,7 +46,7 @@ public class PageReadFilter implements ResourcesProvider {
 			List<DBObject> groups = new ArrayList<>();
 			groups.add(QueryBuilder.start("userId").is(user.getUserId())
 					.put(sharedMethod).is(true).get());
-			for (String gpId: user.getProfilGroupsIds()) {
+			for (String gpId: user.getGroupsIds()) {
 				groups.add(QueryBuilder.start("groupId").is(gpId)
 						.put(sharedMethod).is(true).get());
 			}
