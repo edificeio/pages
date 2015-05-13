@@ -1,24 +1,42 @@
 package fr.wseduc.pages.controllers;
 
 import fr.wseduc.bus.BusAddress;
+import fr.wseduc.pages.Pages;
 import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
 import fr.wseduc.security.SecuredAction;
+
+import org.entcore.common.events.EventStore;
+import org.entcore.common.events.EventStoreFactory;
 import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.user.UserInfos;
 import org.entcore.common.user.UserUtils;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServerRequest;
+import org.vertx.java.core.http.RouteMatcher;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.platform.Container;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.entcore.common.bus.BusResponseHandler.busResponseHandler;
 
 public class PagesController extends MongoDbControllerHelper {
+
+	private EventStore eventStore;
+	private enum PagesEvent { ACCESS }
+
+	@Override
+	public void init(Vertx vertx, Container container, RouteMatcher rm,
+					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
+		super.init(vertx, container, rm, securedActions);
+		eventStore = EventStoreFactory.getFactory().getEventStore(Pages.class.getSimpleName());
+	}
 
 	public PagesController() {
 		super("pages");
@@ -29,6 +47,7 @@ public class PagesController extends MongoDbControllerHelper {
 	@SecuredAction("pages.view")
 	public void view(HttpServerRequest request) {
 		renderView(request);
+		eventStore.createAndStoreEvent(PagesEvent.ACCESS.name(), request);
 	}
 
 	@Get("/p/website")
@@ -42,6 +61,7 @@ public class PagesController extends MongoDbControllerHelper {
 		});
 	}
 
+	@Override
 	@Get("/list/:filter")
 	@ApiDoc("List all authorized pages.")
 	@SecuredAction("pages.list")
@@ -64,6 +84,7 @@ public class PagesController extends MongoDbControllerHelper {
 		retrieve(request);
 	}
 
+	@Override
 	@Put("/:id")
 	@ApiDoc("Update page by id.")
 	@SecuredAction(value = "page.contrib", type = ActionType.RESOURCE)
@@ -71,6 +92,7 @@ public class PagesController extends MongoDbControllerHelper {
 		super.update(request);
 	}
 
+	@Override
 	@Delete("/:id")
 	@ApiDoc("Delete page by id.")
 	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
@@ -122,6 +144,7 @@ public class PagesController extends MongoDbControllerHelper {
 		});
 	}
 
+	@Override
 	@Put("/share/remove/:id")
 	@ApiDoc("Remove share.")
 	@SecuredAction(value = "page.manager", type = ActionType.RESOURCE)
