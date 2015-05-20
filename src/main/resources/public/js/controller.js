@@ -201,6 +201,9 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.display.rename = false;
 		$scope.website.pages.selection()[0].title = $scope.display.newTitle;
 		$scope.website.save();
+		setTimeout(function(){
+			$scope.display.newTitle = '';
+		}, 500);
 	};
 
 	$scope.duplicate = function(){
