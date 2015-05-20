@@ -54,7 +54,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	template.open('grid-view', 'grid-view');
 	template.open('publish', 'publish');
 
-	function viewSite(siteId, pageLink){
+	function viewPage(siteId, pageLink){
 		model.websites.on('sync', function(){
 			var website = model.websites.findWhere({ '_id': siteId });
 			if(website === undefined){
@@ -76,10 +76,21 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			template.open('main', 'websites-list');
 		},
 		viewSite: function(params){
-			viewSite(params.siteId);
+
+			if($scope.website){
+				$location.path('/website/' + $scope.website._id + '/' + $scope.website.landingPage);
+
+			}
+			else{
+				model.websites.one('sync', function(){
+					var website = model.websites.findWhere({ '_id': params.siteId });
+					$scope.website = website;
+					$location.path('/website/' + website._id + '/' + website.landingPage);
+				});
+			}
 		},
 		viewPage: function(params){
-			viewSite(params.siteId, params.pageLink);
+			viewPage(params.siteId, params.pageLink);
 		}
 	});
 
