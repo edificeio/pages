@@ -46,7 +46,7 @@ model.build = function(){
 				content.width = width;
 				content.media.type = 'text';
 				content.media.source = '<h2>Une colonne</h2>' +
-					'<p>Cette colonne de texte vous permet d\'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite' +
+					'<p>Cette colonne de texte vous permet d\'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite ' +
 					'ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>';
 				row.addCell(content);
 			},
