@@ -109,7 +109,7 @@
 <div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
 	<div class="row toggle">
 		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1"><i18n>mainpage</i18n></button>
-		<button ng-click="display.rename = true"><i18n>rename</i18n></button>
+		<button ng-click="display.rename = true" ng-if="website.pages.selection().length === 1"><i18n>rename</i18n></button>
 		<button ng-click="display.duplicate = true" ng-if="website.pages.selection().length === 1"><i18n>duplicate</i18n></button>
 		<button ng-click="removeSelectedPages()"><i18n>remove</i18n></button>
 	</div>
