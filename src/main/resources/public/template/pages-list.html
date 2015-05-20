@@ -90,8 +90,7 @@
 		<li class="head">
 			<div class="one cell"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></div>
 			<div class="three cell">Page</div>
-			<div class="five cell">URL</div>
-			<div class="three cell date">Date</div>
+			<div class="eight cell">URL</div>
 		</li>
 		<li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index" ng-change="website.save()">
 			<div class="one cell">
@@ -101,8 +100,7 @@
 			<div class="three cell" ng-click="editPage(page)">
 				<a><i ng-if="website.landingPage === page.titleLink" class="home"></i>[[page.title]]</a>
 			</div>
-			<div class="five cell" ng-click="editPage(page)">[[page.url(website)]]</div>
-			<div class="three cell date" ng-click="editPage(page)"><a>[[date.format(page.modificationDate, 'DD/MM/YYYY')]]</a></div>
+			<div class="eight cell" ng-click="editPage(page)">[[page.url(website)]]</div>
 		</li>
 	</ul>
 </div>
