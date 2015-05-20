@@ -209,7 +209,9 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.website.pages.push($scope.page);
 		$scope.website.save();
 		$scope.display.duplicate = false;
-		$scope.page = new Page();
+		setTimeout(function(){
+			$scope.page = new Page();
+		}, 500);
 	};
 
 	$scope.editPage = function(page){
