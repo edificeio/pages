@@ -76,16 +76,16 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			template.open('main', 'websites-list');
 		},
 		viewSite: function(params){
-
-			if($scope.website){
-				$location.path('/website/' + $scope.website._id + '/' + $scope.website.landingPage);
-
+			if($scope.website._id){
+				location.replace(window.location.hash + '/' + $scope.website.landingPage);
+				viewPage($scope.website._id, $scope.website.landingPage);
 			}
 			else{
 				model.websites.one('sync', function(){
 					var website = model.websites.findWhere({ '_id': params.siteId });
 					$scope.website = website;
-					$location.path('/website/' + website._id + '/' + website.landingPage);
+					location.replace(window.location.hash + '/' + $scope.website.landingPage);
+					viewPage($scope.website._id, $scope.website.landingPage);
 				});
 			}
 		},
