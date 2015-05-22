@@ -180,12 +180,17 @@ Behaviours.register('pages', {
 				model.websites.remove(this);
 			};
 
-			this.Website.prototype.createWebsite = function(){
+			this.Website.prototype.createWebsite = function(cb){
 				http().postJson('/pages', this).done(function(data){
 					data.owner = { displayName: model.me.username, userId: model.me.userId };
 					this.updateData(data);
 					this.behaviours('pages');
-					model.websites.push(this);
+					if(model.websites){
+						model.websites.push(this);
+					}
+					if(typeof cb === 'function'){
+						cb();
+					}
 				}.bind(this));
 			};
 
@@ -202,7 +207,7 @@ Behaviours.register('pages', {
 					this.saveModifications(cb);
 				}
 				else{
-					this.createWebsite();
+					this.createWebsite(cb);
 				}
 			};
 

@@ -76,7 +76,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			template.open('main', 'websites-list');
 		},
 		viewSite: function(params){
-			if($scope.website._id){
+			if($scope.website._id === params.siteId){
 				location.replace(window.location.hash + '/' + $scope.website.landingPage);
 				viewPage($scope.website._id, $scope.website.landingPage);
 			}
