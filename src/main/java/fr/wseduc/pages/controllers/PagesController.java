@@ -32,8 +32,14 @@ public class PagesController extends MongoDbControllerHelper {
 	}
 
 	@Get("/p/website")
-	public void websiteView(HttpServerRequest request) {
-		renderView(request, null, "website.html", null);
+	public void websiteView(final HttpServerRequest request) {
+		UserUtils.getUserInfos(eb, request, new org.vertx.java.core.Handler<UserInfos>() {
+			@Override
+			public void handle(UserInfos user) {
+				JsonObject context = new JsonObject().putBoolean("notLoggedIn", user == null);
+				renderView(request, context, "website.html", null);
+			}
+		});
 	}
 
 	@Get("/list/:filter")
