@@ -19,14 +19,21 @@
 
 <lightbox show="snipletDisplay.enterLink" on-close="snipletDisplay.enterLink = false;">
 	<h2><i18n>sniplet.addLink</i18n></h2>
-	<div class="row">
-		<input type="text" ng-model="newLink.href" class="twelve cell" placeholder="http://mon-lien.nnn" />
-	</div>
-	<div class="row">
-		<input type="text" ng-model="newLink.text" class="twelve cell" i18n-placeholder="sniplet.form.displayText" />
-	</div>
-	<div class="row">
-		<button class="right-magnet" ng-click="addLink();"><i18n>add</i18n></button>
-		<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="snipletDisplay.enterLink = false;" />
-	</div>
+	<form name="linkForm" novalidate>
+		<div class="row">
+			<input name="url" type="text" ng-model="newLink.href" class="twelve cell" placeholder="http://mon-lien.nnn" required/>
+			<p class="input-errors" ng-if="linkForm.url.$invalid && linkForm.url.$dirty">
+				<span ng-repeat="(key, value) in linkForm.url.$error">
+					<label ng-if="value">[[lang.translate(key)]]</label>
+				</span>
+			</p>
+		</div>
+		<div class="row">
+			<input type="text" ng-model="newLink.text" class="twelve cell" i18n-placeholder="sniplet.form.displayText" />
+		</div>
+		<div class="row">
+			<button class="right-magnet" ng-click="addLink();" ng-disabled="linkForm.$invalid"><i18n>add</i18n></button>
+			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="snipletDisplay.enterLink = false;"/>
+		</div>
+	</form>
 </lightbox>

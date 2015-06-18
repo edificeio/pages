@@ -322,6 +322,7 @@ Behaviours.register('pages', {
 				init: function(){
 					var source = this.source;
 					this.me = model.me;
+					this.lang = lang;
 					if(source.customLinks){
 						this.links = source.customLinks;
 						this.custom = true;
