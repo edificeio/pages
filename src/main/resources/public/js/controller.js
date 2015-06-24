@@ -66,6 +66,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			template.open('main', 'page-viewer');
 		});
 		if($scope.website){
+			$scope.snipletResource = $scope.website;
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
 		}
