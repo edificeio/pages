@@ -91,7 +91,7 @@ model.build = function(){
 						blog.media.source = {
 							template: 'articles',
 							application: 'blog',
-							source: newBlog
+							source: { _id : newBlog._id }
 						};
 						row.addCell(blog);
 						blog.width = width;
