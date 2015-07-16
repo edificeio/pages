@@ -55,20 +55,21 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	template.open('publish', 'publish');
 
 	function viewPage(siteId, pageLink){
-		model.websites.on('sync', function(){
-			var website = model.websites.findWhere({ '_id': siteId });
-			if(website === undefined){
-				return;
-			}
-			$scope.website = website;
-			$scope.snipletResource = website;
-			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
-			template.open('main', 'page-viewer');
-		});
 		if($scope.website){
 			$scope.snipletResource = $scope.website;
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
+		} else {
+			model.websites.one('sync', function(){
+				var website = model.websites.findWhere({ '_id': siteId });
+				if(website === undefined){
+					return;
+				}
+				$scope.website = website;
+				$scope.snipletResource = website;
+				$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
+				template.open('main', 'page-viewer');
+			});
 		}
 	}
 
