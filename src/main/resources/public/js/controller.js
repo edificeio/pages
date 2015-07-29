@@ -1,5 +1,8 @@
 routes.define(function($routeProvider){
 	$routeProvider
+		.when('/website/:siteId/list-pages', {
+			action: 'listPages'
+		})
 		.when('/website/:siteId', {
 			action: 'viewSite',
 			reloadOnSearch: false
@@ -7,6 +10,9 @@ routes.define(function($routeProvider){
 		.when('/website/:siteId/:pageLink', {
 			action: 'viewPage',
 			reloadOnSearch: false
+		})
+		.when('/website/:siteId/edit/:pageLink', {
+			action: 'editPage'
 		})
 		.when('/list-sites', {
 			action: 'listSites',
@@ -55,6 +61,9 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	template.open('publish', 'publish');
 
 	function viewPage(siteId, pageLink){
+		if(pageLink[0] === ':'){
+			pageLink = $scope[pageLink.split(':')[1]];
+		}
 		if($scope.website){
 			$scope.snipletResource = $scope.website;
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
@@ -91,8 +100,23 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 				});
 			}
 		},
+		listPages: function(params){
+			template.open('main', 'website-manager');
+			template.open('edit-view', 'pages-list');
+			if($scope.website._id !== params.siteId){
+				model.websites.one('sync', function(){
+					var website = model.websites.findWhere({ '_id': params.siteId });
+					$scope.website = website;
+
+				});
+			}
+		},
 		viewPage: function(params){
 			viewPage(params.siteId, params.pageLink);
+		},
+		editPage: function(params){
+			viewPage(params.siteId, params.pageLink);
+			$scope.editPage($scope.page);
 		}
 	});
 
@@ -145,9 +169,49 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			notify.error('site.empty.title');
 			return;
 		}
+
 		$scope.page = new Page();
 		$scope.display.createNewSite = false;
-		$scope.website.save();
+		$scope.website.save(function(){
+			if($scope.website.visibility === 'PUBLIC'){
+				$scope.website.markups = {};
+				$scope.website.markups.view = [
+					{
+						href: '/pages#/list-sites',
+						label: 'pages.marker.websites',
+						resourceRight: 'read'
+					},
+					{
+						href: '#/website/' + $scope.website._id + '/edit/:page.titleLink',
+						label: 'edit',
+						resourceRight: 'update'
+					},
+					{
+						href: '/pages#/website/' + $scope.website._id + '/list-pages',
+						label: 'pages.marker.nav',
+						resourceRight: 'update'
+					}
+				];
+				$scope.website.markups.edit = [
+					{
+						href: '/pages#/list-sites',
+						label: 'pages.marker.websites',
+						resourceRight: 'read'
+					},
+					{
+						href: '#/website/' + $scope.website._id + '/:page.titleLink',
+						label: 'pages.marker.preview',
+						resourceRight: 'read'
+					},
+					{
+						href: '/pages#/website/' + $scope.website._id + '/list-pages',
+						label: 'pages.marker.nav',
+						resourceRight: 'update'
+					}
+				];
+			}
+			$scope.website.save();
+		});
 		$scope.snipletResource = $scope.website;
 		template.open('main', 'website-manager');
 		template.open('edit-view', 'website-properties');

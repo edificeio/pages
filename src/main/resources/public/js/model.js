@@ -32,22 +32,14 @@ model.build = function(){
 			content: function(row){
 				var content = new Cell();
 				content.media.type = 'text';
-				content.media.source = '<h1>Votre page personnelle</h1>' +
-				'<p>Vous pouvez entrer ici les informations que vous voulez : cliquez sur l\'encart de texte pour en modifier le contenu. ' +
-				'Vous pouvez aussi modifier l\'image ci-dessus (ou la supprimer en cliquant sur la petite croix en haut à droite). ' +
-				'La navigation de gauche sera complétée automatiquement au fur et à mesure que vous ajouterez des pages.</p>' +
-				'<h1>Publier votre page</h1>' +
-				'<p>Afin de publier votre page, vous devez publier le site web qui la contient. Vous pouvez le faire dans la partie "Propriétés" de l\'espace de gestion de votre site. ' +
-				'Lors de la publication de votre site, pensez à vérifier que tous les contenus que vous utilisez soient bien visibles des autres utilisateurs (blogs, liens ...).</p>';
+				content.media.source = lang.translate('pages.default.content');
 				row.addCell(content);
 			},
 			column: function(row, width){
 				var content = new Cell();
 				content.width = width;
 				content.media.type = 'text';
-				content.media.source = '<h2>Une colonne</h2>' +
-					'<p>Cette colonne de texte vous permet d\'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite ' +
-					'ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>';
+				content.media.source = lang.translate('pages.default.column');
 				row.addCell(content);
 			},
 			navigation: function(row, width){
@@ -302,7 +294,7 @@ model.build = function(){
 			this.selection().forEach(function(website){
 				website.remove();
 			});
-			notify.info('Les sites web ont été supprimés');
+			notify.info('pages.websites.removed');
 		}
 	});
 
