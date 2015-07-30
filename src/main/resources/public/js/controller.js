@@ -64,7 +64,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		if(pageLink[0] === ':'){
 			pageLink = $scope[pageLink.split(':')[1]];
 		}
-		if($scope.website){
+		if($scope.website._id){
 			$scope.snipletResource = $scope.website;
 			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
 			template.open('main', 'page-viewer');
