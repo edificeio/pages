@@ -125,9 +125,9 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.searchMatch = function(element){
-		return !$scope.display.search.trim() ?
+		return !element.hideInPages && (!$scope.display.search.trim() ?
 				true :
-				(lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1) && !element.hideInPages;
+				(lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1));
 	};
 
 	$scope.cancelSniplet = function(){
