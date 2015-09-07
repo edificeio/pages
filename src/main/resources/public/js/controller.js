@@ -120,12 +120,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		}
 	});
 
-	$scope.mine = function(element){
-		return !$scope.display.mineOnly || element.owner.userId === model.me.userId;
-	};
-
 	$scope.searchMatch = function(element){
-		return !element.hideInPages && (!$scope.display.search.trim() ?
+		return !element.hideInPages && (!$scope.display.mineOnly || element.owner.userId === model.me.userId) && (!$scope.display.search.trim() ?
 				true :
 				(lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1));
 	};

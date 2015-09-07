@@ -50,7 +50,7 @@
 
 <nav class="illustrated-links">
 	<ul>
-		<li ng-repeat="website in websites.all | filter:mine | filter:searchMatch">
+		<li ng-repeat="website in websites.all | filter:searchMatch">
 			<div class="illustration" ng-click="viewSite(website)">
 				<img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" />
 				<img skin-src="/img/illustrations/pages-default.png" alt="thumbnail" ng-if="!website.icon" />
