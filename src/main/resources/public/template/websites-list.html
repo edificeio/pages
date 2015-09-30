@@ -1,51 +1,52 @@
-<div class="row" workflow="pages.create">
-	<drop-down-button class="cell">
-		<label class="opener"><i18n>website.create</i18n></label>
-		<opts>
-			<li ng-click="display.createNewSite = true" >
-				<i18n>website.addForm.personal.title</i18n>
-			</li>
-			<li ng-click="display.createNewSite = true; website.visibility = 'PUBLIC';">
+<div class="row">
+	<h1 class="cell">Pages</h1>
+
+	<div class="cell right-magnet" workflow="pages.create">
+		<button class="right-magnet" ng-click="display.createNewSite = true">
+			<i18n>website.create</i18n>
+		</button>
+		<plus workflow="pages.createPublic">
+			<button ng-click="display.createNewSite = true; website.visibility = 'PUBLIC';" workflow="pages.createPublic">
 				<i18n>website.addForm.public.title</i18n>
-			</li>
-		</opts>
-	</drop-down-button>
-	<lightbox show="display.createNewSite" on-close="createNewSite = false">
-		<h2><i18n>website.addForm.title</i18n></h2>
-		<div class="row">
+			</button>
+		</plus>
+
+		<lightbox show="display.createNewSite" on-close="createNewSite = false">
+			<h2><i18n>website.addForm.title</i18n></h2>
 			<div class="row">
-				<label class="three cell"><i18n>title</i18n></label>
-				<input class="nine cell" type="text" ng-model="website.title" />
+				<div class="row">
+					<label class="three cell"><i18n>title</i18n></label>
+					<input class="nine cell" type="text" ng-model="website.title" />
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<button class="right-magnet" ng-click="createSite()"><i18n>create</i18n></button>
-			<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="cancelSiteCreation()" />
-		</div>
-	</lightbox>
+			<div class="row">
+				<button class="right-magnet" ng-click="createSite()"><i18n>create</i18n></button>
+				<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="cancelSiteCreation()" />
+			</div>
+		</lightbox>
+	</div>
 </div>
 
-<filters>
-	<li ng-class="{ selected: display.mineOnly }">
-		<label>
-			<i class="mine type" tooltip="filters.mine"></i>
-			<input type="checkbox" ng-model="display.mineOnly" />
-		</label>
-	</li>
-	<li ng-class="{ selected: display.internal }">
-		<label>
-
-		</label>
-	</li>
-	<li ng-class="{ selected: display.public }">
-		<label>
-
-		</label>
-	</li>
-</filters>
-
-<div class="row">
-	<input type="search" class="twelve cell" i18n-placeholder="search" ng-model="display.search" />
+<div class="row rigid-grid">
+	<div class="two cell">
+		<filters>
+			<li ng-class="{ selected: display.mineOnly }">
+				<label>
+					<i class="mine type" tooltip="filters.mine"></i>
+					<input type="checkbox" ng-model="display.mineOnly" />
+				</label>
+			</li>
+			<li ng-class="{ selected: display.publicSites }">
+				<label>
+					<i class="public type" tooltip="filters.publicSites"></i>
+					<input type="checkbox" ng-model="display.publicSites" />
+				</label>
+			</li>
+		</filters>
+	</div>
+	<div class="margin-two">
+		<input type="search" class="twelve cell" i18n-placeholder="search" ng-model="display.search" />
+	</div>
 </div>
 
 <nav class="illustrated-links">
@@ -57,16 +58,16 @@
 			</div>
 			<div class="content">
 				<div class="row">
-					<h1 ng-click="viewSite(website)" class="eight cell" ng-if="website.visibility !== 'PUBLIC'">[[website.title]]</h1>
-					<h1 class="eight cell" ng-if="website.visibility === 'PUBLIC'"><i class="public"></i><a target="_blank" ng-href="/pages/p/website#/website/[[website._id]]">[[website.title]]</a></h1>
-					<div class="four cell right-magnet">
-						<resource-right name="update" resource="website" class="cell right-magnet">
-							<button ng-click="editWebsite(website)"><i18n>properties</i18n></button>
-						</resource-right>
-						<resource-right name="remove" resource="website" class="cell right-magnet">
-							<button ng-click="openRemoveConfirm(website)"><i18n>remove</i18n></button>
-						</resource-right>
-					</div>
+					<resource-right name="update" resource="website">
+						<label class="cell"><input type="checkbox" ng-model="website.selected" /><span></span></label>
+					</resource-right>
+
+					<h2 ng-click="viewSite(website)" class="eight cell" ng-if="website.visibility !== 'PUBLIC'">
+						[[website.title]]
+					</h2>
+					<h2 class="eight cell" ng-if="website.visibility === 'PUBLIC'">
+						<i class="public"></i><a target="_blank" ng-href="/pages/p/website#/website/[[website._id]]">[[website.title]]</a>
+					</h2>
 				</div>
 				<div class="row">
 					<em>Par [[website.owner.displayName]]</em> - <a ng-href="[[website.url()]]" target="_blank"><strong>[[website.url()]]</strong></a>
@@ -77,13 +78,40 @@
 	</ul>
 </nav>
 
+<div class="toggle-buttons" ng-class="{ hide: websites.selection().length < 1 }">
+	<div class="row toggle">
+
+		<resource-right name="update" resource="websites.selection()">
+			<button ng-click="editWebsiteProperties()" ng-if="websites.selection().length === 1"><i18n>properties</i18n></button>
+		</resource-right>
+		<resource-right name="update" resource="websites.selection()">
+			<button ng-click="editWebsitePages()" ng-if="websites.selection().length === 1"><i18n>website.pages</i18n></button>
+		</resource-right>
+		<resource-right name="share" resource="websites.selection()" class="cell">
+			<button class="cell" ng-click="display.showSharePanel = true"><i18n>share</i18n></button>
+		</resource-right>
+		<button class="cell" ng-click="openPublish()" user-role="ADMIN_LOCAL" ng-if="websites.selection().length === 1"><i18n>pages.publish</i18n></button>
+		<div ng-if="display.showSharePanel">
+			<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
+				<share-panel app-prefix="'pages'" resources="websites.selection()"></share-panel>
+			</lightbox>
+		</div>
+		<lightbox show="display.showPublish" on-close="display.showPublish = false">
+			<container template="publish"></container>
+		</lightbox>
+		<resource-right name="remove" resource="websites.selection()">
+			<button ng-click="openRemoveConfirm(website)"><i18n>remove</i18n></button>
+		</resource-right>
+	</div>
+</div>
+
 <lightbox show="display.showConfirmRemove" on-close="display.showConfirmRemove = false">
 	<h2><i18n>remove</i18n></h2>
 
 	<p><i18n>remove.confirm</i18n></p>
 
 	<div class="row">
-		<button class="right-magnet" ng-click="removeWebsite()">
+		<button class="right-magnet" ng-click="removeWebsites()">
 			<i18n>remove</i18n>
 		</button>
 		<input class="cancel right-magnet" i18n-value="cancel" type="button" ng-click="display.showConfirmRemove = false" />

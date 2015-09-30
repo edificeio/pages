@@ -76,6 +76,13 @@ public class PagesController extends MongoDbControllerHelper {
 		create(request);
 	}
 
+	@Post("/p")
+	@ApiDoc("Add page.")
+	@SecuredAction("pages.add.public")
+	public void addPublic(HttpServerRequest request) {
+		create(request);
+	}
+
 	@Get("/:id")
 	@ApiDoc("Get page by id.")
 	@ResourceFilter(PageReadFilter.class)

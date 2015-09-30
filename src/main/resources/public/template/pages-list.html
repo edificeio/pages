@@ -85,25 +85,27 @@
 	</form>
 
 </lightbox>
-<div class="twelve cell">
-	<ul class="twelve list-view row" sortable-list>
-		<li class="head">
-			<div class="one cell"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></div>
-			<div class="three cell">Page</div>
-			<div class="eight cell">URL</div>
-		</li>
-		<li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index" ng-change="website.save()">
-			<div class="one cell">
-				<i class="drag-anchor"></i>
-				<input type="checkbox" ng-model="page.selected" />
-			</div>
-			<div class="three cell" ng-click="editPage(page)">
-				<a><i ng-if="website.landingPage === page.titleLink" class="home"></i>[[page.title]]</a>
-			</div>
-			<div class="eight cell" ng-click="editPage(page)">[[page.url(website)]]</div>
-		</li>
-	</ul>
-</div>
+
+	<article class="twelve cell">
+		<ul class="twelve list-view row" sortable-list>
+			<li class="head">
+				<div class="one cell"><input type="checkbox" ng-model="display.selectAllPages" ng-change="switchSelectAllPages()"/></div>
+				<div class="three cell">Page</div>
+				<div class="eight cell">URL</div>
+			</li>
+			<li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index" ng-change="website.save()">
+				<div class="one cell">
+					<i class="drag-anchor"></i>
+					<input type="checkbox" ng-model="page.selected" />
+				</div>
+				<div class="three cell" ng-click="editPage(page)">
+					<a><i ng-if="website.landingPage === page.titleLink" class="home"></i>[[page.title]]</a>
+				</div>
+				<div class="eight cell" ng-click="editPage(page)">[[page.url(website)]]</div>
+			</li>
+		</ul>
+	</article>
+
 
 
 <div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">

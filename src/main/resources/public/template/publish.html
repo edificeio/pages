@@ -16,7 +16,7 @@
 	</div>
 	<div class="row">
 		<h2><i18n>search</i18n></h2>
-		<input type="text" ng-model="display.search" i18n-placeholder="share.search.placeholder" />
+		<input type="text" ng-model="display.searchGroups" i18n-placeholder="share.search.placeholder" />
 		<div class="found-users-list">
 			<div ng-repeat="structure in localAdmin.structures.all">
 				<div ng-repeat="group in structure.groups.all | filter:matchSearch | orderBy:'name'" class="row autocomplete">

@@ -35,17 +35,30 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		showEditButtons: true,
 		search: '',
 		mineOnly: false,
+		publicSites: false,
 		snipletStep: 1,
 		maxResults: 5,
 		maxEdit: 5
 	};
 
 	$rootScope.$on('share-updated', function(event, changes){
-		$scope.website.saveModifications(function(){
-			$scope.website.sync(function(){
-				$scope.website.synchronizeRights();
+		if(template.contains('main', 'websites-list')){
+			model.websites.selection().forEach(function(website){
+				website.saveModifications(function(){
+					website.sync(function(){
+						website.synchronizeRights();
+					});
+				});
 			});
-		});
+		}
+		else{
+			$scope.website.saveModifications(function(){
+				$scope.website.sync(function(){
+					$scope.website.synchronizeRights();
+				});
+			});
+		}
+
 	});
 
 	sniplets.load(function(){
@@ -121,7 +134,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	});
 
 	$scope.searchMatch = function(element){
-		return !element.hideInPages && (!$scope.display.mineOnly || element.owner.userId === model.me.userId) && (!$scope.display.search.trim() ?
+		var filters = (!$scope.display.mineOnly || element.owner.userId === model.me.userId) && ($scope.display.publicSites || element.visibility !== 'PUBLIC')
+		return !element.hideInPages && filters && (!$scope.display.search.trim() ?
 				true :
 				(lang.removeAccents((element.title || '').toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1));
 	};
@@ -146,11 +160,8 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		template.open('edit-view', 'pages-list');
 	};
 
-	$scope.removeWebsite = function(site){
-		if(!site){
-			site = $scope.website;
-		}
-		site.remove();
+	$scope.removeWebsites = function(){
+		model.websites.removeSelection();
 		$scope.website = new Website();
 		$scope.display.showConfirmRemove = false;
 	};
@@ -213,11 +224,17 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		template.open('edit-view', 'website-properties');
 	};
 
-	$scope.editWebsite = function(website){
-		$scope.website = website;
-		if(!website){
-			$scope.website = $scope.websites.selection()[0];
-		}
+	$scope.editWebsiteProperties = function(){
+		$scope.website = model.websites.selection()[0];
+		$scope.snipletResource = $scope.website;
+
+		$scope.page = new Page();
+		template.open('main', 'website-manager');
+		template.open('edit-view', 'website-properties');
+	};
+
+	$scope.editWebsitePages = function(){
+		$scope.website = model.websites.selection()[0];
 		$scope.snipletResource = $scope.website;
 
 		$scope.page = new Page();
@@ -411,12 +428,15 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.openPublish = function(){
+		if(template.contains('main', 'websites-list')){
+			$scope.website = model.websites.selection()[0];
+		}
 		$scope.display.showPublish = true;
 		model.localAdmin.structures.sync();
 	};
 
 	$scope.matchSearch = function(element){
-		return $scope.display.search && lang.removeAccents(element.name.toLowerCase()).indexOf(lang.removeAccents($scope.display.search.toLowerCase())) !== -1;
+		return $scope.display.searchGroups && lang.removeAccents(element.name.toLowerCase()).indexOf(lang.removeAccents($scope.display.searchGroups.toLowerCase())) !== -1;
 	};
 
 	$scope.publishForGroup = function(structure, group){

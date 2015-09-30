@@ -4,6 +4,7 @@ Behaviours.register('pages', {
 	rights: {
 		workflow: {
 			create: 'fr.wseduc.pages.controllers.PagesController|add',
+			createPublic: 'fr.wseduc.pages.controllers.PagesController|addPublic',
 			share: 'fr.wseduc.pages.controllers.PagesController|share'
 		},
 		resource: {
@@ -181,7 +182,11 @@ Behaviours.register('pages', {
 			};
 
 			this.Website.prototype.createWebsite = function(cb){
-				http().postJson('/pages', this).done(function(data){
+				var path = '/pages';
+				if(this.visibility === 'PUBLIC'){
+					path = '/pages/p'
+				}
+				http().postJson(path, this).done(function(data){
 					data.owner = { displayName: model.me.username, userId: model.me.userId };
 					this.updateData(data);
 					this.behaviours('pages');
