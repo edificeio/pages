@@ -88,7 +88,7 @@
 			<button ng-click="editWebsitePages()" ng-if="websites.selection().length === 1"><i18n>website.pages</i18n></button>
 		</resource-right>
 		<resource-right name="share" resource="websites.selection()" class="cell">
-			<button class="cell" ng-click="display.showSharePanel = true"><i18n>share</i18n></button>
+			<button class="cell" ng-click="display.showSharePanel = true" ng-if="!websites.findWhere({ selected: true, visibility: 'PUBLIC' })"><i18n>share</i18n></button>
 		</resource-right>
 		<button class="cell" ng-click="openPublish()" user-role="ADMIN_LOCAL" ng-if="websites.selection().length === 1"><i18n>pages.publish</i18n></button>
 		<div ng-if="display.showSharePanel">
