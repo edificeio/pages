@@ -31,13 +31,13 @@
 	<div class="two cell">
 		<filters>
 			<li ng-class="{ selected: display.mineOnly }">
-				<label>
+				<label ng-click="websites.deselectAll()">
 					<i class="mine type" tooltip="filters.mine"></i>
 					<input type="checkbox" ng-model="display.mineOnly" />
 				</label>
 			</li>
 			<li ng-class="{ selected: display.publicSites }">
-				<label>
+				<label ng-click="websites.deselectAll()">
 					<i class="public type" tooltip="filters.publicSites"></i>
 					<input type="checkbox" ng-model="display.publicSites" />
 				</label>
