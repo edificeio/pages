@@ -7,6 +7,10 @@ function Structure(data){
 	this.collection(Group, {
 		sync: function(){
 			http().get('/appregistry/groups/roles?structureId=' + that.id).done(function(groups){
+				groups = _.map(groups, function(group){
+					group.structureId = that.id;
+					return group;
+				});
 				this.load(groups);
 			}.bind(this))
 		}
