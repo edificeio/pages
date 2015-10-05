@@ -78,7 +78,7 @@
 
 					</div>
 					<div ng-if="cell.media.type === 'video'" class="text-wrapper">
-						<div class="absolute" bind-html="cell.media.source" style="pointer-events: none;"></div>
+						<div bind-html="cell.media.source" style="pointer-events: none;"></div>
 					</div>
 					<div ng-if="cell.media.type === 'image'" class="image-container">
 						<image-select ng-model="cell.media.source" visibility="website.visibility"></image-select>
