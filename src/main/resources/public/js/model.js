@@ -196,15 +196,15 @@ model.build = function(){
 			icon = this.icon + '?thumbnail=150x150'
 		}
 		http().postJson('/appregistry/application/external?structureId=' + structure.id, {
-			grantType: "authorization_code",
-			displayName: this.title,
-			secret: "",
-			address: this.url({ relative: true }),
-			icon: icon,
-			target: "",
-			scope: "",
-			name: this.title
-		})
+				grantType: "authorization_code",
+				displayName: this.title,
+				secret: "",
+				address: this.url({ relative: true }),
+				icon: icon,
+				target: "",
+				scope: "",
+				name: this.title
+			})
 			.done(function(newApp){
 				http().postJson('/appregistry/role?structureId=' + structure.id, {
 					role: this.title,
@@ -220,7 +220,10 @@ model.build = function(){
 							cb();
 						}
 					}.bind(this))
-			}.bind(this));
+			}.bind(this))
+			.e409(function(e){
+				notify.error('app.notify.e409');
+			});
 	};
 
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.addRoleForGroup = function(structure, group){
