@@ -233,6 +233,13 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		template.open('edit-view', 'website-properties');
 	};
 
+	$scope.saveProperties = function(){
+		$scope.website.save(function(){
+			$scope.website.updateApplication();
+			$scope.home()
+		});
+	};
+
 	$scope.editWebsitePages = function(){
 		$scope.website = model.websites.selection()[0];
 		$scope.snipletResource = $scope.website;
