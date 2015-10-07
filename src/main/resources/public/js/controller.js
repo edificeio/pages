@@ -439,7 +439,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.matchSearch = function(element){
 		return $scope.display.searchGroups
 				&& lang.removeAccents(element.name.toLowerCase()).indexOf(lang.removeAccents($scope.display.searchGroups.toLowerCase())) !== -1
-				&& !_.findWhere($scope.website.published[element.structureId].groups, { id: element.id });
+				&& ($scope.website.published === undefined || !_.findWhere($scope.website.published[element.structureId].groups, { id: element.id }));
 	};
 
 	$scope.publishForGroup = function(structure, group){
