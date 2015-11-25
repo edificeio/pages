@@ -81,6 +81,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			if($scope.website.pages.length() === 0 && $scope.website.myRights.update){
 				template.open('main', 'website-manager');
 				template.open('edit-view', 'pages-list');
+				$scope.page = new Page();
 			}
 			else{
 				$scope.snipletResource = $scope.website;
@@ -97,6 +98,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 				if(website.pages.length() === 0 && website.myRights.update){
 					template.open('main', 'website-manager');
 					template.open('edit-view', 'pages-list');
+					$scope.page = new Page();
 				}
 				else{
 					$scope.website = website;
