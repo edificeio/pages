@@ -74,23 +74,36 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	template.open('publish', 'publish');
 
 	function viewPage(siteId, pageLink){
-		if(pageLink[0] === ':'){
+		if(pageLink && pageLink[0] === ':'){
 			pageLink = $scope[pageLink.split(':')[1]];
 		}
 		if($scope.website._id){
-			$scope.snipletResource = $scope.website;
-			$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
-			template.open('main', 'page-viewer');
+			if($scope.website.pages.length() === 0 && $scope.website.myRights.update){
+				template.open('main', 'website-manager');
+				template.open('edit-view', 'pages-list');
+			}
+			else{
+				$scope.snipletResource = $scope.website;
+				$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
+				template.open('main', 'page-viewer');
+			}
+
 		} else {
 			model.websites.one('sync', function(){
 				var website = model.websites.findWhere({ '_id': siteId });
 				if(website === undefined){
 					return;
 				}
-				$scope.website = website;
-				$scope.snipletResource = website;
-				$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
-				template.open('main', 'page-viewer');
+				if(website.pages.length() === 0 && website.myRights.update){
+					template.open('main', 'website-manager');
+					template.open('edit-view', 'pages-list');
+				}
+				else{
+					$scope.website = website;
+					$scope.snipletResource = website;
+					$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
+					template.open('main', 'page-viewer');
+				}
 			});
 		}
 	}
@@ -108,6 +121,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 				model.websites.one('sync', function(){
 					var website = model.websites.findWhere({ '_id': params.siteId });
 					$scope.website = website;
+
 					location.replace(window.location.hash + '/' + $scope.website.landingPage);
 					viewPage($scope.website._id, $scope.website.landingPage);
 				});
