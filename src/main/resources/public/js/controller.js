@@ -452,4 +452,12 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.publishForGroup = function(structure, group){
 		$scope.website.publish(structure, group);
 	};
+
+	$scope.isLocalAdmin = function(){
+		return model.me.functions["ADMIN_LOCAL"]
+	}
+
+	$scope.showPublishLabel = function(){
+		$scope.showLabel = true
+	}
 }

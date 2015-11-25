@@ -24,21 +24,26 @@
 
 </div>
 
-<h2>Publication</h2>
+<h2 ng-if="showLabel">Publication</h2>
 
-		<article class="info row" ng-if="website.visibility === 'PUBLIC'">
-			<i18n>public.info</i18n>
-		</article>
+<article class="info row" ng-if="website.visibility === 'PUBLIC'">
+	<i18n>public.info</i18n>
+</article>
 
 <resource-right name="share" resource="website" class="cell">
-		<button class="cell" ng-click="display.showSharePanel = true">Partager dans l'ENT</button>
+	<button class="cell" ng-click="display.showSharePanel = true" ng-init="showPublishLabel()">Partager dans l'ENT</button>
 </resource-right>
-		<button class="cell" ng-click="openPublish()" user-role="ADMIN_LOCAL">Publier dans les applications</button>
-		<div ng-if="display.showSharePanel">
-			<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
-				<share-panel app-prefix="'pages'" resources="website"></share-panel>
-			</lightbox>
-		</div>
-		<lightbox show="display.showPublish" on-close="display.showPublish = false">
-			<container template="publish"></container>
-		</lightbox>
+
+<button class="cell" ng-click="openPublish()" ng-if="isLocalAdmin()">
+	<span ng-init="showPublishLabel()">Publier dans les applications</span>
+</button>
+
+<div ng-if="display.showSharePanel">
+	<lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
+		<share-panel app-prefix="'pages'" resources="website"></share-panel>
+	</lightbox>
+</div>
+
+<lightbox show="display.showPublish" on-close="display.showPublish = false">
+	<container template="publish"></container>
+</lightbox>
