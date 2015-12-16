@@ -210,20 +210,14 @@ model.build = function(){
 				name: this.title
 			})
 			.done(function(newApp){
-				http().postJson('/appregistry/role?structureId=' + structure.id, {
-					role: this.title,
-					actions: [this.title + "|address"]
-				})
-					.done(function(newRole){
-						this.published[structure.id] = {
-							role: newRole,
-							groups: [],
-							application: newApp
-						};
-						if(typeof cb === 'function'){
-							cb();
-						}
-					}.bind(this))
+				this.published[structure.id] = {
+					role: {id: newApp.roleId},
+					groups: [],
+					application: {id: newApp.id}
+				};
+				if(typeof cb === 'function'){
+					cb();
+				}
 			}.bind(this))
 			.e409(function(e){
 				notify.error('app.notify.e409');
@@ -231,41 +225,23 @@ model.build = function(){
 	};
 
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.addRoleForGroup = function(structure, group){
-		group.roles.push(this.published[structure.id].role.id);
-		http().postJson('/appregistry/authorize/group?structureId=' + structure.id, {
-			groupId: group.id,
-			roleIds: group.roles
-		})
-			.done(function(){
-				this.trigger('change');
-			}.bind(this));
-		this.published[structure.id].groups.push(group);
-		this.save();
+        var roleId = this.published[structure.id].role.id;
+		http().put('/appregistry/authorize/group/' + group.id + '/role/' + roleId).done(function(){
+            group.roles.push(roleId);
+            this.published[structure.id].groups.push(group);
+    		this.save();
+			this.trigger('change');
+		}.bind(this));
 	};
 
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.removeRoleForGroup = function(structure, group){
-		var that = this;
-		var rolesList = [];
-		group.roles.forEach(function(role){
-			if(role.id !== that.published[structure.id].role.id){
-				rolesList.push(role);
-			}
-		});
-		group.roles = rolesList;
-
-		http().postJson('/appregistry/authorize/group?structureId=' + structure.id, {
-			groupId: group.id,
-			roleIds: group.roles
-		});
-
-		var groups = [];
-		this.published[structure.id].groups.forEach(function(grp){
-			if(grp.id !== group.id){
-				groups.push(grp);
-			}
-		});
-		this.published[structure.id].groups = groups;
-		this.save();
+        var roleId = this.published[structure.id].role.id;
+		http().delete('/appregistry/authorize/group/' + group.id + '/role/' + roleId).done(function(){
+            group.roles = _.filter(group.roles, function(r){ return r.id !== roleId; });
+            this.published[structure.id].groups = _.filter(this.published[structure.id].groups, function(grp){ return grp.id !== group.id; });
+            this.save();
+			this.trigger('change');
+		}.bind(this));
 	};
 
 	Behaviours.applicationsBehaviours.pages.model.Website.prototype.publish = function(structure, group){
@@ -274,7 +250,7 @@ model.build = function(){
 		}
 		if(!this.published[structure.id]){
 			this.makeApplication(structure, function(){
-				this.addRoleForGroup(structure, group)
+				this.addRoleForGroup(structure, group);
 			}.bind(this));
 		}
 		else{
