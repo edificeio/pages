@@ -207,7 +207,7 @@ model.build = function(){
 				icon: icon,
 				target: "",
 				scope: "",
-				name: this.title
+				name: this.title + " - " + structure.id
 			})
 			.done(function(newApp){
 				this.published[structure.id] = {
