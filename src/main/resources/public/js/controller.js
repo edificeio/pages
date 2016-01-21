@@ -279,6 +279,11 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		$scope.page = new Page();
 	};
 
+    $scope.newPage = function() {
+        $scope.display.createNewPage = true;
+        $scope.page = new Page();
+    };
+
 	$scope.createPage = function(templateName){
 		if(!$scope.page.title){
 			notify.error('page.needs.title');
