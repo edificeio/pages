@@ -335,7 +335,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	$scope.removeCell = function(row, cell){
 		row.cells.remove(cell);
 		if(row.cells.length() === 0){
-			$scope.page.rows.remove(row);
+		    $scope.display.editGrid.rows.remove(row);
 		}
 	};
 
