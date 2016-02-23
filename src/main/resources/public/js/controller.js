@@ -325,7 +325,16 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 	};
 
 	$scope.duplicate = function(){
-		$scope.page.titleLink = encodeURIComponent(lang.removeAccents($scope.page.title.replace(/\ /g, '-').replace(/:/g, '-').replace(/\?/g, '')).toLowerCase());
+	    $scope.page.titleLink = encodeURIComponent(lang.removeAccents(
+            $scope.page.title
+                .replace(/\ /g, '-')
+                .replace(/:/g, '-')
+                .replace(/\?/g, '')
+                .replace(/#/g, 'hash')
+                .replace(/%/g, 'percent')
+                .replace(/$/g, 'dollar')
+                .replace(/£/g, 'pound')
+        ).toLowerCase());
 		$scope.page.rows.load(JSON.parse(JSON.stringify($scope.website.pages.selection()[0].rows)));
 		$scope.website.pages.push($scope.page);
 		$scope.website.save();
