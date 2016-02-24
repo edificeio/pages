@@ -301,7 +301,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
                 .replace(/\?/g, '')
                 .replace(/#/g, 'hash')
                 .replace(/%/g, 'percent')
-                .replace(/$/g, 'dollar')
+                .replace(/\$/g, 'dollar')
                 .replace(/£/g, 'pound')
         ).toLowerCase());
 		$scope.website.pages.push($scope.page);
@@ -332,7 +332,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
                 .replace(/\?/g, '')
                 .replace(/#/g, 'hash')
                 .replace(/%/g, 'percent')
-                .replace(/$/g, 'dollar')
+                .replace(/\$/g, 'dollar')
                 .replace(/£/g, 'pound')
         ).toLowerCase());
 		$scope.page.rows.load(JSON.parse(JSON.stringify($scope.website.pages.selection()[0].rows)));
