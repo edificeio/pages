@@ -1,21 +1,36 @@
-<nav class="vertical twelve cell">
-	<ul>
-		<li ng-repeat="link in links | orderBy:'index'">
-			<a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
-				[[link.text]]
-				<behaviour name="update" resource="snipletResource">
-					<i ng-if="link.external" class="close" ng-click="removeLink($index, $event)"></i>
-				</behaviour>
-			</a>
-			<a ng-click="redirect(link)" ng-if="!link.external" ng-class="{ selected: currentLink(link) }">
-				[[link.text]]
-			</a>
-		</li>
-	</ul>
-	<resource-right name="update" resource="snipletResource">
-		<a class="classic-link" ng-click="snipletDisplay.enterLink = true;" ng-if="custom">Ajouter un lien</a>
-	</resource-right>
-</nav>
+<div ng-if="custom">
+    <nav class="vertical twelve cell">
+        <ul>
+            <li ng-repeat="link in links | orderBy:'index'">
+                <a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
+                    [[link.text]]
+                    <behaviour name="update" resource="snipletResource">
+                        <i ng-if="link.external" class="close" ng-click="removeLink($index, $event)"></i>
+                    </behaviour>
+                </a>
+                <a ng-click="redirect(link)" ng-if="!link.external" ng-class="{ selected: currentLink(link) }">
+                    [[link.text]]
+                </a>
+            </li>
+        </ul>
+        <resource-right name="update" resource="snipletResource">
+            <a class="classic-link" ng-click="snipletDisplay.enterLink = true;">Ajouter un lien</a>
+        </resource-right>
+    </nav>
+</div>
+
+<div ng-if="!custom">
+    <nav class="vertical twelve cell" side-nav>
+        <ul>
+            <li ng-repeat="link in links | orderBy:'index'">
+                <a ng-click="redirect(link)" ng-class="{ selected: currentLink(link) }">
+                    [[link.text]]
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 
 <lightbox show="snipletDisplay.enterLink" on-close="snipletDisplay.enterLink = false;">
 	<h2><i18n>sniplet.addLink</i18n></h2>

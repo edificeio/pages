@@ -1,7 +1,7 @@
 <div class="row">
 	<h1 class="cell"><a data-reload>Pages</a></h1>
 
-	<div class="cell right-magnet" workflow="pages.create">
+	<div class="cell right-magnet zero-mobile" workflow="pages.create">
 		<button class="right-magnet" ng-click="display.createNewSite = true">
 			<i18n>website.create</i18n>
 		</button>
@@ -52,14 +52,14 @@
 <nav class="illustrated-links">
 	<ul>
 		<li ng-repeat="website in websites.all | filter:searchMatch">
-			<div class="illustration" ng-click="viewSite(website)">
+			<div class="illustration zero-mobile" ng-click="viewSite(website)">
 				<img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" />
 				<img skin-src="/img/illustrations/pages-default.png" alt="thumbnail" ng-if="!website.icon" />
 			</div>
 			<div class="content">
 				<div class="row">
 					<resource-right name="update" resource="website">
-						<label class="cell"><input type="checkbox" ng-model="website.selected" /><span></span></label>
+						<label class="cell zero-mobile"><input type="checkbox" ng-model="website.selected" /><span></span></label>
 					</resource-right>
 
 					<h2 ng-click="viewSite(website)" class="eight cell" ng-if="website.visibility !== 'PUBLIC'">
