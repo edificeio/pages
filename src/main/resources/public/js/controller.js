@@ -303,6 +303,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
                 .replace(/%/g, 'percent')
                 .replace(/\$/g, 'dollar')
                 .replace(/£/g, 'pound')
+                .replace(/\^/, 'circ')
         ).toLowerCase());
 		$scope.website.pages.push($scope.page);
 		if($scope.website.pages.length() === 1){
@@ -334,6 +335,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
                 .replace(/%/g, 'percent')
                 .replace(/\$/g, 'dollar')
                 .replace(/£/g, 'pound')
+                .replace(/\^/, 'circ')
         ).toLowerCase());
 		$scope.page.rows.load(JSON.parse(JSON.stringify($scope.website.pages.selection()[0].rows)));
 		$scope.website.pages.push($scope.page);
