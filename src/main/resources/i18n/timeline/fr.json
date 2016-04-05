@@ -1,3 +1,5 @@
 {
+  "pages": "Pages",
+  "pages.shared": "Partage d'une Page",
   "timeline.page.has.shared" : "vous a partagé la page"
 }

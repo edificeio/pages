@@ -141,11 +141,13 @@ public class PagesController extends MongoDbControllerHelper {
 					}
 
 					JsonObject params = new JsonObject()
-							.putString("uri", "/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
+							.putString("uri", container.config().getString("host", "http://localhost:8025") +
+									"/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
 							.putString("username", user.getUsername())
-							.putString("pageUri", "/pages#/website/" + id);
+							.putString("pageUri", container.config().getString("host", "http://localhost:8025") +
+									"/pages#/website/" + id);
 
-					shareJsonSubmit(request, "notify-shared.html", false, params, "title");
+					shareJsonSubmit(request, "pages.shared", false, params, "title");
 				}
 			}
 		});
