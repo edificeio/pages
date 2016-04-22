@@ -146,6 +146,7 @@ public class PagesController extends MongoDbControllerHelper {
 							.putString("username", user.getUsername())
 							.putString("pageUri", container.config().getString("host", "http://localhost:8025") +
 									"/pages#/website/" + id);
+					params.putString("resourceUri", params.getString("pageUri"));
 
 					shareJsonSubmit(request, "pages.shared", false, params, "title");
 				}
