@@ -15,7 +15,7 @@
 	"group.class.Student" : "Tous les élèves de la classe {0}.",
 	"group.class.Relative" : "Tous les parents de la classe {0}.",
     "group.class.Guest": "Tous les invités de la classe {0}.",
-	"group.AdminLocal": "Tous les administrateurs locaux",
+	"group.AdminLocal": "Tous les administrateurs locaux du groupe {0}.",
 	"group.manager" : "Tous les gestionnnaires de la communauté {0}.",
 	"group.contrib" : "Tous les contributeurs de la communauté {0}.",
 	"group.read" : "Tous les lecteurs de la communauté {0}.",
