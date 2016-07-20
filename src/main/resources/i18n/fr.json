@@ -33,7 +33,7 @@
     "page.needs.title": "Votre page doit avoir un titre",
     "post.date": "le",
 	"pages.publish.title": "Afficher dans les applications",
-	"pages.publish.groups.info": "Selectionner les utilisateurs (vous y compris) qui disposeront de l'application",
+	"pages.publish.groups.info": "Sélectionner les groupes utilisateurs (vous y compris) qui disposeront de l'application",
 	"pages.publish.reconnexion": "Ce changement sera effectif lors de votre prochaine connexion",
 	"cell.add.text": "Ajouter du texte",
 	"website.title": "Titre",
