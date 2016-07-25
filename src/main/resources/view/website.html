@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>Pages</title>
@@ -9,14 +9,22 @@
 	{{#notLoggedIn}}
 	<script type="text/javascript">var notLoggedIn = true;</script>
 	{{/notLoggedIn}}
+    <script type="text/ng-template" id="empty">
+    </script>
 </head>
-<script type="text/ng-template" id="empty"></script>
+
 <body ng-click="editGrid(page, $event)" ng-controller="PagesController" class="public">
-	<div class="logo"></div>
+    <header class="main">
+        <section class="navbar">
+            <div class="logo"></div>
+        </section>
+    </header>
 	<default-styles>
-		<section class="main">
-			<container template="main"></container>
-		</section>
+        <div class="material">
+            <section class="main">
+                <container template="main"></container>
+            </section>
+        </div>
 	</default-styles>
 </body>
 </html>
