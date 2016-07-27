@@ -13,6 +13,6 @@
 
 <div class="page-markers" ng-if="website.markups.view !== undefined">
 	<resource-right name="[[markup.resourceRight]]" resource="website" class="marker" ng-repeat="markup in website.markups.view">
-		<a ng-href="[[markup.href]]" translate content="[[markup.label]]" class="content"></a>
+		<a ng-href="[[parseUrl(markup.href)]]" translate content="[[markup.label]]" class="content"></a>
 	</resource-right>
 </div>

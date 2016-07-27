@@ -104,7 +104,12 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 					$scope.website = website;
 					$scope.snipletResource = website;
 					$scope.page = $scope.website.pages.findWhere({ 'titleLink': pageLink || $scope.website.landingPage });
-					template.open('main', 'page-viewer');
+					if (!template.contains('main', 'page-editor')) {
+					    template.open('main', 'page-viewer');
+					}
+					else {
+					    $scope.display.editGrid = $scope.page;
+					}
 				}
 			});
 		}
@@ -205,7 +210,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 						resourceRight: 'read'
 					},
 					{
-						href: '#/website/' + $scope.website._id + '/edit/:page.titleLink',
+					    href: '/pages#/website/' + $scope.website._id + '/edit/:page.titleLink',
 						label: 'edit',
 						resourceRight: 'update'
 					},
@@ -323,6 +328,10 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 		setTimeout(function(){
 			$scope.display.newTitle = '';
 		}, 500);
+	};
+
+	$scope.parseUrl = function (path) {
+	    return http().parseUrl(path, $scope);
 	};
 
 	$scope.duplicate = function(){

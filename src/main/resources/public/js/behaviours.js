@@ -184,7 +184,7 @@ Behaviours.register('pages', {
 			this.Website.prototype.createWebsite = function(cb){
 				var path = '/pages';
 				if(this.visibility === 'PUBLIC'){
-					path = '/pages/p'
+				    path = '/pages/p';
 				}
 				http().postJson(path, this).done(function(data){
 					data.owner = { displayName: model.me.username, userId: model.me.userId };
