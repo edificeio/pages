@@ -106,13 +106,23 @@
 		</ul>
 	</article>
 
-
+<lightbox show="display.confirmRemovePages" on-close="display.confirmRemovePages = false">
+    <div class="row">
+        <h2><i18n>remove</i18n></h2>
+        <p><i18n>remove.page.confirm</i18n></p>
+    </div>
+    <div class="row">
+        <button class="right-magnet" ng-click="removeSelectedPages(); display.confirmRemovePages = false"><i18n>remove</i18n></button>
+        <button class="right-magnet cancel" ng-click="display.confirmRemovePages = false"><i18n>cancel</i18n></button>
+        
+    </div>
+</lightbox>
 
 <div class="toggle-buttons" ng-class="{ hide: website.pages.selection().length < 1 }">
 	<div class="row toggle">
 		<button ng-click="setLandingPage()" ng-if="website.pages.selection().length === 1"><i18n>mainpage</i18n></button>
 		<button ng-click="display.rename = true" ng-if="website.pages.selection().length === 1"><i18n>rename</i18n></button>
 		<button ng-click="display.duplicate = true" ng-if="website.pages.selection().length === 1"><i18n>duplicate</i18n></button>
-		<button ng-click="removeSelectedPages()"><i18n>remove</i18n></button>
+		<button ng-click="display.confirmRemovePages = true"><i18n>remove</i18n></button>
 	</div>
 </div>

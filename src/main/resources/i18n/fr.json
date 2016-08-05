@@ -49,6 +49,7 @@
 	"website.addForm.public.title": "Site public",
   "website.pages": "Liste des pages",
   "remove.confirm": "Voulez-vous vraiment supprimer le site web ?",
+  "remove.page.confirm": "Voulez-vous vraiment supprimer la page ?",
 	"page.form.title": "Titre de la nouvelle page",
 	"page.create.title": "Nouvelle page",
 	"templates.title": "Modèles",
