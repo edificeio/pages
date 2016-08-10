@@ -157,10 +157,10 @@ public class PagesController extends MongoDbControllerHelper {
 					}
 
 					JsonObject params = new JsonObject()
-							.putString("uri", container.config().getString("host", "http://localhost:8025") +
+							.putString("uri", getScheme(request) + "://" + getHost(request) +
 									"/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
 							.putString("username", user.getUsername())
-							.putString("pageUri", container.config().getString("host", "http://localhost:8025") +
+							.putString("pageUri", getScheme(request) + "://" + getHost(request) +
 									"/pages#/website/" + id);
 					params.putString("resourceUri", params.getString("pageUri"));
 
