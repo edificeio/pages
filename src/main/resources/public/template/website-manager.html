@@ -1,22 +1,22 @@
 <div class="twelve cell">
 	<div class="row rigid-grid">
 		<div class="three cell">
-			<h1 ng-click="home()"><i class="pages"></i>Pages</h1>
+			<h1 ng-click="home()"><i class="pages"></i><i18n>pages.title</i18n></h1>
 
 			<nav class="vertical">
-				<h2>Sites web</h2>
+				<h2><i18n>pages.websites</i18n></h2>
 				<ul>
 					<li>
-						<a ng-click="home()">Parcourir les sites</a>
+						<a ng-click="home()"><i18n>pages.browse</i18n></a>
 					</li>
 				</ul>
 				<h2>[[website.title]]</h2>
 				<ul>
 					<li>
-						<a ng-click="template.open('edit-view', 'pages-list')" ng-class="{ selected: template.contains('edit-view', 'pages-list') }">Modifier les pages</a>
+						<a ng-click="template.open('edit-view', 'pages-list')" ng-class="{ selected: template.contains('edit-view', 'pages-list') }"><i18n>pages.update</i18n></a>
 					</li>
 					<li>
-						<a ng-click="template.open('edit-view', 'website-properties')" ng-class="{ selected: template.contains('edit-view', 'website-properties') }">Propriétés</a>
+						<a ng-click="template.open('edit-view', 'website-properties')" ng-class="{ selected: template.contains('edit-view', 'website-properties') }"><i18n>pages.properties</i18n></a>
 					</li>
 				</ul>
 			</nav>

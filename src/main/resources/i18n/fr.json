@@ -67,5 +67,16 @@
   "community.edit": "Modifier",
   "pages.websites.removed": "Les sites web ont été supprimés",
   "pages.default.content": "<h1>Votre page personnelle</h1><p>Vous pouvez entrer ici les informations que vous voulez : cliquez sur l'encart de texte pour en modifier le contenu. Vous pouvez aussi modifier l'image ci-dessus (ou la supprimer en cliquant sur la petite croix en haut à droite). La navigation de gauche sera complétée automatiquement au fur et à mesure que vous ajouterez des pages.</p><h1>Publier votre page</h1><p>Afin de publier votre page dans les applications (administrateurs uniquement), vous devez publier le site web qui la contient. Vous pouvez le faire dans la partie \"Propriétés\" de l'espace de gestion de votre site.</p>",
-  "pages.default.column": "<h2>Une colonne</h2><p>Cette colonne de texte vous permet d'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>"
+  "pages.default.column": "<h2>Une colonne</h2><p>Cette colonne de texte vous permet d'entrer du contenu dans votre site. Vous pouvez changer sa largeur en déplaçant sa bordure à droite ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>",
+  "pages.publication": "Publication",
+  "pages.share": "Partager dans l'ENT",
+  "pages.websites": "Sites web",
+  "pages.browse": "Parcourir les sites",
+  "pages.update": "Modifier les pages",
+  "pages.properties": "Propriétés",
+  "pages.add.video": "Ajouter une vidéo",
+  "pages.add.grid": "Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)",
+  "pages.add.sniplet": "Ajouter un sniplet (navigation, documents à télécharger...)",
+  "pages.add": "Ajouter",
+  "pages.insert.video": "Insérer une vidéo"
 }

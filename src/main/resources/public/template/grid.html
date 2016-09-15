@@ -41,20 +41,20 @@
 										label="Ajouter du son">
 										</media-select>
 							</li>
-							<li ng-click="display.selectVideoContent = true"><i class="video"></i>Ajouter une vidéo</li>
+							<li ng-click="display.selectVideoContent = true"><i class="video"></i><i18n>pages.add.video</i18n></li>
 							<li ng-click="display.selectSniplet = true;" ng-if="website.visibility !== 'PUBLIC'">
-								<i class="sniplet"></i>Ajouter un sniplet (navigation, documents à télécharger...)
+								<i class="sniplet"></i><i18n>pages.add.sniplet</i18n>
 							</li>
-							<li ng-click="setType(cell, 'grid')"><i class="grid"></i>Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)</li>
+							<li ng-click="setType(cell, 'grid')"><i class="grid"></i><i18n>pages.add.grid</i18n></li>
 						</ul>
 						<lightbox show="display.selectVideoContent" on-close="display.selectVideoContent = false">
-							<h2>Insérer une vidéo</h2>
+							<h2><i18n>pages.insert.video</i18n></h2>
 							<p class="info"><i18n>info.video.embed</i18n></p>
 							<div class="row">
 								<textarea ng-model="cell.media.source"></textarea>
 							</div>
 							<div class="row">
-								<button class="right-magnet" ng-click="display.selectVideoContent = false;setType(cell, 'video');">Ajouter</button>
+								<button class="right-magnet" ng-click="display.selectVideoContent = false;setType(cell, 'video');"><i18n>pages.add</i18n></button>
 								<input type="button" class="cancel right-magnet" i18n-value="cancel" ng-click="display.selectVideoContent = false;" />
 							</div>
 						</lightbox>
