@@ -321,8 +321,8 @@ Behaviours.register('pages', {
 	},
 	sniplets: {
 		navigation: {
-			title: lang.translate('pages.navigation.title'),
-			description: lang.translate('pages.navigation.desc'),
+			title: 'pages.navigation.title',
+			description: 'pages.navigation.desc',
 			controller: {
 				init: function(){
 					var source = this.source;
