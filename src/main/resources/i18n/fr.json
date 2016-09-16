@@ -83,5 +83,13 @@
   "smallnote.desc" : "Vous pouvez ajouter facilement de petits encarts de texte en créant un bloc de texte et en changeant la couleur de fond avec le pinceau.",
   "pages.welcome.title" : "Titre de mon site",
   "pages.footer" : "pied de page",
-  "pages.footer.contac" : "ajoutez ici vos informations de contact"
+  "pages.footer.contac" : "ajoutez ici vos informations de contact",
+  "pages.add.line" : "Ajouter une ligne",
+  "pages.add.image" : "Ajouter une image",
+  "pages.add.sound" : "Ajouter du son",
+  "pages.text.help" : "Entrez ici votre texte...",
+  "pages.dynamiccontent" : "Choisir un contenu dynamique",
+  "pages.by" : "Par",
+  "pages.navigation.title" : "Navigation",
+  "pages.navigation.desc" : "La navigation permet à vos visiteurs de parcourir les pages de votre site."
 }

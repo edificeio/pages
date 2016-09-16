@@ -384,7 +384,7 @@ function PagesController($scope, template, route, model, date, $location, $timeo
 			cell.height = 6;
 		}
 		if(type === 'text'){
-			cell.media.source = '<p>Entrez ici votre texte... </p>'
+			cell.media.source = '<p>' + lang.translate('pages.text.help') + ' </p>'
 		}
 	};
 

@@ -28,7 +28,7 @@
 										visibility="website.visibility"
 										ng-change="setType(cell, 'image')"
 										class="image"
-										label="Ajouter une image"
+										label="pages.add.image"
 										file-format="'img'">
 										</media-select></li>
 							<li>
@@ -38,7 +38,7 @@
 										ng-change="setType(cell, 'sound')"
 										class="sound"
 										file-format="'audio'"
-										label="Ajouter du son">
+										label="pages.add.sound">
 										</media-select>
 							</li>
 							<li ng-click="display.selectVideoContent = true"><i class="video"></i><i18n>pages.add.video</i18n></li>
@@ -60,7 +60,7 @@
 						</lightbox>
 						<lightbox show="display.selectSniplet" on-close="cancelSniplet()">
 							<div ng-if="display.snipletStep === 1">
-								<h2>Choisir un contenu dynamique</h2>
+								<h2><i18n>pages.dynamiccontent</i18n></h2>
 								<ul class="thought-out-actions">
 									<li ng-repeat="sniplet in sniplets | filter: {sniplet.hidden: '!true'}" ng-click="selectSnipletSource(sniplet.template, sniplet.application)">
 										<h2>[[lang.translate(sniplet.sniplet.title)]]</h2>
@@ -106,7 +106,7 @@
 		<div class="square-menu"></div>
 		<div class="square-menu-actions">
 			<button ng-click="page.addRow()" class="grid-add-row">
-				Ajouter une ligne
+				<i18n>pages.add.line</i18n>
 			</button>
 		</div>
 	</div>

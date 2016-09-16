@@ -321,8 +321,8 @@ Behaviours.register('pages', {
 	},
 	sniplets: {
 		navigation: {
-			title: 'Navigation',
-			description: 'La navigation permet à vos visiteurs de parcourir les pages de votre site.',
+			title: lang.translate('pages.navigation.title'),
+			description: lang.translate('pages.navigation.desc'),
 			controller: {
 				init: function(){
 					var source = this.source;
