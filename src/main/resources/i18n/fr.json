@@ -78,5 +78,10 @@
   "pages.add.grid": "Ajouter une grille (les grilles permettent de créer des lignes à l'intérieur d'une cellule)",
   "pages.add.sniplet": "Ajouter un sniplet (navigation, documents à télécharger...)",
   "pages.add": "Ajouter",
-  "pages.insert.video": "Insérer une vidéo"
+  "pages.insert.video": "Insérer une vidéo",
+  "pages.about" : "A propos...",
+  "smallnote.desc" : "Vous pouvez ajouter facilement de petits encarts de texte en créant un bloc de texte et en changeant la couleur de fond avec le pinceau.",
+  "pages.welcome.title" : "Titre de mon site",
+  "pages.footer" : "pied de page",
+  "pages.footer.contac" : "ajoutez ici vos informations de contact"
 }

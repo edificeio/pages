@@ -104,8 +104,7 @@ model.build = function(){
 			smallNote: function(row){
 				var smallNote = new Cell();
 				smallNote.media.type = 'text';
-				smallNote.media.source = '<h2>A propos...</h2><p>Vous pouvez ajouter facilement de petits encarts ' +
-				'de texte en créant un bloc de texte et en changeant la couleur de fond avec le pinceau.</p>';
+				smallNote.media.source = '<h2>'+lang.translate('pages.about')+'</h2><p>'+lang.translate('smallnote.desc')+'</p>';
 				smallNote.className = ['black'];
 				smallNote.width = 2;
 				row.addCell(smallNote);
@@ -113,7 +112,7 @@ model.build = function(){
 			welcomeMessage: function(row){
 				var welcome = new Cell();
 				welcome.media.type = 'text';
-				welcome.media.source = '<h1>Titre de mon site</h1>';
+				welcome.media.source = '<h1>'+lang.translate('pages.welcome.title')+'</h1>';
 				row.addCell(welcome);
 				welcome.width = 10;
 				welcome.height = 1;
@@ -127,7 +126,7 @@ model.build = function(){
 			footpage: function(row){
 				var footpage = new Cell();
 				footpage.media.type = 'text';
-				footpage.media.source = '<em class="low-importance centered-text twelve cell">pied de page<br />ajoutez ici vos informations de contact</em>';
+				footpage.media.source = '<em class="low-importance centered-text twelve cell">'+lang.translate('pages.footer')+'<br />'+lang.translate('pages.footer.contact')+'</em>';
 				row.addCell(footpage);
 				footpage.height = 1;
 			}
