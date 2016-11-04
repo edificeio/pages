@@ -1,17 +1,23 @@
 /*
- * Copyright © WebServices pour l'Éducation, 2014
+ * Copyright © "Open Digital Education" (SAS “WebServices pour l’Education”), 2014
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is published by "Open Digital Education" (SAS “WebServices pour l’Education”).
+ * You must indicate the name of the software and the company in any production /contribution
+ * using the software and indicate on the home page of the software industry in question,
+ * "powered by Open Digital Education" with a reference to the website: https: //opendigitaleducation.com/.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * This program is free software, licensed under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation, version 3 of the License.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You can redistribute this application and/or modify it since you respect the terms of the GNU Affero General Public License.
+ * If you modify the source code and then use this modified source code in your creation, you must make available the source code of your modifications.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with the software.
+ * If not, please see : <http://www.gnu.org/licenses/>. Full compliance requires reading the terms of this license and following its directives.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 package fr.wseduc.pages.service.impl;
