@@ -1,0 +1,56 @@
+﻿<div class="row">
+    <p class="row info tuto">
+        <strong><i18n>tuto.title</i18n></strong>
+        <br /><strong><i18n>tuto.action.select</i18n></strong> <i18n>tuto.text.select</i18n>
+    </p>
+
+    <div class="fallen dominos">
+        <div ng-repeat="folder in currentFolder.children.all" class="rigid-grid">
+            <explorer ng-model="folder.selected" class="folder four cell item">
+                <section class="domino" dragstart ng-model="folder._id">
+                    <div class="top">
+                        <i class="folder-large absolute"></i>
+                    </div>
+                    <div class="bottom">
+                        <div class="content">
+                            <h3>[[folder.name]]</h3>
+                        </div>
+
+                    </div>
+                </section>
+            </explorer>
+        </div>
+        <div ng-repeat="website in currentFolder.websites.filtered | filter:searchMatch" class="rigid-grid">
+            <explorer ng-model="website.selected" class="four cell item">
+                <section class="domino" dragstart ng-model="website._id">
+                    <div class="top">
+                        <img skin-src="/img/illustrations/pages-default.png" alt="thumbnail" ng-if="!website.icon" class="absolute">
+                        <img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" class="absolute" />
+                    </div>
+                    <div class="bottom">
+                        <div class="content">
+                            <strong>[[website.title]]</strong>
+                            <br /><span>Modifié le [[website.lastModified]]</span>
+                            <br />
+                            <div class="right-magnet">
+                                <i ng-if="website.visibility === 'PUBLIC'" class="public"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </explorer>
+        </div>
+    </div>
+</div>
+
+<div class="toggle-buttons" ng-class="{ hide: currentFolder.selectedLength < 1 }">
+    <div class="row toggle">
+        <div>
+            <!-- Both-->
+            <button ng-click="restore()" ng-if="can('remove')"><i18n>restore</i18n></button>
+            <resource-right name="remove" resource="currentFolder.selection">
+                <button ng-click="lightbox('confirmRemove')"><i18n>remove</i18n></button>
+            </resource-right>
+        </div>
+    </div>
+</div>

@@ -1,18 +1,33 @@
-<container template="grid-view"></container>
-<div class="page-markers" ng-if="website.markups.view === undefined">
-	<div class="marker">
-		<div class="content" ng-click="home()"><i18n>pages.marker.websites</i18n></div>
-	</div>
-	<resource-right name="update" resource="website" class="marker zero-mobile">
-		<div class="content" ng-click="editPage(page)"><i18n>edit</i18n></div>
-	</resource-right>
-	<resource-right name="update" resource="website" class="marker zero-mobile">
-		<div class="content" ng-click="cancelEdit()"><i18n>pages.marker.nav</i18n></div>
-	</resource-right>
-</div>
+<div class="row" ng-controller="ViewController">
+    <div class="row" ng-if="me">
+        <side-panel class="zero-mobile">
+            <nav class="vertical">
+                <h2><i18n>pages.list.title</i18n></h2>
+                <ul>
+                    <li ng-repeat="w in websites">
+                        <a ng-class="{'selected': w._id === website._id}" ng-href="#/website/[[w._id]]">[[w.title]]</a>
+                    </li>
+                </ul>
+            </nav>
+        </side-panel>
 
-<div class="page-markers" ng-if="website.markups.view !== undefined">
-	<resource-right name="[[markup.resourceRight]]" resource="website" class="marker" ng-repeat="markup in website.markups.view">
-		<a ng-href="[[parseUrl(markup.href)]]" translate content="[[markup.label]]" class="content"></a>
-	</resource-right>
+        <app-title>
+            <h1 class="breadcrumbs"><a ng-click="redirectTo('/')">Pages</a><a ng-href="#/website/[[website._id]]">[[website.title]]</a></h1>
+        </app-title>
+    </div>
+    <div class="row">
+        <resource-right resource="website" name="update">
+            <button ng-click="edit()"><i18n>edit</i18n></button>
+            <div class="info inline cell" ng-if="page.published">
+                <i18n>page.published</i18n>
+            </div>
+            <div class="info inline cell" ng-if="!page.published">
+                <i18n>page.unpublished</i18n>
+            </div>
+        </resource-right>
+    </div>
+
+    <div class="twelve cell">
+        <container template="view/grid"></container>
+    </div>
 </div>

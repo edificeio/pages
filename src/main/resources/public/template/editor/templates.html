@@ -1,0 +1,52 @@
+﻿<h2><i18n>templates.title</i18n></h2>
+<ul class="thought-out-actions">
+    <li ng-click="setTemplate('oneColumn', website);" ng-class="{ selected: display.currentTemplate === 'oneColumn'}">
+        <div class="row">
+            <div class="three cell">
+                <img src="/pages/public/templates-images/oneColumn.png" />
+            </div>
+            <div class="nine cell">
+                <h2><i18n>templates.oneColumn.title</i18n></h2>
+                <p><i18n>templates.oneColumn.desc</i18n></p>
+            </div>
+        </div>
+    </li>
+    <li ng-click="setTemplate('twoColumns', website);" ng-class="{ selected: display.currentTemplate === 'twoColumns'}">
+        <div class="row">
+            <div class="three cell">
+                <img src="/pages/public/templates-images/twoColumns.png" />
+            </div>
+            <div class="nine cell">
+                <h2><i18n>templates.twoColumns.title</i18n></h2>
+                <p><i18n>templates.twoColumns.desc</i18n></p>
+            </div>
+        </div>
+    </li>
+    <li ng-click="setTemplate('navigationAndBlog', website);" 
+        ng-if="website.visibility !== 'PUBLIC'"  
+        ng-class="{ selected: display.currentTemplate === 'navigationAndBlog'}">
+        <div class="row">
+            <div class="three cell">
+                <img src="/pages/public/templates-images/navigationAndBlog.png" />
+            </div>
+            <div class="nine cell">
+                <h2><i18n>templates.blog.title</i18n></h2>
+                <p><i18n>templates.blog.desc</i18n></p>
+
+            </div>
+        </div>
+    </li>
+    <li 
+        ng-click="setTemplate('navigationAndContent', website);"
+         ng-class="{ selected: display.currentTemplate === 'navigationAndContent'}">
+        <div class="row">
+            <div class="three cell">
+                <img src="/pages/public/templates-images/navigationAndContent.png" />
+            </div>
+            <div class="nine cell">
+                <h2><i18n>templates.nav.title</i18n></h2>
+                <p><i18n>templates.nav.desc</i18n></p>
+            </div>
+        </div>
+    </li>
+</ul>

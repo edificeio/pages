@@ -1,0 +1,36 @@
+﻿<h2><i18n>move</i18n></h2>
+<hr class="row" />
+
+<script type="text/ng-template" id="folder-management">
+    <a 
+       ng-class="{ selected: display.targetFolder === f }" 
+       ng-click="display.targetFolder = f"
+        ng-if="!selectionContains(f)">
+        [[f.name || idiom.translate('root')]]
+    </a>
+    <ul class="row" ng-if="!selectionContains(f)">
+        <li ng-repeat="f in f.children.all" ng-include="'folder-management'"></li>
+    </ul>
+</script>
+
+<div class="row">
+    <nav class="vertical">
+        <nav class="vertical" ng-init="f=root">
+            <ul>
+                <li data-ng-include="'folder-management'"></li>
+            </ul>
+        </nav>
+    </nav>
+    <a ng-if="display.targetFolder && !display.newFolder" ng-click="display.newFolder = true" class="twelve cell vertical-spacing">
+        <i18n>folder.new.create</i18n>
+    </a>
+    <div class="row vertical-spacing" ng-if="display.newFolder">
+        <input type="text" ng-model="folder.name" class="cell five" />
+        <button ng-click="createFolder(); display.newFolder = false;" class="cell"><i18n>create</i18n></button>
+    </div>
+    <hr class="row" />
+    <div class="row">
+        <button ng-click="move()" class="right-magnet" ng-disabled="!display.targetFolder"><i18n>move</i18n></button>
+        <button type="button" class="cancel right-magnet" ng-click="lightbox('move')"><i18n>cancel</i18n></button>
+    </div>
+</div>

@@ -24,3 +24,12 @@ data
 developer.id
 *.mod.json
 .DS_STORE
+**/ts/entcore
+**/ts/**/*.js
+**/ts/*.js
+**/ts/**/*.js.map
+**/ts/*.js.map
+**/template/entcore
+**/temp
+**/dist
+**/.DS_Store

@@ -1,0 +1,167 @@
+<script type="text/ng-template" id="folder-tree">
+    <div ng-if="folder.contains(currentFolder)">
+        <li data-ng-repeat="folder in folder.children.all">
+            <a ng-class="{ selected: currentFolder === folder, opened: folder.contains(currentFolder) }"
+               ng-click="openFolder(folder)"
+               class="folder-list-item"
+               dragdrop="dropTo(folder, $originalEvent)">
+                <i class="arrow" ng-if="folder.children.length"></i> [[folder.name]]
+            </a>
+            <!-- ng-if="folder.contains(currentFolder)"-->
+            <ul ng-class="{ selected: folder.contains(currentFolder), closed: !folder.contains(currentFolder) }"
+                ng-include="'folder-tree'"></ul>
+        </li>
+    </div>
+</script>
+
+<div class="row" ng-controller="LibraryController">
+	<div class="row">
+
+		<app-title>
+			<h1 class="cell"><a data-reload>Pages</a></h1>
+		</app-title>
+
+		<div class="cell right-magnet zero-mobile" workflow="pages.create">
+			<button ng-click="createWebsiteView()" class="right-magnet">
+				<i18n>website.create</i18n>
+			</button>
+		</div>
+	</div>
+
+	<div class="row rigid-grid">
+		<section class="four cell">
+			<div class="margin-two row">
+				<input type="search" class="eleven cell" i18n-placeholder="search" ng-model="display.searchWebsites" />
+			</div>
+			<nav class="vertical" side-nav>
+				<ul>
+					<li>
+                        <a 
+                           ng-class="{ selected: currentFolder.name === 'root', opened: root.contains(currentFolder) }"
+                           ng-click="openRoot()"
+                           dragdrop="dropTo('root', $originalEvent)"
+                        >
+                            <i class="arrow" ng-if="root.children.length"></i>
+                            <i18n>projects.root</i18n></a>
+                            <ul>
+                                <div ng-if="root.contains(currentFolder)">
+                                    <li ng-repeat="folder in root.children.all">
+                                        <a ng-click="openFolder(folder)"
+                                           ng-class="{ selected: currentFolder === folder, opened: folder.contains(currentFolder) }"
+                                           dragdrop="dropTo(folder, $originalEvent)">
+                                            <i class="arrow" ng-if="folder.children.length"></i>
+                                            [[folder.name]]
+                                        </a>
+                                        <ul ng-include="'folder-tree'"></ul>
+                                    </li>
+                                </div>
+                            </ul>
+                    </li>
+					<li ng-click="openTrash()">
+                        <a 
+                           ng-class="{ selected: currentFolder.name === 'trash' }"
+                           dragdrop="dropTo('trash', $originalEvent)">
+                            <i18n>folder.trash</i18n>
+                        </a>
+                    </li>
+				</ul>
+				<a class="classic-link" ng-click="lightbox('newFolder')" workflow="pages.createFolder"><i18n>folder.new</i18n></a>
+			</nav>
+		</section>
+		<section class="margin-four">
+			<div class="twelve cell chips">
+                <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.protected }" class="chip">
+                    <i class="mine" tooltip="filters.mine"></i>
+                    <i18n>filters.privateSites</i18n>
+                    <input type="checkbox" ng-model="filters.protected" />
+                </label>
+                <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.public }" class="chip">
+                    <i class="public" tooltip="filters.publicSites"></i>
+                    <i18n>filters.publicSites</i18n>
+                    <input type="checkbox" ng-model="filters.public" />
+                </label>
+
+                <container template="library/folder-content"></container>
+			</div>
+	    </section>
+    </div>
+	<lightbox show="display.lightbox.newSite" on-close="lightbox('newSite')">
+        <div ng-if="display.lightbox.newSite">
+            <container template="library/create-website"></container>
+        </div>
+	</lightbox>
+    <lightbox show="display.lightbox.move" on-close="lightbox('move')">
+        <div ng-if="display.lightbox.move">
+            <container template="library/move"></container>
+        </div>
+    </lightbox>
+
+    <lightbox show="display.lightbox.renameFolder" on-close="lightbox('renameFolder')">
+        <h2><i18n>rename</i18n></h2>
+        <input type="text" class="twelve cell" ng-model="currentFolder.selection[0].name" i18n-placeholder="name"/>
+        <div class="row">
+            <button class="right-magnet" ng-click="currentFolder.selection[0].save(); lightbox('renameFolder')">
+                <i18n>save</i18n>
+            </button>
+            <button class="cancel right-magnet" ng-click="lightbox('renameFolder')">
+                <i18n>cancel</i18n>
+            </button>
+            
+        </div>
+    </lightbox>
+
+	<lightbox show="display.lightbox.newFolder" on-close="lightbox('newFolder')">
+		<form ng-submit="createFolder()">
+			<h2><i18n>folder.new</i18n></h2>
+			<div class="row">
+				<input type="text" ng-model="folder.name" placeholder="name" required autofocus class="twelve cell" />
+			</div>
+			<div class="row">
+				<button class="right-magnet"><i18n>create</i18n></button>
+				<button type="button" class="cancel right-magnet" ng-click="lightbox('newFolder')"><i18n>cancel</i18n></button>
+			</div>
+		</form>
+	</lightbox>
+
+    <lightbox show="display.lightbox.properties" onclose="lightbox('properties')">
+        <h1><i18n>properties</i18n></h1>
+        <div class="four cell clip height-four three-mobile">
+            <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
+        </div>
+        <div class="eight cell">
+            <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven right-magnet" />
+        </div>
+        <div class="row">
+            <button class="right-magnet" ng-click="lightbox('properties'); website.save()"><i18n>save</i18n></button>
+            <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
+        </div>
+    </lightbox>
+
+    <div ng-if="display.showSharePanel">
+        <lightbox show="display.showSharePanel" on-close="display.showSharePanel = false">
+            <share-panel app-prefix="'pages'" resources="currentFolder.selection"></share-panel>
+        </lightbox>
+    </div>
+
+    <lightbox show="display.showPublish" on-close="display.showPublish = false">
+        <container template="publish"></container>
+    </lightbox>
+
+    <lightbox show="display.lightbox.confirmRemove" on-close="lightbox('confirmRemove')">
+        <h2><i18n>remove</i18n></h2>
+
+        <p><i18n>remove.confirm</i18n></p>
+
+        <div class="row">
+            <button class="right-magnet" ng-click="removeSelection()">
+                <i18n>remove</i18n>
+            </button>
+            <button class="cancel right-magnet" type="button" ng-click="lightbox('confirmRemove')">
+                <i18n>cancel</i18n>
+            </button>
+        </div>
+    </lightbox>
+
+    <container template="editor/pages-manager"></container>
+    <container template="library/publish"></container>
+</div>

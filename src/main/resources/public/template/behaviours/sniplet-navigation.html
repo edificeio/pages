@@ -23,8 +23,8 @@
     <nav class="vertical twelve cell" side-nav>
         <ul>
             <li ng-repeat="link in links | orderBy:'index'">
-                <a ng-click="redirect(link)" ng-class="{ selected: currentLink(link) }">
-                    [[link.text]]
+                <a ng-href="[[link.href]]" ng-class="{ selected: currentLink(link) }">
+                    [[link.title]]
                 </a>
             </li>
         </ul>

@@ -1,0 +1,43 @@
+<div class="toggle-buttons" ng-class="{ hide: currentFolder.selectedLength < 1 }">
+    <div class="row toggle">
+        <div>
+            <!-- Both-->
+            <button ng-click="open(currentFolder.selection[0])"><i18n>open</i18n></button>
+        </div>
+        <div ng-if="currentFolder.selectionIsFolders">
+            <!-- Exclusive to folders-->
+            <button ng-click="lightbox('renameFolder')" ng-if="selection.length === 1"><i18n>rename</i18n></button>
+        </div>
+        <div ng-if="currentFolder.selectionIsWebsites">
+            <!-- Exclusive to websites-->
+            <resource-right name="share" resource="currentFolder.selection">
+                <button class="cell" ng-click="display.showSharePanel = true">
+                    <i18n>share</i18n>
+                </button>
+            </resource-right>
+            <resource-right name="update" resource="currentFolder.selection">
+                <button ng-click="managePagesView(currentFolder.selection[0])" ng-if="currentFolder.selection.length === 1">
+                    <i18n>website.pages</i18n>
+                </button>
+            </resource-right>
+            <button class="cell" ng-click="openPublish()" user-role="ADMIN_LOCAL" ng-if="currentFolder.selection.length === 1">
+                <i18n>pages.publish</i18n>
+            </button>
+            <resource-right name="update" resource="currentFolder.selection">
+                <button ng-click="editWebsiteProperties()" ng-if="currentFolder.selection.length === 1">
+                    <i18n>properties</i18n>
+                </button>
+            </resource-right>
+            <div workflow="pages.create">
+                <button ng-click="duplicateWebsites()">
+                    <i18n>duplicate</i18n>
+                </button>
+            </div>
+        </div>
+        <div>
+            <!-- Both -->
+            <button ng-click="lightbox('move')" ng-if="can('update')"><i18n>move</i18n></button>
+            <button ng-click="lightbox('confirmRemove')" ng-if="can('remove')"><i18n>remove</i18n></button>
+        </div>
+    </div>
+</div>

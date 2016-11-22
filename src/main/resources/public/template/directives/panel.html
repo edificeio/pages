@@ -1,0 +1,43 @@
+﻿<div class="pages-editor-panel toggle-panel" bottom-scroll="blocks.next()" scrollable>
+    <div class="toggle cell">
+        <div class="row">
+            <h4><i18n>panel.help.title</i18n></h4>
+            <div class="info">
+                <i18n>panel.help.content</i18n>
+            </div>
+            <h4><i18n>panel.media.title</i18n></h4>
+            <div class="row sniplets">
+                <div class="sniplet" ng-repeat="medium in media" drag-item="medium">
+                    <i class="[[medium.type]]" tooltip="[[medium.type]]"></i>
+                </div>
+            </div>
+            <h4 ng-if="website.visibility !== 'PUBLIC'"><i18n>panel.sniplets.title</i18n></h4>
+            <div class="row sniplets" ng-if="website.visibility !== 'PUBLIC'">
+                <div class="sniplet" ng-repeat="sniplet in snipletsSources" drag-item="sniplet">
+                    <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
+                </div>
+            </div>
+            <h4><i18n>panel.blocks.title</i18n></h4>
+            <div class="row">
+                <input type="text" class="twelve cell search" ng-model="display.searchBlocks" /><i></i>
+            </div>
+            <div class="row">
+                
+                <div class="block-preview" ng-repeat="block in blocks.all | filter: searchBlocks | limitTo: blocks.index" drag-item="block">
+                    <div class="block-description">
+                        <h4>[[block.title]]</h4>
+                        <div>[[block.description]]</div>
+                    </div>
+                    <div class="block [[block.name]]">
+                        <div ng-include="block.path"></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+<ul class="icons-tabs pages-editor-panel">
+    <li><i class="tools"></i></li>
+</ul>

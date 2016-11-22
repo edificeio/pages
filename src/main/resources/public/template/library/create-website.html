@@ -1,0 +1,30 @@
+<wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()">
+	<step workflow="pages.createPublic" internal-next>
+        <h1><i18n>wizard.type.title</i18n></h1>
+        <div class="row">
+            <button class="cancel centered six" ng-click="website.visibility = 'PROTECTED';" internal-next style="float: none">
+                <i class="mine type cell horizontal-spacing"></i>
+                <i18n>wizard.type.private</i18n>
+            </button>
+        </div>
+        <div class="row">
+            <button class="cancel centered six" ng-click="website.visibility = 'PUBLIC';" internal-next style="float: none">
+                <i class="public type cell horizontal-spacing"></i>
+                <i18n>wizard.type.public</i18n>
+            </button>
+        </div>
+	</step>
+	<step next-condition="website.title !== undefined">
+        <h1><i18n>wizard.properties.title</i18n></h1>
+        <div class="four cell clip height-four three-mobile">
+            <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
+        </div>
+        <div class="eight cell">
+            <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven right-magnet" />
+        </div>
+	</step>
+	<step next-condition="website.pages.all.length > 0">
+        <h1><i18n>wizard.template.title</i18n></h1>
+        <container template="editor/templates"></container>
+	</step>
+</wizard>
