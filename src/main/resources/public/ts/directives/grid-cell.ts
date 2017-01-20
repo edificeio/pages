@@ -67,6 +67,8 @@ export let gridCell = ng.directive('gridCell', function($compile){
             setShadow();
 
             element.on('drop', async (event, item) => {
+                scope.cell.media = { type: 'empty' };
+                scope.$apply();
                 if (item.path) {
                     let response = await http.get(item.path);
                     let media: Media = {

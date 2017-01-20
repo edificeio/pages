@@ -20,7 +20,7 @@ export let panel = ng.directive('panel', () => {
                             Blocks.index = 0;
                             scope.$apply();
                         }
-                    }, 200);
+                    }, 200)
                 }
             });
 
