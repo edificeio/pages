@@ -1,4 +1,5 @@
-import { ng, idiom, template, sniplets, Behaviours } from 'entcore/entcore';
+import { ng, idiom, template, sniplets, Behaviours, ui } from 'entcore/entcore';
+import { $ } from 'entcore/libs/jquery/jquery';
 import { moment } from 'entcore/libs/moment/moment';
 import { Folders, Website } from '../model';
 
@@ -29,8 +30,8 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         let websites = await Folders.websites();
         let website: Website = websites.find(w => w._id === params.siteId);
         $scope.snipletResource = website;
-        await website.rights.fromBehaviours();
-        if (website.myRights['update'] && !params.preview) {
+        await website.rights.fromBehaviours()
+        if (website.myRights['update'] && !params.preview && $(window).width() > ui.breakpoints.tablette) {
             template.open('main', 'page-editor');
         }
         else {
