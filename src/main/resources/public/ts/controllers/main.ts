@@ -62,7 +62,12 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     });
 
     $scope.redirectTo = (path) => {
-        $location.path(path);
+        if (window.location.href.indexOf('/p/') === -1) {
+            $location.path(path);
+        }
+        else {
+            window.location.href = '/pages#' + path;
+        }
     };
 
     $scope.lightbox = function (lightboxName: string, data: any) {
