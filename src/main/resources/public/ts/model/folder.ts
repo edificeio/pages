@@ -252,11 +252,19 @@ export class Trash extends HierarchicalFolder {
 }
 
 export class Folders{
+    private static publicWebsiteProvider: Provider<Website> = new Provider<Website>('/pages/pub/list/all', Website);
     private static websiteProvider: Provider<Website> = new Provider<Website>('/pages/list/all', Website);
     private static folderProvider: Provider<Folder> = new Provider<Folder>('/pages/folder/list/all', Folder);
 
     static async websites(): Promise<Website[]> {
-        let websites: Website[] = await this.websiteProvider.data();
+        let websites: Website[];
+        if (model.me) {
+            websites = await this.websiteProvider.data();
+        }
+        else {
+            websites = await this.publicWebsiteProvider.data();
+        }
+        
         return websites;
     }
 

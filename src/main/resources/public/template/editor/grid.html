@@ -19,7 +19,7 @@
                     </div>
 				</div>
 				<div ng-if="cell.media.type === 'text'" class="text-wrapper">
-					<editor ng-model="cell.media.source" placeholder="page.texte.placeholder"></editor>
+					<editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="website.visibility.toLowerCase()"></editor>
 				</div>
 				<div ng-if="cell.media.type === 'video'" class="video-wrapper">
                     <embedder ng-model="display.htmlCode" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
