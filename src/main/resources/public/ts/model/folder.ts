@@ -3,7 +3,7 @@ import { Pages, Page } from './page';
 import { Cell, Cells } from './cell';
 import { Row, Rows } from './row'; 
 import http from 'axios';
-import { Rights, Shareable } from 'entcore';
+import { Rights, Shareable, model } from 'entcore';
 import { Mix, Provider, Selection, Selectable, Eventer } from 'toolkit';
 import { _ } from 'entcore/libs/underscore/underscore';
 
@@ -117,6 +117,7 @@ export class Folder extends HierarchicalFolder implements Shareable{
     async create(): Promise<void>{
         let response = await http.post('/pages/folder', this);
         Mix.extend(this, response.data);
+        this.owner.userId = model.me.userId;
         Folders.provideFolder(this);
     }
 

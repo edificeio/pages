@@ -104,9 +104,14 @@ export class Page implements Selectable {
     }
 
     setTitleLink(){
-        this.titleLink = encodeURIComponent(lang.removeAccents(
+        let titleLink = encodeURIComponent(lang.removeAccents(
             this.title.replace(/\ |\:|\?|#|%|\$|£|\^|\*|€|°|\(|\)|\[|\]|§|'|"|&|ç|ù|`|=|\+|<|@/g, '')
-        ).toLowerCase())
+        ).toLowerCase());
+        if (_.findWhere(this.website.pages.all, { titleLink: titleLink }) !== undefined) {
+            titleLink += '-1';
+        }
+        
+        this.titleLink = titleLink;
     }
 
     copyFrom(page: Page){

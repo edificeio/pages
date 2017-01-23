@@ -226,9 +226,18 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						if(resizeLimits.vertical){
 							let distance = mouse.y - p.top;
                             newHeight = distance;
+
+                            if (element.offset().top + newHeight > window.scrollY + $(window).height() - 30) {
+                                window.scrollTo(0, window.scrollY + 15);
+                            }
+                            if (element.offset().top + newHeight < window.scrollY + 30) {
+                                window.scrollTo(0, window.scrollY - 15);
+                            }
+
                             if (newHeight < cellWidth) {
                                 newHeight = cellWidth;
                             }
+                            
 							element.css({ 'padding-bottom': newHeight });
 						}
 						if(!interrupt){
