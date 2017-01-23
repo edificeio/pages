@@ -561,6 +561,7 @@ Behaviours.register('pages', {
 	    },
 	    sniplets: {
 	        navigation: {
+	            public: true,
 	            title: 'pages.navigation.title',
 	            description: 'pages.navigation.desc',
 	            controller: {
@@ -579,9 +580,17 @@ Behaviours.register('pages', {
 	                                        this.snipletDisplay = {};
 	                                        return [2 /*return*/];
 	                                    }
+	                                    if (!entcore_1.model.me)
+	                                        return [3 /*break*/, 2];
 	                                    return [4 /*yield*/, axios_1.default.get('/pages/' + this.source._id)];
 	                                case 1:
 	                                    response = _a.sent();
+	                                    return [3 /*break*/, 4];
+	                                case 2: return [4 /*yield*/, axios_1.default.get('/pages/pub/' + this.source._id)];
+	                                case 3:
+	                                    response = _a.sent();
+	                                    _a.label = 4;
+	                                case 4:
 	                                    this.links = underscore_1._.map(response.data.pages, function (page) {
 	                                        return {
 	                                            title: page.title,

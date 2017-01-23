@@ -11,9 +11,14 @@
                     <i class="[[medium.type]]" tooltip="[[medium.type]]"></i>
                 </div>
             </div>
-            <h4 ng-if="website.visibility !== 'PUBLIC'"><i18n>panel.sniplets.title</i18n></h4>
+            <h4><i18n>panel.sniplets.title</i18n></h4>
             <div class="row sniplets" ng-if="website.visibility !== 'PUBLIC'">
                 <div class="sniplet" ng-repeat="sniplet in snipletsSources" drag-item="sniplet">
+                    <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
+                </div>
+            </div>
+            <div class="row sniplets" ng-if="website.visibility === 'PUBLIC'">
+                <div class="sniplet" ng-repeat="sniplet in publicSnipletsSources" drag-item="sniplet">
                     <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
                 </div>
             </div>

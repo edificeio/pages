@@ -63,7 +63,8 @@ Behaviours.register('pages', {
 		this.resources = pages;
 	},
 	sniplets: {
-		navigation: {
+        navigation: {
+            public: true,
 			title: 'pages.navigation.title',
 			description: 'pages.navigation.desc',
 			controller: {
@@ -77,8 +78,13 @@ Behaviours.register('pages', {
 						this.snipletDisplay = {};
 						return;
 					}
-
-					let response = await http.get('/pages/' + this.source._id);
+                    let response;
+                    if (model.me) {
+                        response = await http.get('/pages/' + this.source._id);
+                    }
+                    else {
+                        response = await http.get('/pages/pub/' + this.source._id);
+                    }
 					this.links = _.map(response.data.pages, function(page){
 						return {
 							title: page.title,

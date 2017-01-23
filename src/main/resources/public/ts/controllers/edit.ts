@@ -1,6 +1,7 @@
 import { ng, sniplets } from 'entcore/entcore';
 import { template, idiom } from 'entcore/entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
+import { _ } from 'entcore/libs/underscore/underscore';
 
 export let edit = ng.controller('EditController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {
@@ -67,6 +68,14 @@ export let edit = ng.controller('EditController', [
         $scope.snipletsSources = sniplets.sniplets.map((s) => ({ 
                 type: 'sniplet', 
                 source: { application: s.application, template: s.template, title: s.sniplet.title } 
+            })
+        );
+
+        $scope.publicSnipletsSources = _
+            .filter(sniplets.sniplets, (s) => s.sniplet.public)
+            .map((s) => ({
+                type: 'sniplet',
+                source: { application: s.application, template: s.template, title: s.sniplet.title }
             })
         );
 
