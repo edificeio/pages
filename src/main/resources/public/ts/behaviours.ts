@@ -85,10 +85,15 @@ Behaviours.register('pages', {
                     else {
                         response = await http.get('/pages/pub/' + this.source._id);
                     }
-					this.links = _.map(response.data.pages, function(page){
+                    this.source.landingPage = response.data.landingPage;
+                    this.links = _.map(response.data.pages, (page) => {
+                        let href = '#/website/' + this.source._id + '/' + page.titleLink;
+                        if (window.location.hash.startsWith('#/preview/')) {
+                            href = '#/preview/' + this.source._id + '/' + page.titleLink;
+                        }
 						return {
 							title: page.title,
-                            href: page.href,
+                            href: href,
                             published: page.published
 						}
                     });
@@ -113,7 +118,12 @@ Behaviours.register('pages', {
 						});
                     }
                     this.snipletResource.save();
-				},
+                },
+                refreshIfNeeded(path: string) {
+                    if (this.currentLink(path)) {
+                        window.location.reload();
+                    }
+                },
 				removeLink: function(index, $event){
 					$event.preventDefault();
 					this.source.customLinks.splice(index, 1);
@@ -132,8 +142,10 @@ Behaviours.register('pages', {
 						this.snipletResource.save();
 					}
 				},
-				currentLink: function(link){
-					return link.href.split('#')[1] === window.location.hash.split('#')[1];
+                currentLink: function (link) {
+                    let samePath = link.href.split('#')[1] === window.location.hash.split('#')[1];
+                    let landingPage = this.source.landingPage === link.href.split('/')[2];
+					return samePath || landingPage;
 				},
 				getReferencedResources: function(source){
 					return [];

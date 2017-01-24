@@ -567,6 +567,7 @@ Behaviours.register('pages', {
 	            controller: {
 	                init: function () {
 	                    return __awaiter(this, void 0, void 0, function () {
+	                        var _this = this;
 	                        var source, response;
 	                        return __generator(this, function (_a) {
 	                            switch (_a.label) {
@@ -591,10 +592,15 @@ Behaviours.register('pages', {
 	                                    response = _a.sent();
 	                                    _a.label = 4;
 	                                case 4:
+	                                    this.source.landingPage = response.data.landingPage;
 	                                    this.links = underscore_1._.map(response.data.pages, function (page) {
+	                                        var href = '#/website/' + _this.source._id + '/' + page.titleLink;
+	                                        if (window.location.hash.startsWith('#/preview/')) {
+	                                            href = '#/preview/' + _this.source._id + '/' + page.titleLink;
+	                                        }
 	                                        return {
 	                                            title: page.title,
-	                                            href: page.href,
+	                                            href: href,
 	                                            published: page.published
 	                                        };
 	                                    });
@@ -624,6 +630,11 @@ Behaviours.register('pages', {
 	                    }
 	                    this.snipletResource.save();
 	                },
+	                refreshIfNeeded: function (path) {
+	                    if (this.currentLink(path)) {
+	                        window.location.reload();
+	                    }
+	                },
 	                removeLink: function (index, $event) {
 	                    $event.preventDefault();
 	                    this.source.customLinks.splice(index, 1);
@@ -641,7 +652,9 @@ Behaviours.register('pages', {
 	                    }
 	                },
 	                currentLink: function (link) {
-	                    return link.href.split('#')[1] === window.location.hash.split('#')[1];
+	                    var samePath = link.href.split('#')[1] === window.location.hash.split('#')[1];
+	                    var landingPage = this.source.landingPage === link.href.split('/')[2];
+	                    return samePath || landingPage;
 	                },
 	                getReferencedResources: function (source) {
 	                    return [];
