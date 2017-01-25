@@ -134,9 +134,6 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                     element.data('resizing', true);
 					cells.trigger('startResize');
 					cells.removeClass('grid-media');
-					element.css({ overflow: 'hidden', 'min-height': 0 });
-					element.removeClass('height-zero');
-					element.removeClass('height-undefined');
 
 					//this makes sure the cursor doesn't change when we move the mouse outside the element
 					$('.main').css({
@@ -147,7 +144,10 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 
 					// the element height is converted in padding-bottom if vertical resize happens
 					// this is done in order to keep it compatible with the grid, which is based on padding
-					if(resizeLimits.vertical){
+                    if (resizeLimits.vertical) {
+                        element.css({ overflow: 'hidden', 'min-height': 0 });
+                        element.removeClass('height-zero');
+                        element.removeClass('height-undefined');
 						element.css({ 'padding-bottom': element.height() + 'px', height: 0 });
 					}
 

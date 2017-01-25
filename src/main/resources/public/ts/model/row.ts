@@ -47,6 +47,9 @@ export class Row {
         let cell = new Cell();
         cell.height = height;
         cell.width = width;
+        while (this.width > 12) {
+            cell.width--;
+        }
         this.addCell(cell);
     }
 
@@ -103,6 +106,12 @@ export class Row {
 
         return weight;
     }
+
+    get width(): number {
+        let width = 0;
+        this.cells.forEach((c) => width += c.width);
+        return width;
+    }
 }
 
 export class Rows {
@@ -140,10 +149,14 @@ export class Rows {
     }
 
     addFillerRow(): Row {
-        let hasFillerRow = true;
-        this.last.cells.forEach((c) => {
-            hasFillerRow = hasFillerRow && !c.media.type
-        });
+        let hasFillerRow = false;
+        if (this.last) {
+            hasFillerRow = true;
+            this.last.cells.forEach((c) => {
+                hasFillerRow = hasFillerRow && !c.media.type
+            });
+        }
+        
         if (hasFillerRow) {
             return;
         }
@@ -171,7 +184,7 @@ export class Rows {
         list = Mix.castArrayAs(Row, list);
         this._all = list;
     }
-    
+
     empty() {
         this._all.splice(0, this.all.length);
     }
