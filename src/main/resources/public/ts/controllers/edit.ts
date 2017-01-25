@@ -128,13 +128,15 @@ export let edit = ng.controller('EditController', [
 
         $scope.applySASS = (page: Page) => {
             page.applySASS();
-            $scope.website.save();
         };
 
         $scope.closeManagePages = () => {
             $scope.lightbox('managePages');
             $scope.website.newPage = undefined;
             $scope.website.showStyle = undefined;
-            $scope.website.save()
         };
+
+        $scope.closeCellTitle = () => {
+            $scope.lightbox('setCellTitle');
+        }
 }])

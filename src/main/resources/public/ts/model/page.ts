@@ -84,12 +84,10 @@ export class Page implements Selectable {
 
     publish() {
         this.published = true;
-        this.eventer.trigger('save');
     }
 
     unpublish() {
         this.published = false;
-        this.eventer.trigger('save');
     }
 
     url() {
@@ -136,7 +134,6 @@ export class Page implements Selectable {
 
     setLanding() {
         this.website.landingPage = this.titleLink;
-        this.eventer.trigger('save');
     }
 
     duplicate() {
@@ -146,7 +143,6 @@ export class Page implements Selectable {
         duplicate.title = this.title + ' (Copie)';
         duplicate.setTitleLink();
         this.website.pages.push(duplicate);
-        this.eventer.trigger('save');
     }
 }
 
@@ -160,9 +156,6 @@ export class Pages {
             this._all = arr;
         }
         this.eventer = new Eventer();
-        this._all.forEach((p) => {
-            p.eventer.on('save', () => this.eventer.trigger('save'));
-        })
     }
 
     forEach(cb: (p: Page) => void) {

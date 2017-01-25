@@ -32,6 +32,7 @@ export class Cell {
     row: number;
     page: Page;
     style: any;
+    title: string;
 
     constructor() {
         this.media = {};
@@ -40,7 +41,6 @@ export class Cell {
 
     source(source: Media){
         this.media = source;
-        this.page.eventer.trigger('save');
     }
 
     toJSON() {
@@ -50,7 +50,8 @@ export class Cell {
             index: this.index,
             className: this.className,
             media: cleanJSON(this.media),
-            style: cleanJSON(this.style)
+            style: cleanJSON(this.style),
+            title: this.title
         }
     }
 

@@ -65,5 +65,10 @@
     </div>
 
     <container template="editor/pages-manager"></container>
-    
+    <lightbox show="display.lightbox.setCellTitle" on-close="closeCellTitle()">
+        <h2><i18n>cell.set.title</i18n></h2>
+        <div class="row">
+            <input type="text" class="twelve cell" ng-model="display.data.title" i18n-placeholder="title" />
+        </div>
+    </lightbox>
 </div>

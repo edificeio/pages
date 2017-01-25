@@ -18,15 +18,18 @@ export let gridCell = ng.directive('gridCell', function($compile){
 			onRowChange: '&'
 		},
         template: `
+            <h2 class="cell-title">[[cell.title]]</h2>
             <input type="color" ng-model="cell.style['background-color']" class="color-picker" />
-            <div class="media-wrapper">
+            <div class="media-wrapper" ng-class="{ 'has-title': cell.title }">
                 <div class="media-container" ng-class="className" ng-transclude></div>
             </div>
             <dots-menu>
-                <opt ng-click="removeCell()"><i18n>remove</i18n></opt>
+                <opt ng-click="setTitle()"><i18n>cell.set.title</i18n></opt>
+                <opt ng-click="removeTitle()"><i18n>cell.remove.title</i18n></opt>
                 <opt ng-click="duplicate()"><i18n>duplicate</i18n></opt>
                 <opt ng-click="setColor()"><i18n>cell.setBackground</i18n></opt>
                 <opt ng-click="removeColor()" ng-if="cell.style['background-color']"><i18n>cell.removeBackground</i18n></opt>
+                <opt ng-click="removeCell()"><i18n>remove</i18n></opt>
             </dots-menu>
         `,
 		transclude: true,
@@ -83,6 +86,15 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 setShadow();
                 scope.$apply();
             });
+
+            scope.setTitle = () => {
+                scope.$parent.lightbox('setCellTitle', scope.cell);
+            };
+
+            scope.removeTitle = () => {
+                scope.cell.title = undefined;
+                scope.row.page.eventer.trigger('save');
+            };
 
             scope.removeCell = () => {
                 scope.row.removeCell(scope.cell);

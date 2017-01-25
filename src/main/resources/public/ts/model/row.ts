@@ -58,7 +58,6 @@ export class Row {
         cell.page = this.page;
         cell.row = this.index;
         this.cells.push(cell);
-        this.page.eventer.trigger('save');
         return cell;
     }
 
@@ -69,12 +68,13 @@ export class Row {
         let tempStyle = JSON.parse(JSON.stringify(cell.style));
         cell.style = JSON.parse(JSON.stringify(cell2.style));
         cell2.style = tempStyle;
-        this.page.eventer.trigger('save');
+        let tempTitle = cell.title;
+        cell.title = cell2.title;
+        cell2.title = tempTitle;
     }
 
     removeAt(index: number) {
         this.cells.removeAt(index);
-        this.page.eventer.trigger('save');
     }
 
     removeCell(cell: Cell) {
@@ -95,7 +95,6 @@ export class Row {
             leftNeighbour.width += cell.width;
         }
         this.cells.removeCell(cell);
-        this.page.eventer.trigger('save');
     }
 
     get weight(): number {
