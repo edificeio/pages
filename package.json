@@ -1,5 +1,5 @@
 {
-  "name": "rack",
+  "name": "pages",
   "version": "0.5.0",
   "description": "This application allows users to create websites.",
   "main": "gulpfile.js",
@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/web-education/rack.git"
+    "url": "https://github.com/web-education/pages.git"
   },
   "author": "",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/web-education/rack/issues"
+    "url": "https://github.com/web-education/pages/issues"
   },
-  "homepage": "https://github.com/web-education/rack"
+  "homepage": "https://github.com/web-education/pages"
 }
