@@ -186,9 +186,9 @@ export class Root extends HierarchicalFolder {
         let folders = await Folders.folders();
         this.websites.all = [];
         websites.forEach((w) => {
-            let inRoot = true;
+            let inRoot = !w.trashed;
             folders.forEach((f) => {
-                inRoot = inRoot && f.websitesIds.indexOf(w._id) === -1 && !w.trashed;
+                inRoot = inRoot && f.websitesIds.indexOf(w._id) === -1;
             });
             if (inRoot) {
                 this.websites.all.push(w);
@@ -221,7 +221,7 @@ export class Trash extends HierarchicalFolder {
     async sync(): Promise<void> {
         let websites = await Folders.websites();
         this.websites.all = websites.filter(
-            w => w.trashed
+            w => w.trashed && w.myRights.manager
         );
         this.websites.refreshFilters();
         let folders = await Folders.folders();
