@@ -1,6 +1,7 @@
 import { ng, idiom, template, sniplets, Behaviours, ui } from 'entcore/entcore';
 import { $ } from 'entcore/libs/jquery/jquery';
 import { moment } from 'entcore/libs/moment/moment';
+import { _ } from 'entcore/libs/underscore/underscore';
 import { Folders, Website } from '../model';
 import { Autosave } from 'toolkit';
 
@@ -93,6 +94,6 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     };
 
     await sniplets.load();
-    $scope.sniplets = sniplets.sniplets;
+    $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
     $scope.$apply();
 }]);

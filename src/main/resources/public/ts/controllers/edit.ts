@@ -59,14 +59,14 @@ export let edit = ng.controller('EditController', [
             { type: 'image' }
         ];
 
-        $scope.snipletsSources = sniplets.sniplets.map((s) => ({ 
+        $scope.snipletsSources = $scope.sniplets.map((s) => ({ 
                 type: 'sniplet', 
                 source: { application: s.application, template: s.template, title: s.sniplet.title } 
             })
         );
 
         $scope.publicSnipletsSources = _
-            .filter(sniplets.sniplets, (s) => s.sniplet.public)
+            .filter($scope.sniplets, (s) => s.sniplet.public)
             .map((s) => ({
                 type: 'sniplet',
                 source: { application: s.application, template: s.template, title: s.sniplet.title }
