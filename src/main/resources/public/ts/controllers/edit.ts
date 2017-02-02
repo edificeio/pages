@@ -2,40 +2,33 @@ import { ng, sniplets } from 'entcore/entcore';
 import { template, idiom } from 'entcore/entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
 import { _ } from 'entcore/libs/underscore/underscore';
+import { Autosave } from 'toolkit';
 
 export let edit = ng.controller('EditController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {
         let params = $route.current.params;
         let findPage = async (): Promise<void> => {
+            let websites = await Folders.websites();
+            let website: Website = websites.find((w) => w._id === params.siteId);
+            $scope.website = website;
+
             if (params.pageId) {
-                let websites = await Folders.websites();
-                let website: Website = websites.find((w) => w._id === params.siteId);
-                $scope.website = website;
                 $scope.page = website.pages.matchingPath(params.pageId, website);
-                let page: Page = $scope.page;
-                page.rows.forEach((r) => {
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                });
-                $scope.page.addFillerRow();
-                $scope.page.applySASS();
             }
             else {
-                let websites = await Folders.websites();
-                let website: Website = websites.find((w) => w._id === params.siteId);
-                $scope.website = website;
                 $scope.page = website.pages.landingPage(website);
-                let page: Page = $scope.page;
-                page.rows.forEach((r) => {
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                    $scope.display.guideRows.push($scope.display.guideRows.length);
-                });
-                $scope.page.addFillerRow();
-                $scope.page.applySASS();
             }
 
+            let page: Page = $scope.page;
+            page.rows.forEach((r) => {
+                $scope.display.guideRows.push($scope.display.guideRows.length);
+                $scope.display.guideRows.push($scope.display.guideRows.length);
+                $scope.display.guideRows.push($scope.display.guideRows.length);
+            });
+            $scope.page.addFillerRow();
+            $scope.page.applySASS();
+
+            website.watchChanges();
             $scope.websites = await Folders.websites();
             await Blocks.sync();
             $scope.blocks = Blocks;
@@ -43,6 +36,7 @@ export let edit = ng.controller('EditController', [
         };
 
         model.on('route-changed', () => {
+            Autosave.unwatchAll();
             params = $route.current.params;
             findPage();
         });

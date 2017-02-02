@@ -29,12 +29,6 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 });
             };
 
-            let saveLoop = () => {
-                scope.website.save();
-                setTimeout(saveLoop, 1000);
-            };
-            saveLoop();
-
             element.addClass('drawing-grid');
             element.on('editor-focus', 'editor', () => {
                 setTimeout(() => {

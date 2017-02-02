@@ -1,7 +1,7 @@
 import { Folder, Folders, Filters } from './folder';
 import { Pages, Page, Row, Cell, SnipletSource } from './index';
 import { Structure, Group, Publication } from './publish';
-import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model } from 'toolkit';
+import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'toolkit';
 import http from "axios";
 import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } from 'entcore/entcore';
 import { _ } from 'entcore/libs/underscore/underscore';
@@ -58,6 +58,10 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         this.trashed = true;
         Folders.trash.sync();
         await this.save();
+    }
+
+    watchChanges(){
+        Autosave.watch(() => this.update(), this);
     }
 
     url(params?: { relative?: boolean }): string {

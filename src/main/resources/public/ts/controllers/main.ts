@@ -2,6 +2,7 @@ import { ng, idiom, template, sniplets, Behaviours, ui } from 'entcore/entcore';
 import { $ } from 'entcore/libs/jquery/jquery';
 import { moment } from 'entcore/libs/moment/moment';
 import { Folders, Website } from '../model';
+import { Autosave } from 'toolkit';
 
 export let main = ng.controller('MainController', ['$scope', 'model', 'route', '$location',
     async function ($scope, model, route, $location): Promise<void> {
@@ -44,18 +45,23 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     route({
         listSites: function () {
             template.open('main', 'library');
+            Autosave.unwatchAll();
         },
         site: async function (params) {
+            Autosave.unwatchAll();
             openSite(params);
         },
         page: function (params) {
+            Autosave.unwatchAll();
             openSite(params);
         },
         previewSite: async function (params) {
+            Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
         },
         previewPage: function (params) {
+            Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
         }
