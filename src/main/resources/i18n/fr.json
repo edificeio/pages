@@ -196,12 +196,14 @@
   "pages.footer.contact": "Informations de contact",
   "folder.new": "Nouveau dossier",
   "folder.new.create": "Créer un nouveau dossier",
+
   "blocks.title.title": "Titre",
   "blocks.title.description": "Ajoutez un titre",
   "blocks.title.keywords": "entête titre h format",
   "blocks.image.title": "Illustration",
   "blocks.image.description": "Ajoutez une illustration",
   "blocks.image.keywords": "entête titre h format",
+  
   "panel.help.title": "Ajouter du contenu",
   "panel.help.content": "Glisser-déposer un contenu dans la page",
   "panel.media.title": "Multimédia",
