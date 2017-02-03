@@ -197,13 +197,60 @@
   "folder.new": "Nouveau dossier",
   "folder.new.create": "Créer un nouveau dossier",
 
-  "blocks.title.title": "Titre",
-  "blocks.title.description": "Ajoutez un titre",
-  "blocks.title.keywords": "entête titre h format",
+
+  "blocks.title-block.title": "Titre",
+  "blocks.title-block.description": "Ajoutez un titre simple",
+  "blocks.title-block.keywords": "entête titre h format",
+
+  "blocks.title-text.title": "Titre avec texte",
+  "blocks.title-text.description": "Ajoutez un titre accompagné d'un texte",
+  "blocks.title-text.keywords": "entête titre h format texte paragraphe intro",
+
+  "blocks.title-image.title": "Titre avec une image",
+  "blocks.title-image.description": "Ajoutez un titre accompagné d'une image",
+  "blocks.title-image.keywords": "entête titre h format texte paragraphe intro illustration image img",
+
+  "blocks.text-card.title": "Texte dans carte",
+  "blocks.text-card.description": "Ajoutez du texte à l'interieur d'une carte",
+  "blocks.text-card.keywords": "texte paragraphe carte carton fiche card contour",
+
   "blocks.image.title": "Illustration",
-  "blocks.image.description": "Ajoutez une illustration",
-  "blocks.image.keywords": "entête titre h format",
-  
+  "blocks.image.description": "Ajoutez une illustration seule",
+  "blocks.image.keywords": "illustration image img",
+
+  "blocks.image-left.title": "Texte avec image à gauche",
+  "blocks.image-left.description": "Ajoutez un texte accompagné d'une illustration",
+  "blocks.image-left.keywords": "left gauche illustration image img texte paragraphe",
+
+  "blocks.image-right.title": "Texte avec image à droite",
+  "blocks.image-right.description": "Ajoutez un texte accompagné d'une illustration",
+  "blocks.image-right.keywords": "right droite illustration image img texte paragraphe",
+
+  "blocks.two-col.title": "Deux colonnes",
+  "blocks.two-col.description": "Ajoutez du contenu séparé en deux colonnes",
+  "blocks.two-col.keywords": "colonnes double deux texte image",
+
+  "blocks.three-col.title": "Trois colonnes",
+  "blocks.three-col.description": "Ajoutez du contenu séparé en trois colonnes",
+  "blocks.three-col.keywords": "colonnes triple trois texte image",
+
+  "blocks.quote.title": "Citation",
+  "blocks.quote.description": "Ajoutez une citation",
+  "blocks.quote.keywords": "texte paragraphe citation",
+
+  "blocks.quote-left.title": "Citation avec image à droite",
+  "blocks.quote-left.description": "Ajoutez une citation accompagnée d'une image",
+  "blocks.quote-left.keywords": "texte paragraphe citation illustration image doite",
+
+  "blocks.quote-right.title": "Citation avec image à gauche",
+  "blocks.quote-right.description": "Ajoutez une citation accompagnée d'une image",
+  "blocks.quote-right.keywords": "texte paragraphe citation illustration image gauche",
+
+  "blocks.accordions.title": "Accordéons",
+  "blocks.accordions.description": "Ajoutez du contenu dans un module déroulant",
+  "blocks.accordions.keywords": "accordeons deroulant menu selection",
+
+
   "panel.help.title": "Ajouter du contenu",
   "panel.help.content": "Glisser-déposer un contenu dans la page",
   "panel.media.title": "Multimédia",

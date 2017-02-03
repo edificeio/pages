@@ -27,17 +27,17 @@
                 <input type="text" class="twelve cell search" ng-model="display.searchBlocks" /><i></i>
             </div>
             <div class="row">
-                
+
                 <div class="block-preview" ng-repeat="block in blocks.all | filter: searchBlocks | limitTo: blocks.index" drag-item="block">
                     <div class="block-description">
                         <h4>[[block.title]]</h4>
                         <div>[[block.description]]</div>
                     </div>
-                    <div class="block [[block.name]]">
+                    <div class="block-template [[block.name]]">
                         <div ng-include="block.path"></div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
