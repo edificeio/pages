@@ -33,4 +33,8 @@ developer.id
 **/temp
 **/dist
 **/.DS_Store
-**/view
+**/view/*.html
+src/main/resources/public/js/*.js
+rev-manifest.json
+node_modules
+bower_components
