@@ -84,19 +84,16 @@ gulp.task('bower', ['drop-cache'], function(){
 });
 
 gulp.task('update-libs', ['bower'], function(){
-    var html = gulp.src(['./bower_components/entcore/src/template/**/*.html'])
+    var html = gulp.src(['./node_modules/infra-front/src/template/**/*.html'])
          .pipe(gulp.dest('./src/main/resources/public/template/entcore'));
         
-    var ts = gulp.src('./bower_components/entcore/src/ts/**/*.ts' )
+    var ts = gulp.src('./node_modules/infra-front/src/ts/**/*.ts' )
          .pipe(gulp.dest('./src/main/resources/public/ts/entcore'));
-
-    var module = gulp.src('./bower_components/entcore/src/ts/**/*.ts')
-        .pipe(gulp.dest('./node_modules/entcore'));
 
     var sassJs = gulp.src('./bower_components/sass.js/dist/**/*.js')
         .pipe(gulp.dest('./src/main/resources/public/dist/sass-js'));
         
-   return merge([html, ts, module]);
+   return merge([html, ts, sassJs]);
 });
 
 gulp.task('ts-local', ['copy-local-libs'], function () { return compileTs() });
