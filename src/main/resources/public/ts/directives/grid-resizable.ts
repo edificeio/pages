@@ -56,11 +56,21 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					if(cursor){
 						cursor = cursor + '-resize';
 					}
-
-					element.css({ cursor: cursor });
-					element.children('*').css({ cursor: cursor });
+					if(cursor !== element.css('cursor')){
+						element.removeClass(element.css('cursor'));
+						if(cursor){
+							element.addClass(cursor + '-over');
+						}
+						
+						element.css({ cursor: cursor });
+						element.children('*').css({ cursor: cursor })
+					}
+					
 				});
 				element.on('mouseout', (e) => {
+					element.removeClass('ns-resize-over');
+					element.removeClass('ew-resize-over');
+					element.removeClass('nwse-resize-over');
 					element.off('mousemove');
 				});
 			});
@@ -71,6 +81,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					return;
 				}
 				element.find('editor').css({ 'pointer-events': 'none' });
+				element.addClass(element.css('cursor'));
 				let mouse = { y: e.pageY, x: e.pageX };
 
 				resizeLimits = {
@@ -286,6 +297,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					});
 
 					setTimeout(() => {
+						element.removeClass(element.css('cursor'));
 						cells.data('resizing', false);
 						cells.data('lock', false);
 						cells.attr('style', '');
