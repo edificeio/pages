@@ -18,6 +18,9 @@ export let gridDraggable = ng.directive('gridDraggable', function($compile){
             });
             
             ui.extendElement.draggable(element, {
+                startDrag: () => {
+                    element.addClass('dragging');
+                },
                 tick: (e, mouse) => {
                     if (firstTick) {
                         let placeholder = $('<grid-cell></grid-cell>')
@@ -94,6 +97,7 @@ export let gridDraggable = ng.directive('gridDraggable', function($compile){
                 },
                 mouseUp: () => {
                     setTimeout(() => {
+                        element.removeClass('dragging');
                         $('.placeholder').remove();
                         $('.dragover').removeClass('dragover');
                         element.addClass('grid-media');
