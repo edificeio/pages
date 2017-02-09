@@ -25,7 +25,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
             </div>
             <dots-menu>
                 <opt ng-click="setTitle()"><i18n>cell.set.title</i18n></opt>
-                <opt ng-click="removeTitle()"><i18n>cell.remove.title</i18n></opt>
+                <opt ng-click="removeTitle()" ng-if="cell.title"><i18n>cell.remove.title</i18n></opt>
                 <opt ng-click="duplicate()"><i18n>duplicate</i18n></opt>
                 <opt ng-click="setColor()"><i18n>cell.setBackground</i18n></opt>
                 <opt ng-click="removeColor()" ng-if="cell.style['background-color']"><i18n>cell.removeBackground</i18n></opt>
