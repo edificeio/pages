@@ -26,6 +26,7 @@ export let panel = ng.directive('panel', () => {
 
             $('body').on('click', '.side-panel-opener', () => {
                 togglePanel.removeClass('hide');
+                togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
                 icon.addClass('active');
                 Blocks.index = 4;
                 scope.$apply();
@@ -34,6 +35,7 @@ export let panel = ng.directive('panel', () => {
             icon.on('click', () => {
                 if (togglePanel.hasClass('hide')) {
                     togglePanel.removeClass('hide');
+                    togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
                     icon.addClass('active');
                     Blocks.index = 4;
                     scope.$apply();
@@ -52,6 +54,7 @@ export let panel = ng.directive('panel', () => {
                 togglePanel.css({ overflow: 'visible' });
                 $('grid-cell').one('drop', () => {
                     togglePanel.removeClass('hide');
+                    togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
                     Blocks.index = 4;
                     scope.$apply();
                 });
