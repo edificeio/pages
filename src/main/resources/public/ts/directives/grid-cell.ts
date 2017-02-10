@@ -47,7 +47,10 @@ export let gridCell = ng.directive('gridCell', function($compile){
             }
 
             element.on('editor-blur', 'editor', () => {
-                scope.row.page.eventer.trigger('save');
+				element.removeClass('editor-focus');
+            });
+            element.on('editor-focus', 'editor', () => {
+                element.addClass('editor-focus');
             });
 
             element.on("dragover", function (event) {
