@@ -84,10 +84,10 @@ gulp.task('bower', ['drop-cache'], function(){
 });
 
 gulp.task('update-libs', ['bower'], function(){
-    var html = gulp.src(['./node_modules/infra-front/src/template/**/*.html'])
+    var html = gulp.src(['./node_modules/entcore/src/template/**/*.html'])
          .pipe(gulp.dest('./src/main/resources/public/template/entcore'));
         
-    var ts = gulp.src('./node_modules/infra-front/src/ts/**/*.ts' )
+    var ts = gulp.src('./node_modules/entcore/src/ts/**/*.ts' )
          .pipe(gulp.dest('./src/main/resources/public/ts/entcore'));
 
     var sassJs = gulp.src('./bower_components/sass.js/dist/**/*.js')
