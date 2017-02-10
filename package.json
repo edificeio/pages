@@ -20,7 +20,7 @@
     "merge2": "^1.0.2",
     "source-map-loader": "^0.1.5",
     "toolkit": "git+https://git@github.com/entcore/toolkit.git#dev",
-    "infra-front": "git+https://git@github.com/entcore/infra-front.git#dev",
+    "entcore": "git+https://git@github.com/entcore/infra-front.git#dev",
     "typescript": "2.1.1",
     "webpack": "^1.13.1",
     "webpack-stream": "^3.1.0"
