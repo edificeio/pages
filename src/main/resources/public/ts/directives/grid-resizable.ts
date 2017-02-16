@@ -71,6 +71,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					element.removeClass('ns-resize-over');
 					element.removeClass('ew-resize-over');
 					element.removeClass('nwse-resize-over');
+					element.css({ cursor: '' });
 					element.off('mousemove');
 				});
 			});
@@ -110,7 +111,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					if(neighbour.length < 1){
 						return cell;
 					}
-					if(neighbour.width() - step <= cellWidth * 2){
+					if((neighbour.width() + 4) - step <= cellWidth * 2){
 						return findResizableNeighbour(neighbour, step);
 					}
 					else{
@@ -123,7 +124,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					let childrenSize = 0;
                     cells.each(function (index, cell) {
                         if ($(cell).parent().length) {
-                            childrenSize += $(cell).width();
+                            childrenSize += $(cell).width() + 4;
                         }
 					});
 					return  rowWidth - (childrenSize + diff + 2 * cells.length);
@@ -178,15 +179,15 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 							if (newWidth < cellWidth) {
 								newWidth = cellWidth;
 							}
-							let diff = newWidth - element.width();
+							let diff = newWidth - element.width() - 4;
 
 							//neighbour resizing
 							let remainingSpace = parentRemainingSpace(diff);
-							let neighbour = findResizableNeighbour(element, distance - element.width());
+							let neighbour = findResizableNeighbour(element, distance - element.width() + 4);
                             
                             if (neighbour || remainingSpace >= 0) {
                                 if (neighbour && remainingSpace <= 0) {
-									let neighbourWidth = (neighbour.width() + remainingSpace) - 10;
+									let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 10;
                                     if (neighbourWidth < cellWidth * 2) {
                                         neighbour.detach();
                                     }
@@ -223,7 +224,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                                     }
 
                                     if (!foundCell) {
-                                        let neighbourWidth = neighbour.width() + remainingSpace;
+                                        let neighbourWidth = neighbour.width() + 4 + remainingSpace;
                                         neighbour.width(neighbourWidth - 6);
                                     }
                                 }
