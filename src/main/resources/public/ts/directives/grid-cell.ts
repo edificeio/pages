@@ -41,6 +41,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
 
             scope.styles = _.map(scope.cell.style, (val, key) => ({ name: key, val: val }));
             element.addClass('droppable');
+            element.addClass('twelve-mobile');
 
             if (element.parents('.edit').length === 0) {
                 element.children('.color-picker, dots-menu').remove();
