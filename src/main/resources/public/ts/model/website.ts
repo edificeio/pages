@@ -17,7 +17,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     title: string;
     eventer: Eventer;
     _id: string;
-    visibility: 'PUBLIC' | 'PROTECTED';
+    visibility: 'PUBLIC' | 'PRIVATE';
     landingPage: string;
     description: string;
     status: 'PUBLISHED' | 'DRAFT';

@@ -12,7 +12,7 @@ export let library = ng.controller('LibraryController', [
     $scope.root = Folders.root;
     $scope.folder = new Folder();
     $scope.website = new Website();
-    $scope.website.visibility = 'PROTECTED';
+    $scope.website.visibility = 'PRIVATE';
     $scope.filters = Filters;
     $scope.filters.protected = true;
 
@@ -99,7 +99,7 @@ export let library = ng.controller('LibraryController', [
 
     $scope.createWebsiteView = () => {
         $scope.website = new Website();
-        $scope.website.visibility = 'PROTECTED';
+        $scope.website.visibility = 'PRIVATE';
         $scope.website.initNewPage();
         $scope.lightbox('newSite');
     };
