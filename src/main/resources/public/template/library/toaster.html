@@ -2,7 +2,7 @@
     <div class="row toggle">
         <div>
             <!-- Both-->
-            <button ng-click="open(currentFolder.selection[0])"><i18n>open</i18n></button>
+            <button ng-click="open(currentFolder.selection[0])" ng-if="selection.length === 1"><i18n>open</i18n></button>
         </div>
         <div ng-if="currentFolder.selectionIsFolders">
             <!-- Exclusive to folders-->
