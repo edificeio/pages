@@ -19,10 +19,10 @@
                     </div>
 				</div>
 				<div ng-if="cell.media.type === 'text'" class="text-wrapper">
-					<editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="(website.visibility || 'PROTECTED').toLowerCase()"></editor>
+					<editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
 				</div>
 				<div ng-if="cell.media.type === 'video'" class="video-wrapper">
-                    <embedder ng-model="display.htmlCode" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
+                    <embedder ng-model="cell.media.source" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
                     <button ng-if="!cell.media.source" ng-click="lightbox('selectVideo')">
                         <i18n>video.pick</i18n>
                     </button>
@@ -32,7 +32,7 @@
 					<image-select 
                         ng-change="page.eventer.trigger('save')"
                         ng-model="cell.media.source" 
-                        visibility="website.visibility || 'PROTECTED'" 
+                        visibility="currentVisibility()" 
                         default="/img/illustrations/pages-default.png"
                         thumbnails="[{ width: 1600, height: 0 }]">
                     </image-select>
@@ -41,7 +41,7 @@
 					<sound-select 
                         ng-change="page.eventer.trigger('save')"
                         ng-model="cell.media.source" 
-                        visibility="website.visibility || 'PROTECTED'">
+                        visibility="currentVisibility()">
                     </sound-select>
 				</div>
 				<div ng-if="cell.media.type === 'sniplet'">

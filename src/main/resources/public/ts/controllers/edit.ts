@@ -59,6 +59,13 @@ export let edit = ng.controller('EditController', [
             { type: 'image' }
         ];
 
+        $scope.currentVisibility = () => {
+            if($scope.website.visibility !== 'PUBLIC'){
+                return 'protected';
+            }
+            return $scope.website.visibility.toLowerCase();
+        }
+
         $scope.snipletsSources = $scope.sniplets.map((s) => ({ 
                 type: 'sniplet', 
                 source: { application: s.application, template: s.template, title: s.sniplet.title } 
