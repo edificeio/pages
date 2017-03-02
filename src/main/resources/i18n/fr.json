@@ -250,7 +250,8 @@
   "blocks.accordions.description": "Ajoutez du contenu dans un module déroulant",
   "blocks.accordions.keywords": "accordeons deroulant menu selection",
 
-
+  "tooltip.grid": "Afficher/masquer la grille",
+  "tooltip.newpage": "Créer une page",
   "panel.help.title": "Ajouter du contenu",
   "panel.help.content": "Glisser-déposer un contenu dans la page",
   "panel.media.title": "Multimédia",
