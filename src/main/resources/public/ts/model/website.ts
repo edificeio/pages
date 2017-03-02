@@ -246,7 +246,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     }
 
     async moveTo(target: string | Folder): Promise<void> {
-        Folders.toRoot(this);
+        await Folders.toRoot(this);
 
         if (target instanceof Folder && target._id) {
             target.websitesIds.push(this._id);
