@@ -300,6 +300,7 @@ export class Websites {
             this.all.push(copy);
             Folders.provideWebsite(copy);
         }
+        this.refreshFilters();
     }
 
     removeSelection() {
