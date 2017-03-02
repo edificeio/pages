@@ -117,7 +117,7 @@ export class Folder extends HierarchicalFolder implements Shareable{
     async create(): Promise<void>{
         let response = await http.post('/pages/folder', this);
         Mix.extend(this, response.data);
-        this.owner.userId = model.me.userId;
+        this.owner = { userId: model.me.userId, displayName: model.me.firstName + ' ' + model.me.lastName };
         Folders.provideFolder(this);
     }
 
