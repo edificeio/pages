@@ -267,6 +267,11 @@
   "page.editstyle": "Modifier le style",
   "css.help": "Le style de la page doit être écrit en SASS. Il impactera tous les blocs.",
   "css.title": "Modifier le style",
+  "tooltip.shared": "Projet partagé",
+  "tooltip.manager": "Gestionnaire",
+  "tooltip.update": "Contributeur",
+  "tooltip.read": "Lecteur",
+  "tooltip.public": "Projet public",
   "pages.websites.removed": "Les projets ont été supprimés",
   "pages.default.content": "<h1>Votre page personnelle</h1><p>Vous pouvez entrer ici les informations que vous voulez : cliquez sur l'encart de texte pour en modifier le contenu. Vous pouvez aussi modifier l'image ci-dessus (ou la supprimer en cliquant sur la petite croix en haut à droite). La navigation de gauche sera complétée automatiquement au fur et à mesure que vous ajouterez des pages.</p><h1>Publier votre page</h1><p>Afin de publier votre page dans les applications (administrateurs uniquement), vous devez publier le projet qui la contient. Vous pouvez le faire dans la partie \"Propriétés\" de l'espace de gestion de votre projet.</p>",
   "pages.default.column": "<h2>Une colonne</h2><p>Cette colonne de texte vous permet d'entrer du contenu dans votre projet. Vous pouvez changer sa largeur en déplaçant sa bordure à droite ou à gauche. Vous pouvez aussi la déplacer en faisant un glisser-déposer.</p>"
