@@ -24,10 +24,13 @@ export let library = ng.controller('LibraryController', [
     BaseFolder.eventer.on('refresh', () => $scope.$apply());
     Website.eventer.on('save', () => $scope.$apply());
 
-    $rootScope.$on('share-updated', function (event, changes) {
-        $scope.currentFolder.selection.forEach((website) => {
+    $rootScope.$on('share-updated', async (event, changes) => {
+        for(let website of $scope.currentFolder.selection){
+            await (website as Website).sync();
             website.synchronizeRights();
-        });
+        }
+
+        $scope.$apply();
     });
 
     $scope.searchGroups = (item: Group) => {

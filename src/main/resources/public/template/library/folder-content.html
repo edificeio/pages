@@ -34,12 +34,13 @@
                             <br /><span>Modifié le [[website.lastModified]]</span>
                             <br />
                             <div class="icons">
+                                <i ng-if="website.shared.length > 0" class="shared inline"></i>
                                 <i ng-if="website.visibility === 'PUBLIC'" class="public"></i>
                                 <i class="manage" ng-if="website.myRights.manager"></i>
                                 <i class="edit" ng-if="!website.myRights.manager && website.myRights.update"></i>
                                 <i class="view" ng-if="!website.myRights.update"></i>
                             </div>
-                            <i ng-if="website.shared.length > 0" class="shared inline"></i>
+                            
                         </div>
                     </div>
                 </section>
