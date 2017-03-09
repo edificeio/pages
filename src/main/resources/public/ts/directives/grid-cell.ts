@@ -5,6 +5,24 @@ import { Row, Media, Blocks, Cell } from '../model';
 import { Mix } from 'toolkit';
 import http from 'axios';
 
+
+let flashCell = (element) => {
+    let addFlash = async () => {
+        await ui.scrollToId('flash');
+        element.removeAttr('id');
+
+        let flash = $('<div></div>')
+            .appendTo(element)
+            .addClass('flash')
+            .fadeOut();
+    };
+
+    setTimeout(() => {
+        element.attr('id', 'flash');
+        addFlash();
+    }, 100);
+};
+
 export let gridCell = ng.directive('gridCell', function($compile){
 	return {
 		restrict: 'E',
@@ -34,6 +52,10 @@ export let gridCell = ng.directive('gridCell', function($compile){
         `,
 		transclude: true,
 		link: function (scope, element, attributes) {
+            if(scope.cell.flash){
+                flashCell(element);
+            }
+
             var cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
             setTimeout(() => {
                 element.find('.media-container, .text-wrapper').css(scope.cell.style);
@@ -156,13 +178,11 @@ export let gridCell = ng.directive('gridCell', function($compile){
             });
 
             scope.duplicate = () => {
-                let newRow = Mix.castAs(Row, JSON.parse(JSON.stringify(scope.row)), scope.row.page) as Row;
+                let newRow = new Row(scope.row.page);
+                let newCell: Cell = Mix.castAs(Cell, JSON.parse(JSON.stringify(scope.cell)));
+                newCell.flash = true;
+                newRow.addCell(newCell);
                 let currentRow = scope.row as Row;
-                currentRow.cells.forEach((c, i) => {
-                    if (c !== scope.cell) {
-                        newRow.cells.all[i].media = {};
-                    }
-                });
 
                 currentRow.page.rows.insertAfter(newRow, currentRow);
                 scope.$apply();

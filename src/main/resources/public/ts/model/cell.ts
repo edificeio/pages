@@ -33,6 +33,7 @@ export class Cell {
     page: Page;
     style: any;
     title: string;
+    flash: boolean;
 
     constructor() {
         this.media = {};
