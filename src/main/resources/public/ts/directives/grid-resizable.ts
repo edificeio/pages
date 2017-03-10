@@ -10,7 +10,6 @@ let removeCursorEffect = (element) => {
 	element.removeClass('ns-resize-over');
 	element.removeClass('ew-resize-over');
 	element.removeClass('nwse-resize-over');
-	element.removeClass(element.css('cursor'));
 	element.css({ cursor: '' });
 };
 
@@ -77,6 +76,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 				});
 				element.on('mouseout', (e) => {
 					removeCursorEffect(element);
+					element.removeClass(element.css('cursor'));
 					element.off('mousemove');
 				});
 			});
@@ -96,7 +96,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						5 > mouse.y && mouse.y > element.offset().top + (element.height() + parseInt(element.css('padding-bottom'))) - 15) && !lock.vertical
 				};
 
-				let cellWidth = parseInt(element.parent().width() / 12);
+				let cellWidth = Math.ceil(element.parent().width() / 12) + 4;
 				let cells = element.parent().children('grid-cell');
 				let interrupt = false;
 				let parentData = {
@@ -194,7 +194,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                                 if (neighbour && remainingSpace <= 0) {
 									let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 10;
                                     if (neighbourWidth < cellWidth * 2) {
-                                        neighbour.detach();
+                                        neighbourWidth = cellWidth * 2;
                                     }
 									neighbour.width(neighbourWidth);
                                 }
@@ -282,12 +282,14 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					});
 
 					setTimeout(() => {
-						element.removeClass(element.css('cursor'));
 						cells.data('resizing', false);
 						cells.data('lock', false);
 						cells.attr('style', '');
                         cells.addClass('grid-media');
 						removeCursorEffect(element);
+						element.removeClass('ew-resize');
+						element.removeClass('ns-resize');
+						element.removeClass('nwse-resize');
                         element.find('*').css({ cursor: 'inherit' });
                         element.find('editor').css({ 'pointer-events': '' });
                         scope.row.page.eventer.trigger('save');

@@ -6,60 +6,58 @@
     </div>
 	<div class="row" ng-repeat="row in page.rows.all">
 		<grid-row index="row.index">
-            <div ng-repeat="cell in row.cells.all">
-                <grid-cell class="media cell editor-media"
-						grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
-						cell="cell" row="row">
-                    <div ng-if="!cell.media.type">
-                        <div class="help">
-                            <div>
-                                <a class="side-panel-opener" href="javascript:;"><i18n>drag.and.drop</i18n></a>
-                                <i18n>bloc.help</i18n>
-                                <a class="start-write" href="javascript:;"><i18n>bloc.write</i18n></a>
-                            </div>
+            <grid-cell class="media cell editor-media" ng-repeat="cell in row.cells.all"
+                    grid-resizable grid-draggable w="cell.width" h="cell.height" class-name="cell.className"
+                    cell="cell" row="row">
+                <div ng-if="!cell.media.type">
+                    <div class="help">
+                        <div>
+                            <a class="side-panel-opener" href="javascript:;"><i18n>drag.and.drop</i18n></a>
+                            <i18n>bloc.help</i18n>
+                            <a class="start-write" href="javascript:;"><i18n>bloc.write</i18n></a>
                         </div>
                     </div>
-                    <div ng-if="cell.media.type === 'text'" class="text-wrapper">
-                        <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
+                </div>
+                <div ng-if="cell.media.type === 'text'" class="text-wrapper">
+                    <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
+                </div>
+                <div ng-if="cell.media.type === 'video'" class="video-wrapper">
+                    <embedder ng-model="cell.media.source" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
+                    <button ng-if="!cell.media.source" ng-click="lightbox('selectVideo')">
+                        <i18n>video.pick</i18n>
+                    </button>
+                    <div bind-html="cell.media.source" style="pointer-events: none;"></div>
+                </div>
+                <div ng-if="cell.media.type === 'image'" class="image-wrapper">
+                    <image-select 
+                        ng-change="page.eventer.trigger('save')"
+                        ng-model="cell.media.source" 
+                        visibility="currentVisibility()" 
+                        default="/img/illustrations/pages-default.png"
+                        thumbnails="[{ width: 1600, height: 0 }]">
+                    </image-select>
+                </div>
+                <div ng-if="cell.media.type === 'sound'" class="audio-wrapper">
+                    <sound-select 
+                        ng-change="page.eventer.trigger('save')"
+                        ng-model="cell.media.source" 
+                        visibility="currentVisibility()">
+                    </sound-select>
+                </div>
+                <div ng-if="cell.media.type === 'sniplet'">
+                    <div ng-if="!cell.media.source.source">
+                        <sniplet-source application="[[cell.media.source.application]]" template="[[cell.media.source.template]]" ng-model="cell.media.source.source"></sniplet-source>
                     </div>
-                    <div ng-if="cell.media.type === 'video'" class="video-wrapper">
-                        <embedder ng-model="cell.media.source" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
-                        <button ng-if="!cell.media.source" ng-click="lightbox('selectVideo')">
-                            <i18n>video.pick</i18n>
-                        </button>
-                        <div bind-html="cell.media.source" style="pointer-events: none;"></div>
+                    <div ng-if="cell.media.source.source">
+                        <sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>
                     </div>
-                    <div ng-if="cell.media.type === 'image'" class="image-wrapper">
-                        <image-select 
-                            ng-change="page.eventer.trigger('save')"
-                            ng-model="cell.media.source" 
-                            visibility="currentVisibility()" 
-                            default="/img/illustrations/pages-default.png"
-                            thumbnails="[{ width: 1600, height: 0 }]">
-                        </image-select>
+                </div>
+                <div ng-if="cell.media.type === 'grid'">
+                    <div ng-init="page = cell.media.source">
+                        <container template="view/grid"></container>
                     </div>
-                    <div ng-if="cell.media.type === 'sound'" class="audio-wrapper">
-                        <sound-select 
-                            ng-change="page.eventer.trigger('save')"
-                            ng-model="cell.media.source" 
-                            visibility="currentVisibility()">
-                        </sound-select>
-                    </div>
-                    <div ng-if="cell.media.type === 'sniplet'">
-                        <div ng-if="!cell.media.source.source">
-                            <sniplet-source application="[[cell.media.source.application]]" template="[[cell.media.source.template]]" ng-model="cell.media.source.source"></sniplet-source>
-                        </div>
-                        <div ng-if="cell.media.source.source">
-                            <sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>
-                        </div>
-                    </div>
-                    <div ng-if="cell.media.type === 'grid'">
-                        <div ng-init="page = cell.media.source">
-                            <container template="view/grid"></container>
-                        </div>
-                    </div>
-                </grid-cell>
-            </div>
+                </div>
+            </grid-cell>
 		</grid-row>
 	</div>
 </drawing-grid>

@@ -40,7 +40,6 @@ export let edit = ng.controller('EditController', [
             params = $route.current.params;
             findPage();
         });
-        findPage();
 
         template.open('view/grid', 'view/grid');
         template.open('editor/grid', 'editor/grid');

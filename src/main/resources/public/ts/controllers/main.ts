@@ -39,7 +39,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         else {
             template.open('main', 'page-viewer');
         }
-        model.trigger('route-changed');
+        setTimeout(() => model.trigger('route-changed'), 500);
         $scope.$apply();
     }
 

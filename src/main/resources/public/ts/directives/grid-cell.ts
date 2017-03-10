@@ -120,9 +120,6 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 }
 
                 let row: Row = scope.row;
-                if (row.remainingSpace > 0 && scope.cell === row.cells.last) {
-                    scope.cell.width += row.remainingSpace;
-                }
 			});
 
 			scope.$watch('h', function(newVal, oldVal){
