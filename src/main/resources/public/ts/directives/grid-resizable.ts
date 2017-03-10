@@ -306,6 +306,9 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                         $('.add-cell').remove();
                         element.find('*').css({ cursor: 'inherit' });
                         element.find('editor').css({ 'pointer-events': '' });
+						element.removeClass('ns-resize');
+						element.removeClass('ew-resize');
+						element.removeClass('nwse-resize');
                         scope.row.page.eventer.trigger('save');
 					}, 100);
 					$(document).off('mousemove.resize');
