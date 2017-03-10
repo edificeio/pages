@@ -2,12 +2,6 @@
     <div ng-if="display.lightbox.managePages && website.newPage === undefined && website.showStyle === undefined">
         <h2><i18n>pages.manage.title</i18n></h2>
 
-        <div class="row">
-            <button class="right-magnet" ng-click="website.initNewPage()">
-                <i18n>page.create</i18n>
-            </button>
-        </div>
-
         <div class="twelve cell card">
             <ul class="twelve list-view row" sortable-list>
                 <li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index">
@@ -45,6 +39,17 @@
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div class="row">
+            <div class="twelve cell vertical-spacing">
+                <button class="right-magnet" ng-click="closeManagePages()">
+                    <i18n>validate</i18n>
+                </button>
+                <button class="right-magnet cancel" ng-click="website.initNewPage()">
+                    <i18n>page.create</i18n>
+                </button>
+            </div>
         </div>
     </div>
     <div ng-if="website.showStyle && website.newPage === undefined">
