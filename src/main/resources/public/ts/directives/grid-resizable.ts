@@ -114,9 +114,9 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 				function findResizableNeighbour(cell, step){
 					let neighbour = cell.next('grid-cell');
 					if(neighbour.length < 1){
-						return cell;
+						return undefined;
 					}
-					if((neighbour.width() + 4) - step <= cellWidth * 2){
+					if((neighbour.width() + 4) - step <= cellWidth){
 						return findResizableNeighbour(neighbour, step);
 					}
 					else{
@@ -193,32 +193,11 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                             if (neighbour || remainingSpace >= 0) {
                                 if (neighbour && remainingSpace <= 0) {
 									let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 10;
-                                    if (neighbourWidth < cellWidth * 2) {
-                                        neighbourWidth = cellWidth * 2;
+                                    if (neighbourWidth < cellWidth) {
+                                        neighbourWidth = cellWidth;
                                     }
 									neighbour.width(neighbourWidth);
                                 }
-
-                                if (remainingSpace > 0) {
-                                    let foundCell = false;
-                                    
-                                    cells.each((index, cell) => {
-                                        if ($(cell).parent().length === 0) {
-                                            if (remainingSpace > cellWidth * 2) {
-                                                element.parent().append(cell);
-                                                $(cell).width(cellWidth * 2);
-                                                remainingSpace = 0;
-                                            }
-                                            foundCell = true;
-                                        }
-                                    });
-
-                                    if (!foundCell) {
-                                        let neighbourWidth = neighbour.width() + 4 + remainingSpace;
-                                        neighbour.width(neighbourWidth - 6);
-                                    }
-                                }
-                                
 
 								element.width(newWidth);
 							}
