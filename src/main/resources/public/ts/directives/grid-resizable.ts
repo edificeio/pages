@@ -6,6 +6,14 @@ interface Directions{
 	vertical?: boolean;
 }
 
+let removeCursorEffect = (element) => {
+	element.removeClass('ns-resize-over');
+	element.removeClass('ew-resize-over');
+	element.removeClass('nwse-resize-over');
+	element.removeClass(element.css('cursor'));
+	element.css({ cursor: '' });
+};
+
 export let gridResizable = ng.directive('gridResizable', function($compile){
 	return {
 		restrict: 'A',
@@ -57,7 +65,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						cursor = cursor + '-resize';
 					}
 					if(cursor !== element.css('cursor')){
-						element.removeClass(element.css('cursor'));
+						removeCursorEffect(element);
 						if(cursor){
 							element.addClass(cursor + '-over');
 						}
@@ -68,10 +76,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					
 				});
 				element.on('mouseout', (e) => {
-					element.removeClass('ns-resize-over');
-					element.removeClass('ew-resize-over');
-					element.removeClass('nwse-resize-over');
-					element.css({ cursor: '' });
+					removeCursorEffect(element);
 					element.off('mousemove');
 				});
 			});
@@ -208,21 +213,6 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                                         }
                                     });
 
-                                    if (cells[cells.length - 1] === element[0] && !foundCell) {
-                                        if (remainingSpace > cellWidth * 2) {
-                                            let cell = $('<grid-cell></grid-cell>')
-                                                .addClass('media')
-                                                .addClass('add-cell')
-                                                .addClass('cell');
-                                            element.parent().append(cell);
-                                            cells = element.parent().children('grid-cell');
-                                            $(cell).width((cellWidth * 2) - 1);
-                                            $(cell).height(200);
-                                            remainingSpace = 0;
-                                        }
-                                        foundCell = true;
-                                    }
-
                                     if (!foundCell) {
                                         let neighbourWidth = neighbour.width() + 4 + remainingSpace;
                                         neighbour.width(neighbourWidth - 6);
@@ -282,18 +272,12 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						let cellWIndex = Math.round(width * 12 / parentData.size.width);
                         let cellHIndex = Math.round(height * 12 / parentData.size.width);
 
-                        if ($(cell).hasClass('add-cell')) {
-                            scope.row.addEmptyCell(cellWIndex, 0);
-                            return;
-                        }
-
                         let cellScope = angular.element(cell).scope();
                         
-						cellScope.w = cellWIndex;
-                        cellScope.h = cellHIndex;
+						cellScope.cell.width = cellWIndex;
+                        cellScope.cell.height = cellHIndex;
                         setTimeout(() => {
-                            cellScope.$apply('w');
-                            cellScope.$apply('h');
+                            cellScope.$apply();
                         }, 10);
 					});
 
@@ -303,12 +287,9 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						cells.data('lock', false);
 						cells.attr('style', '');
                         cells.addClass('grid-media');
-                        $('.add-cell').remove();
+						removeCursorEffect(element);
                         element.find('*').css({ cursor: 'inherit' });
                         element.find('editor').css({ 'pointer-events': '' });
-						element.removeClass('ns-resize');
-						element.removeClass('ew-resize');
-						element.removeClass('nwse-resize');
                         scope.row.page.eventer.trigger('save');
 					}, 100);
 					$(document).off('mousemove.resize');
