@@ -27,8 +27,8 @@
                         </a>
                     </div>
                     <div class="one cell">
-                        <i class="visible" ng-click="page.unpublish()" ng-if="page.published"></i>
-                        <i class="hidden" ng-click="page.publish()" ng-if="!page.published"></i>
+                        <i class="public" ng-if="page.published" tooltip="page.published"></i>
+                        <i class="prive" ng-if="!page.published" tooltip="page.unpublished"></i>
                     </div>
                     <div class="one cell">
                         <dots-menu class="right-magnet">
