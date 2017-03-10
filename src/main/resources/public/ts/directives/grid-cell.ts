@@ -35,21 +35,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
 			onIndexChange: '&',
 			onRowChange: '&'
 		},
-        template: `
-            <h2 class="cell-title">[[cell.title]]</h2>
-            <input type="color" ng-model="cell.style['background-color']" class="color-picker" />
-            <div class="media-wrapper" ng-class="{ 'has-title': cell.title }">
-                <div class="media-container" ng-class="className" ng-transclude></div>
-            </div>
-            <dots-menu>
-                <opt ng-click="setTitle()"><i18n>cell.set.title</i18n></opt>
-                <opt ng-click="removeTitle()" ng-if="cell.title"><i18n>cell.remove.title</i18n></opt>
-                <opt ng-click="duplicate()"><i18n>duplicate</i18n></opt>
-                <opt ng-click="setColor()"><i18n>cell.setBackground</i18n></opt>
-                <opt ng-click="removeColor()" ng-if="cell.style['background-color']"><i18n>cell.removeBackground</i18n></opt>
-                <opt ng-click="removeCell()"><i18n>remove</i18n></opt>
-            </dots-menu>
-        `,
+        templateUrl: '/pages/public/template/directives/grid-cell.html',
 		transclude: true,
 		link: function (scope, element, attributes) {
             if(scope.cell.flash){
@@ -114,6 +100,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
             });
 
             scope.setTitle = () => {
+                scope.cell.newTitle = scope.cell.title;
                 scope.$parent.lightbox('setCellTitle', scope.cell);
             };
 

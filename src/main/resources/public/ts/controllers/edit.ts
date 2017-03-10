@@ -137,7 +137,11 @@ export let edit = ng.controller('EditController', [
             $scope.website.showStyle = undefined;
         };
 
-        $scope.closeCellTitle = () => {
+        $scope.closeCellTitle = (save: boolean) => {
+            if(save){
+                $scope.display.data.title = $scope.display.data.newTitle;
+            }
+            delete $scope.display.data.newTitle;
             $scope.lightbox('setCellTitle');
-        }
+        };
 }])

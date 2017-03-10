@@ -68,7 +68,11 @@
     <lightbox show="display.lightbox.setCellTitle" on-close="closeCellTitle()">
         <h2><i18n>cell.set.title</i18n></h2>
         <div class="row">
-            <input type="text" class="twelve cell" ng-model="display.data.title" i18n-placeholder="title" />
+            <input type="text" class="twelve cell" ng-model="display.data.newTitle" i18n-placeholder="title" />
+        </div>
+        <div class="row">
+            <button class="right-magnet" ng-click="closeCellTitle(true)"><i18n>save</i18n></button>
+            <button class="right-magnet cancel" ng-click="closeCellTitle()"><i18n>cancel</i18n></button>
         </div>
     </lightbox>
 </div>
