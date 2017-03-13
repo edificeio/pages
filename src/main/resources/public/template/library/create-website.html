@@ -23,8 +23,4 @@
             <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven right-magnet" />
         </div>
 	</step>
-	<step next-condition="website.pages.all.length > 0">
-        <h1><i18n>wizard.template.title</i18n></h1>
-        <container template="editor/templates"></container>
-	</step>
 </wizard>

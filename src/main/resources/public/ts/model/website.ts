@@ -159,8 +159,8 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         await http.delete('/pages/' + this._id);
     }
     
-    async setTemplate(templateName: string): Promise<void> {
-        await this.newPage.fromTemplate(templateName, this);
+    async setTemplate(): Promise<void> {
+        await this.newPage.fromTemplate(this);
     }
 
     trigger(event: string) {
@@ -179,13 +179,16 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         await this.rights.fromBehaviours();
     }
 
-    async useNewPage(): Promise<void> {
+    async useNewPage(): Promise<Page> {
+        await this.save();
+        let page = this.newPage;
         this.newPage.published = true;
         this.newPage.setTitleLink();
+        this.newPage.fromTemplate(this);
         this.pages.push(this.newPage);
         this.newPage = undefined;
-        await this.save();
         this.eventer.trigger('page-added');
+        return page;
     }
 
     initNewPage(){

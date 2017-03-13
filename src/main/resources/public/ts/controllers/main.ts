@@ -75,11 +75,6 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         $scope.display.lightbox[lightboxName] = !$scope.display.lightbox[lightboxName];
     };
 
-    $scope.setTemplate = async (templateName: string, website: Website) => {
-        $scope.display.currentTemplate = templateName;
-        await website.setTemplate(templateName);
-    };
-
     $scope.addPage = (website: Website) => {
         website.useNewPage();
         website.save();

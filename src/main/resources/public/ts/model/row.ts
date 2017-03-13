@@ -144,26 +144,6 @@ export class Rows {
     removeRow(row: Row) {
         let index = this.all.indexOf(row);
         this.all.splice(index, 1);
-        this.addFillerRow();
-    }
-
-    addFillerRow(): Row {
-        let hasFillerRow = false;
-        if (this.last) {
-            hasFillerRow = true;
-            this.last.cells.forEach((c) => {
-                hasFillerRow = hasFillerRow && !c.media.type
-            });
-        }
-        
-        if (hasFillerRow) {
-            return;
-        }
-        let row = this.addRow();
-        for (let i = 0; i < 3; i++) {
-            row.addFillerCell();
-        }
-        return row;
     }
 
     insertAfter(newRow: Row, ref: Row) {

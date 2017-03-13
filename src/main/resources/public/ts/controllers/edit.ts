@@ -20,7 +20,6 @@ export let edit = ng.controller('EditController', [
             }
 
             let page: Page = $scope.page;
-            $scope.page.addFillerRow();
             $scope.page.applySASS();
 
             website.watchChanges();
@@ -75,12 +74,10 @@ export let edit = ng.controller('EditController', [
 
         $scope.cellContent = (cell: Cell, content) => {
             cell.source(content);
-            $scope.page.addFillerRow();
         };
 
         $scope.dropContent = (row, cell, $item) => {
             cell.source($item);
-            row.page.addFillerRow();
             row.page.trigger('save');
         };
 
@@ -91,7 +88,8 @@ export let edit = ng.controller('EditController', [
 
         $scope.addPage = async () => {
             $scope.display.currentTemplate = undefined;
-            await $scope.website.useNewPage();
+            let page = await $scope.website.useNewPage();
+            $location.path('/website/' + $scope.website._id + '/' + page.titleLink)
             $scope.$apply();
         };
 

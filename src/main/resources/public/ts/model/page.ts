@@ -1,6 +1,6 @@
 import { Website } from './website';
 import { Row, Rows } from './row';
-import { templates } from './template';
+import { Cell } from './cell';
 import { idiom as lang } from 'entcore/entcore';
 import { Mix, Selectable, Eventer } from 'toolkit';
 import { $ } from 'entcore/libs/jquery/jquery';
@@ -77,9 +77,26 @@ export class Page implements Selectable {
         }
     }
 
-    async fromTemplate(templateName: string, website: Website): Promise<void> {
+    fromTemplate(website: Website) {
         this.rows.empty();
-        await templates[templateName](this, website);
+        website.eventer.off('page-added');
+        let row = this.addRow();
+        
+        let navigation = new Cell();
+        navigation.media.type = 'sniplet';
+        row.addCell(navigation);
+        navigation.width = 3;
+        navigation.media.source = {
+            template: 'navigation',
+            application: 'pages',
+            source: { _id: website._id }
+        };
+
+        let content = new Cell();
+        content.width = 9;
+        content.media.type = 'text';
+        content.media.source = lang.translate('pages.default.content');
+        row.addCell(content);
     }
 
     publish() {
@@ -122,10 +139,6 @@ export class Page implements Selectable {
 
     removeRow(row: Row) {
         this.rows.removeRow(row);
-    }
-
-    addFillerRow() {
-        return this.rows.addFillerRow();
     }
 
     async remove(): Promise<void> {
