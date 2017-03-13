@@ -3,6 +3,8 @@ import { Page } from './page';
 import { Rows, Row } from './row';
 import { cleanJSON } from 'entcore/entcore';
 
+export let cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+
 let weights = {
     sniplet: 5,
     text: 0.3,
@@ -76,6 +78,10 @@ export class Cells {
         if (arr instanceof Array) {
             this._all = arr;
         }
+    }
+
+    get length(): number{
+        return this.all.length;
     }
 
     forEach(fn: (c: Cell, i: number) => void) {

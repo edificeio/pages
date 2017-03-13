@@ -22,6 +22,7 @@ export class Row {
     fromJSON(row) {
         this.cells = new Cells(Mix.castArrayAs(Cell, row.cells as any));
         this.cells.forEach((c) => c.page = this.page);
+        this.cells.all.sort((c1, c2) => c1.index - c2.index);
     }
 
     get remainingSpace(): number {
@@ -53,11 +54,26 @@ export class Row {
         this.addCell(cell);
     }
 
+    addCellAt(cell: Cell, index: number): Cell {
+        this.cells.forEach(c => {
+            if(c.index >= index){
+                c.index ++;
+            }
+        })
+        cell.index = index;
+        cell.page = this.page;
+        cell.row = this.index;
+        this.cells.push(cell);
+        this.cells.all.sort((c1, c2) => c1.index - c2.index);
+        return cell;
+    }
+
     addCell(cell: Cell): Cell {
         cell.index = this.cells.all.length;
         cell.page = this.page;
         cell.row = this.index;
         this.cells.push(cell);
+        this.cells.all.sort((c1, c2) => c1.index - c2.index);
         return cell;
     }
 
@@ -81,8 +97,8 @@ export class Row {
         let leftNeighbour = this.cells.previous(cell);
         let rightNeighbour = this.cells.next(cell);
         if (leftNeighbour && rightNeighbour) {
-            leftNeighbour.width += cell.width / 2;
-            rightNeighbour.width += cell.width / 2 + cell.width % 2;
+            leftNeighbour.width += parseInt(cell.width / 2);
+            rightNeighbour.width += parseInt(cell.width / 2) + parseInt(cell.width % 2);
         }
         if (!leftNeighbour) {
             if (!rightNeighbour) {

@@ -1,9 +1,8 @@
 import { ng, ui } from 'entcore/entcore';
 import { $ } from 'entcore/libs/jquery/jquery';
 import { _ } from 'entcore/libs/underscore/underscore';
-import { Row, Media, Blocks, Cell } from '../model';
+import { Row, Media, Blocks, Cell, cellSizes } from '../model';
 import { Mix } from 'toolkit';
-import http from 'axios';
 
 
 let flashCell = (element) => {
@@ -42,13 +41,13 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 flashCell(element);
             }
 
-            var cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+            
             setTimeout(() => {
                 element.find('.media-container, .text-wrapper').css(scope.cell.style);
             }, 300);
 
             scope.styles = _.map(scope.cell.style, (val, key) => ({ name: key, val: val }));
-            element.addClass('droppable');
+            
             element.addClass('twelve-mobile');
 
             if (element.parents('.edit').length === 0) {
@@ -62,16 +61,6 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 element.addClass('editor-focus');
             });
 
-            element.on("dragover", function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            });
-
-            element.on("dragleave", function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            });
-
             function setShadow(){
                 let cell = scope.cell as Cell;
                 if (cell.media.type === 'text') {
@@ -80,24 +69,6 @@ export let gridCell = ng.directive('gridCell', function($compile){
             }
 
             setShadow();
-
-            element.on('drop', async (event, item) => {
-                scope.cell.media = { type: 'empty' };
-                scope.$apply();
-                if (item.path) {
-                    let response = await http.get(item.path);
-                    let media: Media = {
-                        type: 'text',
-                        source: response.data
-                    };
-                    item = media;
-                }
-
-                scope.cell.source(JSON.parse(JSON.stringify(item)));
-                scope.row.page.addFillerRow();
-                setShadow();
-                scope.$apply();
-            });
 
             scope.setTitle = () => {
                 scope.cell.newTitle = scope.cell.title;
