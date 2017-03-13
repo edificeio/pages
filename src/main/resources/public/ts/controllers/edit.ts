@@ -20,11 +20,6 @@ export let edit = ng.controller('EditController', [
             }
 
             let page: Page = $scope.page;
-            page.rows.forEach((r) => {
-                $scope.display.guideRows.push($scope.display.guideRows.length);
-                $scope.display.guideRows.push($scope.display.guideRows.length);
-                $scope.display.guideRows.push($scope.display.guideRows.length);
-            });
             $scope.page.addFillerRow();
             $scope.page.applySASS();
 
@@ -43,13 +38,6 @@ export let edit = ng.controller('EditController', [
 
         template.open('view/grid', 'view/grid');
         template.open('editor/grid', 'editor/grid');
-
-        Rows.eventer.on('add-row', () => {
-            $scope.display.guideRows.push($scope.display.guideRows.length);
-            $scope.display.guideRows.push($scope.display.guideRows.length);
-            $scope.display.guideRows.push($scope.display.guideRows.length);
-            $scope.$apply();
-        })
 
         $scope.media = [
             { type: 'sound' },

@@ -15,15 +15,8 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     $scope.display = {
         lightbox: {},
         currentTemplate: '',
-        guideRows: [],
-        guideCols: [],
         sliderTest: 1
     };
-
-    for (let i = 0; i < 12; i++) {
-        $scope.display.guideRows.push(i);
-        $scope.display.guideCols.push(i);
-    }
 
     template.open('editor/pages-manager', 'editor/pages-manager');
     template.open('editor/templates', 'editor/templates');

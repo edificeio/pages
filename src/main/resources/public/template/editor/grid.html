@@ -1,9 +1,4 @@
 <drawing-grid class="edit pages-grid">
-    <div class="grid-guides" ng-if="display.showGrids">
-        <div class="row" ng-repeat="i in display.guideRows">
-            <div class="one cell height-one" ng-repeat="i in display.guideCols"></div>
-        </div>
-    </div>
 	<div class="row" ng-repeat="row in page.rows.all">
 		<grid-row index="row.index">
             <grid-cell class="media cell editor-media" ng-repeat="cell in row.cells.all"
