@@ -8,7 +8,6 @@ export let panel = ng.directive('panel', () => {
         templateUrl: '/pages/public/template/directives/panel.html',
         link: (scope, element, attributes) => {
             let togglePanel = element.children('.toggle-panel');
-            togglePanel.addClass('hide');
             let icon = element.children('ul').children('li');
 
             $('body').on('click', (e) => {
