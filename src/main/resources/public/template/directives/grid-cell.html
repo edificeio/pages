@@ -3,6 +3,7 @@
 <div class="media-wrapper" ng-class="{ 'has-title': cell.title }">
     <div class="media-container" ng-class="className" ng-transclude></div>
 </div>
+<i class="trash" ng-click="removeCell()"></i>
 <dots-menu>
     <opt ng-click="setTitle()"><i18n>cell.set.title</i18n></opt>
     <opt ng-click="removeTitle()" ng-if="cell.title"><i18n>cell.remove.title</i18n></opt>

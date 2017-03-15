@@ -21,7 +21,10 @@ export class Row {
 
     fromJSON(row) {
         this.cells = new Cells(Mix.castArrayAs(Cell, row.cells as any));
-        this.cells.forEach((c) => c.page = this.page);
+        this.cells.forEach((c) => {
+            c.page = this.page;
+            c.row = this;
+        });
         this.cells.all.sort((c1, c2) => c1.index - c2.index);
     }
 
@@ -32,16 +35,6 @@ export class Row {
             usedSpace += cell.width;
         });
         return maxSize - usedSpace;
-    }
-
-    addFillerCell() {
-        let cell = new Cell();
-        cell.page = this.page;
-        cell.width = 4;
-        cell.row = this.index;
-
-        cell.media = {};
-        this.cells.all.push(cell);
     }
 
     addEmptyCell(width: number, height: number) {
@@ -62,7 +55,7 @@ export class Row {
         })
         cell.index = index;
         cell.page = this.page;
-        cell.row = this.index;
+        cell.row = this;
         this.cells.push(cell);
         this.cells.all.sort((c1, c2) => c1.index - c2.index);
         return cell;
@@ -71,7 +64,7 @@ export class Row {
     addCell(cell: Cell): Cell {
         cell.index = this.cells.all.length;
         cell.page = this.page;
-        cell.row = this.index;
+        cell.row = this;
         this.cells.push(cell);
         this.cells.all.sort((c1, c2) => c1.index - c2.index);
         return cell;
@@ -94,23 +87,17 @@ export class Row {
     }
 
     removeCell(cell: Cell) {
-        let leftNeighbour = this.cells.previous(cell);
-        let rightNeighbour = this.cells.next(cell);
-        if (leftNeighbour && rightNeighbour) {
-            leftNeighbour.width += parseInt(cell.width / 2);
-            rightNeighbour.width += parseInt(cell.width / 2) + parseInt(cell.width % 2);
-        }
-        if (!leftNeighbour) {
-            if (!rightNeighbour) {
-                this.page.removeRow(this);
-                return;
-            }
-            rightNeighbour.width += cell.width;
-        }
-        if (!rightNeighbour) {
-            leftNeighbour.width += cell.width;
-        }
         this.cells.removeCell(cell);
+        if(this.cells.length === 0){
+            this.page.removeRow(this);
+            return;
+        }
+        let newCellWidth = 12 / this.cells.length;
+        this.cells.forEach(c => c.width = newCellWidth);
+        if(this.cells.length * newCellWidth < 12){
+            let filler = this.cells.all[parseInt(this.cells.length / 2)];
+            filler.width += 12 % (this.cells.length * newCellWidth);
+        }
     }
 
     get weight(): number {

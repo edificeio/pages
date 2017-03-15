@@ -21,6 +21,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			let cellWidth;
 
 			let newCellWidth;
+			let filling = 0;
 			let firstDrag = true;
 
 			let elementWidth;
@@ -33,74 +34,111 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			let timerToken;
 			let marginTime = false;
 
+			let newLength;
+			let dragCell = false;
+
+			let margin = '';
+
 			element.on("dragover", function (event, e) {
                 event.preventDefault();
                 event.stopPropagation();
 				if(firstDrag){
+					margin = ((newCellWidth + filling) * cellWidth) + 'px';
+					newLength = row.cells.length + 1;
+					dragCell = false;
+					if(element.children('.dragging').length > 0){
+						newLength--;
+						dragCell = true;
+						margin = (element.children('.dragging').width() - 4) + 'px';
+					}
 					firstDrag = false;
 					elementWidth = element.width();
 					elementOffset = element.offset();
 					cellWidth = elementWidth / 12;
 					gridCells = element.find('grid-cell');
-					element.height(element.height());
-					newCellWidth = parseInt(12 / (row.cells.length + 1));
-					gridCells.each((index, item) => {
-						$(item).removeClass(cellSizes[row.cells.all[index].width]);
-						$(item).addClass(cellSizes[newCellWidth]);
-					});
+					newCellWidth = parseInt(12 / newLength);
+					filling = 12 % (newCellWidth * newLength);
+
+					if(!dragCell){
+						gridCells.each((index, item) => {
+							$(item).removeClass(cellSizes[row.cells.all[index].width]);
+							$(item).addClass(cellSizes[newCellWidth]);
+						});
+					}
+
 					timerToken = setTimeout(() => {
-						marginTime = true
+						marginTime = true;
 					}, 100);
 				}
 				
 				elementIndex = parseInt((e.x - elementOffset.left) / (newCellWidth * cellWidth));
-				
 				if(elementIndex !== previousElementIndex && marginTime){
-					gridCells.attr('style', '');
-					$(gridCells[elementIndex]).css({ 'margin-left': (newCellWidth * cellWidth) + 'px' });
+					gridCells.each((index, item) => {
+						if(!$(item).hasClass('dragging')){
+							$(item).attr('style', '');
+						}
+					});
+					
+					if(!$(gridCells[elementIndex]).hasClass('dragging')){
+						$(gridCells[elementIndex]).css({ 'margin-left': margin });
+					}
+					else{
+						$(gridCells[elementIndex]).next().css({ 'margin-left': margin });
+					}
+
 					previousElementIndex = elementIndex;
 				}
             });
 
 			element.on("dragout", function (event) {
-				firstDrag = true;
-				marginTime = false;
 				clearTimeout(timerToken);
                 event.preventDefault();
                 event.stopPropagation();
-				gridCells.attr('style', '');
+				gridCells.each((index, gc) => {
+					if(!$(gc).hasClass('dragging')){
+						$(gc).attr('style', '');
+					}
+				});
+				element.css({ height: '' });
+				firstDrag = true;
+				marginTime = false;
+				previousElementIndex = undefined;
 				gridCells.each((index, item) => {
-					$(item).removeClass(cellSizes[newCellWidth]);
-					$(item).addClass(cellSizes[row.cells.all[index].width]);
+					if(!$(item).hasClass('dragging')){
+						$(item).removeClass(cellSizes[newCellWidth]);
+						$(item).addClass(cellSizes[row.cells.all[index].width]);
+					}
 				});
             });
 
-			element.on('drop', (event, item) => {
-				let cell = new Cell();
-                cell.media = { type: 'empty' };
-				cell.width = newCellWidth;
+			element.on('drop', async (event, item) => {
+				firstDrag = true;
+				previousElementIndex = undefined;
 				gridCells.attr('style', '');
-				row.cells.forEach(c => c.width = newCellWidth);
-				setTimeout(() => {
-					row.addCellAt(cell, elementIndex);
+
+				if(item instanceof Cell && dragCell){
+					item.index = elementIndex;
 					scope.$apply();
-					if (item.path) {
-						http.get(item.path).then(response => {
-							let media: Media = {
-								type: 'text',
-								source: response.data
-							};
-							item = media;
-							cell.source(JSON.parse(JSON.stringify(item)));
-							scope.$apply();
-						});
-						
-					}
-					else{
-						cell.source(JSON.parse(JSON.stringify(item)));
-						scope.$apply();
-					}
-				}, 250);
+					return;
+				}
+
+				let cell: Cell = new Cell();
+				if(item instanceof Cell){
+					item.removeFromRow();
+					cell = item;
+				}
+
+				if(!cell.media){
+					cell.media = { type: 'empty' };
+				}
+				row.addCellAt(cell, elementIndex);
+				cell.width = newCellWidth + filling;
+				row.cells.forEach(c => c.width = newCellWidth);
+				scope.$apply();
+				if(!(item instanceof Cell)){
+					await cell.setContent(JSON.parse(JSON.stringify(item)));
+					scope.$apply();
+				}
             });
 		}
 	}

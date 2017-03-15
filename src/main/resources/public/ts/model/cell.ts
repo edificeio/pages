@@ -2,6 +2,7 @@ import { Mix } from 'toolkit';
 import { Page } from './page';
 import { Rows, Row } from './row';
 import { cleanJSON } from 'entcore/entcore';
+import http from 'axios';
 
 export let cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 
@@ -31,7 +32,7 @@ export class Cell {
     media: Media;
     className: string[];
     index: number;
-    row: number;
+    row: Row;
     page: Page;
     style: any;
     title: string;
@@ -40,6 +41,35 @@ export class Cell {
     constructor() {
         this.media = {};
         this.style = {};
+    }
+
+    removeFromRow(){
+        this.row.removeCell(this);
+    }
+
+    setContent(item: any): Promise<any>{
+        this.media = { type: 'empty' };
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (item.path) {
+                    http.get(item.path).then(response => {
+                        let media: Media = {
+                            type: 'text',
+                            source: response.data
+                        };
+                        item = media;
+                        this.source(JSON.parse(JSON.stringify(item)));
+                        resolve();
+                    });
+                    
+                }
+                else{
+                    this.source(JSON.parse(JSON.stringify(item)));
+                    resolve();
+                }
+            }, 250);
+        });
+        
     }
 
     source(source: Media){

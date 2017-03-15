@@ -39,6 +39,8 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					}
 
 					lock.vertical = (element.find('grid-cell, [vertical-lock]').length > 0);
+					lock.horizontal = (element.find('grid-cell, [horizontal-lock]').length > 0) || 
+						element.index() == element.parent().children('grid-cell').length - 1;
 
 					let mouse = { x: e.pageX, y: e.pageY };
 					resizeLimits = {
