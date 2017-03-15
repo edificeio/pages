@@ -4,7 +4,7 @@
   "description": "This application allows users to create websites.",
   "main": "gulpfile.js",
   "dependencies": {
-    "@types/core-js": "^0.9.34",
+    "@types/core-js": "0.9.36",
     "axios": "^0.15.2",
     "bower": "^1.7.9",
     "core-js": "^2.4.1",
