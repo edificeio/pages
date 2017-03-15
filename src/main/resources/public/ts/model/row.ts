@@ -58,7 +58,23 @@ export class Row {
         cell.row = this;
         this.cells.push(cell);
         this.cells.all.sort((c1, c2) => c1.index - c2.index);
+        this.cells.forEach((c, i) => {
+            c.index = i;
+        });
         return cell;
+    }
+
+    moveCell(cell: Cell, index: number){
+        this.cells.forEach(c => {
+            if(c.index >= index){
+                c.index ++;
+            }
+        });
+        cell.index = index;
+        this.cells.all.sort((c1, c2) => c1.index - c2.index);
+        this.cells.forEach((c, i) => {
+            c.index = i;
+        });
     }
 
     addCell(cell: Cell): Cell {
@@ -84,6 +100,9 @@ export class Row {
 
     removeAt(index: number) {
         this.cells.removeAt(index);
+        this.cells.forEach((c, i) => {
+            c.index = i;
+        });
     }
 
     removeCell(cell: Cell) {
@@ -98,6 +117,9 @@ export class Row {
             let filler = this.cells.all[parseInt(this.cells.length / 2)];
             filler.width += 12 % (this.cells.length * newCellWidth);
         }
+        this.cells.forEach((c, i) => {
+            c.index = i;
+        });
     }
 
     get weight(): number {

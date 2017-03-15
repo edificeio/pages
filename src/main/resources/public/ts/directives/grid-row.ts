@@ -39,26 +39,29 @@ export let gridRow = ng.directive('gridRow', function($compile){
 
 			let margin = '';
 
+			let initialCalc = () => {
+				margin = ((newCellWidth + filling) * cellWidth) + 'px';
+				newLength = row.cells.length + 1;
+				dragCell = false;
+				if(element.children('.dragging').length > 0){
+					newLength--;
+					dragCell = true;
+					margin = (element.children('.dragging').width() - 4) + 'px';
+				}
+				firstDrag = false;
+				elementWidth = element.width();
+				elementOffset = element.offset();
+				cellWidth = elementWidth / 12;
+				gridCells = element.find('grid-cell');
+				newCellWidth = parseInt(12 / newLength);
+				filling = 12 % (newCellWidth * newLength);
+			};
+
 			element.on("dragover", function (event, e) {
                 event.preventDefault();
                 event.stopPropagation();
 				if(firstDrag){
-					margin = ((newCellWidth + filling) * cellWidth) + 'px';
-					newLength = row.cells.length + 1;
-					dragCell = false;
-					if(element.children('.dragging').length > 0){
-						newLength--;
-						dragCell = true;
-						margin = (element.children('.dragging').width() - 4) + 'px';
-					}
-					firstDrag = false;
-					elementWidth = element.width();
-					elementOffset = element.offset();
-					cellWidth = elementWidth / 12;
-					gridCells = element.find('grid-cell');
-					newCellWidth = parseInt(12 / newLength);
-					filling = 12 % (newCellWidth * newLength);
-
+					initialCalc();
 					if(!dragCell){
 						gridCells.each((index, item) => {
 							$(item).removeClass(cellSizes[row.cells.all[index].width]);
@@ -92,6 +95,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 
 			element.on("dragout", function (event) {
 				clearTimeout(timerToken);
+				initialCalc();
                 event.preventDefault();
                 event.stopPropagation();
 				gridCells.each((index, gc) => {
@@ -117,7 +121,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				gridCells.attr('style', '');
 
 				if(item instanceof Cell && dragCell){
-					item.index = elementIndex;
+					row.moveCell(item, elementIndex);
 					scope.$apply();
 					return;
 				}
