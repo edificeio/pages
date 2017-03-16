@@ -48,7 +48,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					dragCell = true;
 					margin = (element.children('.dragging').width() - 4) + 'px';
 				}
-				firstDrag = false;
+				firstDrag = true;
 				elementWidth = element.width();
 				elementOffset = element.offset();
 				cellWidth = elementWidth / 12;
@@ -81,12 +81,14 @@ export let gridRow = ng.directive('gridRow', function($compile){
 							$(item).attr('style', '');
 						}
 					});
-					
-					if(!$(gridCells[elementIndex]).hasClass('dragging')){
-						$(gridCells[elementIndex]).css({ 'margin-left': margin });
-					}
-					else{
-						$(gridCells[elementIndex]).next().css({ 'margin-left': margin });
+
+					if((elementIndex < gridCells.length - 1 && dragCell) || (elementIndex < gridCells.length && !dragCell)){
+						if(!$(gridCells[elementIndex]).hasClass('dragging')){
+							$(gridCells[elementIndex]).css({ 'margin-left': margin });
+						}
+						else{
+							$(gridCells[elementIndex]).next().css({ 'margin-left': margin });
+						}
 					}
 
 					previousElementIndex = elementIndex;

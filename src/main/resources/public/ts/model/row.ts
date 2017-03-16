@@ -166,6 +166,13 @@ export class Rows {
         return row;
     }
 
+    addRowAt(index: number): Row {
+        let row = new Row(this.page);
+        this.all.splice(index, 0, row);
+        Rows.eventer.trigger('add-row');
+        return row;
+    }
+
     removeRow(row: Row) {
         let index = this.all.indexOf(row);
         this.all.splice(index, 1);

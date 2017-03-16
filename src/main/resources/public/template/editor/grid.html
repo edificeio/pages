@@ -1,5 +1,6 @@
 <drawing-grid class="edit pages-grid">
-	<div class="row" ng-repeat="row in page.rows.all">
+    <div class="new-row droppable" ng-repeat-start="row in page.rows.all"></div>
+	<div class="row" ng-repeat-end>
 		<grid-row index="row.index" row="row">
             <grid-cell class="media cell editor-media" ng-repeat="cell in row.cells.all"
                     grid-resizable drag-item="cell" w="cell.width" h="cell.height" class-name="cell.className"

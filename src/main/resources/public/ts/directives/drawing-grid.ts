@@ -1,6 +1,6 @@
 ﻿import { ng } from 'entcore/entcore';
 import { $ } from 'entcore/libs/jquery/jquery';
-import { Row, Cell, Media } from '../model';
+import { Row, Cell, Media, Page } from '../model';
 import http from 'axios';
 
 export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
@@ -32,40 +32,36 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             };
 
             let newRow = element.find('.new-row');
-
-            element.addClass('droppable');
             element.addClass('drawing-grid');
 
-            let firstTick = true;
             let rows;
-            element.on('dragover', (e, p) => {
-                if(firstTick){
-                    rows = element.find('.grid-row');
-                    firstTick = false;
-                }
-                if(rows.length === 0 || p.y > rows.last().offset().top + rows.last().height() + 20){
-                    if(!newRow.hasClass('highlight')){
-                        newRow.addClass('highlight');
-                    }
-                }
-                else{
-                    newRow.removeClass('highlight');
-                }
+            element.on('dragover', '.new-row', (e, p) => {
+                $(e.target).addClass('highlight');
             });
 
-            element.on('dragout', (e) => {
-                firstTick = true;
-                newRow.removeClass('highlight');
+            element.on('dragout', '.new-row', (e) => {
+                $(e.target).removeClass('highlight');
             });
 
-            element.on('drop', async (e, item) => {
-                if(newRow.hasClass('highlight')){
-                    let row: Row = scope.page.addRow();
-                    let cell = new Cell();
-				    cell.width = 12;
-                    row.addCell(cell);
-                    scope.$apply();
-                    await cell.setContent(item);
+            element.on('drop', '.new-row', async (e, item) => {
+                let index = $(e.target).index();
+
+                let cell: Cell = new Cell();
+                if(item instanceof Cell){
+                    item.removeFromRow();
+                    cell = item;
+                }
+
+                if(!cell.media){
+                    cell.media = { type: 'empty' };
+                }
+                let page: Page = scope.page;
+                let row = page.addRowAt(index);
+                row.addCell(cell);
+                cell.width = 12;
+                scope.$apply();
+                if(!(item instanceof Cell)){
+                    await cell.setContent(JSON.parse(JSON.stringify(item)));
                     scope.$apply();
                 }
             });

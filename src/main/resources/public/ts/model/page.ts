@@ -137,6 +137,10 @@ export class Page implements Selectable {
         return this.rows.addRow();
     }
 
+    addRowAt(index: number) {
+        return this.rows.addRowAt(index);
+    }
+
     removeRow(row: Row) {
         this.rows.removeRow(row);
     }
