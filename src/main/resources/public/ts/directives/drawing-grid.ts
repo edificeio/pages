@@ -44,7 +44,12 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             });
 
             element.on('drop', '.new-row', async (e, item) => {
-                let index = $(e.target).index();
+                let index = 0;
+                element.find('.new-row').each((i, item) => {
+                    if(item === e.target){
+                        index = i;
+                    }
+                });
 
                 let cell: Cell = new Cell();
                 if(item instanceof Cell){
@@ -57,6 +62,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 }
                 let page: Page = scope.page;
                 let row = page.addRowAt(index);
+                console.log('Adding row at index : ' + index);
                 row.addCell(cell);
                 cell.width = 12;
                 scope.$apply();
