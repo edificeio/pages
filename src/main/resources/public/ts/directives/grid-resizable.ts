@@ -44,7 +44,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 
 					let mouse = { x: e.pageX, y: e.pageY };
 					resizeLimits = {
-						horizontal:  element.offset().left + element.width() + 5 > mouse.x && mouse.x > element.offset().left + element.width() - 15,
+						horizontal:  element.offset().left + element.width() + 5 > mouse.x && mouse.x > element.offset().left + element.width() - 15 && !lock.horizontal,
 						vertical: (element.offset().top + (element.height() + parseInt(element.css('padding-bottom'))) +
 							5 > mouse.y && mouse.y > element.offset().top + (element.height() + parseInt(element.css('padding-bottom'))) - 15) && !lock.vertical
 					};
@@ -118,7 +118,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					if(neighbour.length < 1){
 						return undefined;
 					}
-					if((neighbour.width() + 4) - step <= cellWidth){
+					if((neighbour.width() + 4) - step <= cellWidth * 2){
 						return findResizableNeighbour(neighbour, step);
 					}
 					else{
@@ -192,14 +192,12 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 							let remainingSpace = parentRemainingSpace(diff);
 							let neighbour = findResizableNeighbour(element, distance - element.width() + 4);
                             
-                            if (neighbour || remainingSpace >= 0) {
-                                if (neighbour && remainingSpace <= 0) {
-									let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 10;
-                                    if (neighbourWidth < cellWidth) {
-                                        neighbourWidth = cellWidth;
-                                    }
-									neighbour.width(neighbourWidth);
-                                }
+                            if (neighbour) {
+								let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 5;
+								if (neighbourWidth < cellWidth) {
+									neighbourWidth = cellWidth;
+								}
+								neighbour.width(neighbourWidth);
 
 								element.width(newWidth);
 							}
