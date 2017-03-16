@@ -39,6 +39,10 @@ export let gridRow = ng.directive('gridRow', function($compile){
 
 			let margin = '';
 
+			scope.$watch('row', () => {
+				row = scope.row;
+			});
+
 			let initialCalc = () => {
 				margin = ((newCellWidth + filling) * cellWidth) + 'px';
 				newLength = row.cells.length + 1;
