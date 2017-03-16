@@ -62,6 +62,10 @@ export let gridRow = ng.directive('gridRow', function($compile){
                 event.stopPropagation();
 				if(firstDrag){
 					initialCalc();
+					gridCells.each((index, item) => {
+						$(item).height($(item).height());
+						$(item).css('overflow', 'hidden');
+					});
 					if(!dragCell){
 						gridCells.each((index, item) => {
 							$(item).removeClass(cellSizes[row.cells.all[index].width]);
@@ -78,7 +82,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				if(elementIndex !== previousElementIndex && marginTime){
 					gridCells.each((index, item) => {
 						if(!$(item).hasClass('dragging')){
-							$(item).attr('style', '');
+							$(item).css('margin-left', '');
 						}
 					});
 
