@@ -115,8 +115,8 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 
 				function findResizableNeighbour(cell, step){
 					let neighbour = cell.next('grid-cell');
-					if(neighbour.length < 1){
-						return undefined;
+					if(neighbour.next('grid-cell').length < 1){
+						return neighbour;
 					}
 					if((neighbour.width() + 4) - step <= cellWidth * 2){
 						return findResizableNeighbour(neighbour, step);
@@ -126,15 +126,15 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 					}
 				}
 
-				function parentRemainingSpace(diff){
+				function parentRemainingSpace(el){
 					let rowWidth = element.parent().width();
 					let childrenSize = 0;
                     cells.each(function (index, cell) {
-                        if ($(cell).parent().length) {
+						if(cell !== el[0]){
                             childrenSize += $(cell).width() + 4;
                         }
 					});
-					return  rowWidth - (childrenSize + diff + 2 * cells.length);
+					return  rowWidth - childrenSize - 4;
 				}
 
 				e.preventDefault();
@@ -179,28 +179,26 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 						//horizontal resizing
 						if(resizeLimits.horizontal){
 							let distance = mouse.x - p.left;
-							if(element.offset().left + distance > parentData.pos.left + parentData.size.width){
-								distance = (parentData.pos.left + parentData.size.width) - element.offset().left - 2;
-							}
 							newWidth = distance;
 							if (newWidth < cellWidth) {
 								newWidth = cellWidth;
 							}
-							let diff = newWidth - element.width() - 4;
+							let diff = newWidth - element.width();
 
 							//neighbour resizing
-							let remainingSpace = parentRemainingSpace(diff);
 							let neighbour = findResizableNeighbour(element, distance - element.width() + 4);
-                            
-                            if (neighbour) {
-								let neighbourWidth = (neighbour.width() + 4 + remainingSpace) - 5;
-								if (neighbourWidth < cellWidth) {
-									neighbourWidth = cellWidth;
+							let neighbourWidth = parentRemainingSpace(neighbour);
+								if(diff > 0){
+									console.log(diff);
+									diff += 10;
+									neighbourWidth -= diff;
 								}
-								neighbour.width(neighbourWidth);
-
+								if(neighbourWidth < cellWidth * 2){
+									newWidth += neighbourWidth - cellWidth * 2;
+									neighbourWidth = cellWidth * 2;
+								}
 								element.width(newWidth);
-							}
+								neighbour.width(neighbourWidth);
 						}
 
 						//vertical resizing

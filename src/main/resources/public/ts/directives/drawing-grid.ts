@@ -7,28 +7,31 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
     return {
         restrict: 'E',
         link: function (scope, element, attributes) {
+            let initialPosition;
+            let maxDistance;
+            let firstScroll = true;
             let placeToolbar = () => {
-                let maxDistance = $('.height-marker').height();
-                let initialPosition = element.offset().top - parseInt(element.css('margin-top'));
+                if(firstScroll){
+                    initialPosition = $('sticky-row').offset().top - parseInt(element.css('margin-top'));
+                    maxDistance = $('.height-marker').height();
+                    firstScroll = false;
+                }
                 let newPosition = initialPosition - $(window)[0].scrollY;
-                if (newPosition < maxDistance) {
+                if (newPosition <= maxDistance) {
                     newPosition = maxDistance;
-                    element.css({
-                        'margin-top': '0'
-                    });
+                    
                 }
-                else {
-                    element.css({
-                        'margin-top': ($('editor.focus editor-toolbar').height() + 20) + 'px'
-                    });
-                }
-                $('editor-toolbar').css({
-                    top: newPosition + 'px'
-                });
 
-                $('editor > popover').css({
-                    top: newPosition + 'px'
-                });
+                if($('sticky-row').hasClass('floating')){
+                    element.find('editor-toolbar').css({
+                        top: newPosition + 'px'
+                    });
+                }
+                else{
+                    element.find('editor-toolbar').offset({
+                        top: initialPosition
+                    });
+                }
             };
 
             let newRow = element.find('.new-row');
@@ -73,22 +76,12 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             });
 
             element.on('editor-focus', 'editor', () => {
-                setTimeout(() => {
-                    if ($(window)[0].scrollY < element.offset().top - parseInt(element.css('margin-top'))) {
-                        element.css({
-                            'margin-top': ($('editor.focus editor-toolbar').height() +20) + 'px'
-                        });
-                    }
-                    
-                    placeToolbar();
-                }, 100);
+                placeToolbar();
+                $('sticky-row').addClass('hide');
             });
             element.on('editor-blur', 'editor', () => {
-                if (element.find('editor.focus').length === 0) {
-                    element.css({
-                        'margin-top': '0px'
-                    });
-                }
+                placeToolbar();
+                $('sticky-row').removeClass('hide');
             });
 
             $(window).on('scroll', () => {

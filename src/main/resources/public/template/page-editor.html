@@ -16,36 +16,45 @@
         </app-title>
     </div>
     
-    <div class="row">
+    <sticky-row>
         <div class="six cell">
-            <button ng-if="!page.published" ng-click="page.publish()">
-                <i18n>publish</i18n>
-            </button>
-            <button ng-if="page.published" ng-click="page.unpublish()">
-                <i18n>unpublish</i18n>
-            </button>
-            <button class="cancel" ng-click="preview()"><i18n>preview</i18n></button>
-            <div class="info inline cell" ng-if="page.published">
-                <i18n>page.published</i18n>
+            <div class="row">
+                <button ng-if="!page.published" ng-click="page.publish()">
+                    <i18n>publish</i18n>
+                </button>
+                <button ng-if="page.published" ng-click="page.unpublish()">
+                    <i18n>unpublish</i18n>
+                </button>
+                <button class="cancel" ng-click="preview()"><i18n>preview</i18n></button>
             </div>
-            <div class="info inline cell" ng-if="!page.published">
-                <i18n>page.unpublished</i18n>
+            <div class="row">
+                <div class="small-text cell" ng-if="page.published">
+                    <i18n>page.published</i18n>
+                </div>
+                <div class="small-text cell" ng-if="!page.published">
+                    <i18n>page.unpublished</i18n>
+                </div>
             </div>
+            
         </div>
         <div class="five cell right-magnet">
-            <div class="info cell inline right-magnet">
-                <i18n>editing</i18n>
-            </div>
-            <div class="buttons-set right-magnet">
-                <button ng-click="lightbox('managePages');">
-                    <i18n>pages.manage</i18n>
-                </button>
-                <button  ng-click="lightbox('managePages');website.initNewPage();" tooltip="tooltip.newpage">
-                    <i class="add-page"></i>
-                </button>
+            <div class="row">
+                <div class="cell right-magnet small-text">
+                    <i18n>editing</i18n>
+                </div>
+
+                <div class="buttons-set right-magnet">
+                    <button ng-click="lightbox('managePages');">
+                        <i18n>pages.manage</i18n>
+                    </button>
+                    <button  ng-click="lightbox('managePages');website.initNewPage();" tooltip="tooltip.newpage">
+                        <i class="add-page"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </sticky-row>
+
     <div class="row">
         <div class="warning" ng-if="page.weight > 17">
             <i18n>page.warning.heavy</i18n>
@@ -59,8 +68,6 @@
         </div>
 
         <panel></panel>
-        
-        
     </div>
 
     <container template="editor/pages-manager"></container>

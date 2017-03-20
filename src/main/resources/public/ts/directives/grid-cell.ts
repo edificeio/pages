@@ -81,7 +81,6 @@ export let gridCell = ng.directive('gridCell', function($compile){
 
             scope.removeCell = () => {
                 scope.row.removeCell(scope.cell);
-                scope.$parent.$apply();
             };
 
 			scope.$watch('w', function(newVal, oldVal){
