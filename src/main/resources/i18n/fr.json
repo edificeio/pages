@@ -131,6 +131,7 @@
   "page.warning.heavy": "Cette page utilise beaucoup de contenu. Elle risque d'être longue à télécharger si le réseau est lent.",
   "page.warning.old": "Cette page contient des grilles. Les grilles ne sont plus supportées ; vous pouvez les supprimer et les déplacer, mais vous ne pouvez pas en modifier le contenu.",
   "post.date": "le",
+  "modified.on": "Modifié le [[website.lastModified]]",
   "pages.publish.title": "Afficher dans les applications",
   "pages.publish.groups.info": "Sélectionner les groupes utilisateurs (vous y compris) qui disposeront de l'application",
   "pages.publish.reconnexion": "Ce changement sera effectif lors de votre prochaine connexion",
