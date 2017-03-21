@@ -18,39 +18,33 @@
     
     <sticky-row>
         <div class="six cell">
-            <div class="row">
+            <div class="buttons-set">
                 <button ng-if="!page.published" ng-click="page.publish()">
                     <i18n>publish</i18n>
                 </button>
                 <button ng-if="page.published" ng-click="page.unpublish()">
                     <i18n>unpublish</i18n>
                 </button>
-                <button class="cancel" ng-click="preview()"><i18n>preview</i18n></button>
-            </div>
-            <div class="row">
-                <div class="small-text cell" ng-if="page.published">
-                    <i18n>page.published</i18n>
-                </div>
-                <div class="small-text cell" ng-if="!page.published">
-                    <i18n>page.unpublished</i18n>
+                <div class="tip">
+                    <i class="public" ng-if="page.published" tooltip="page.published"></i>
+                    <i class="prive" ng-if="!page.published" tooltip="page.unpublished"></i>
                 </div>
             </div>
-            
+            <button class="cancel" ng-click="preview()"><i18n>preview</i18n></button>
+
         </div>
         <div class="five cell right-magnet">
-            <div class="row">
-                <div class="cell right-magnet small-text">
-                    <i18n>editing</i18n>
-                </div>
+            <div class="buttons-set right-magnet">
+                <button class="cancel" ng-click="lightbox('managePages');">
+                    <i18n>pages.manage</i18n>
+                </button>
+                <button class="cancel"  ng-click="lightbox('managePages');website.initNewPage();" tooltip="tooltip.newpage">
+                    <i class="add-page"></i>
+                </button>
+            </div>
 
-                <div class="buttons-set right-magnet">
-                    <button ng-click="lightbox('managePages');">
-                        <i18n>pages.manage</i18n>
-                    </button>
-                    <button  ng-click="lightbox('managePages');website.initNewPage();" tooltip="tooltip.newpage">
-                        <i class="add-page"></i>
-                    </button>
-                </div>
+            <div class="cell right-magnet button-info">
+                <i18n>editing</i18n>
             </div>
         </div>
     </sticky-row>

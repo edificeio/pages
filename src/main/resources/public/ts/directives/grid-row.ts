@@ -146,8 +146,9 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					cell.media = { type: 'empty' };
 				}
 				row.addCellAt(cell, elementIndex);
-				cell.width = newCellWidth + filling;
 				row.cells.forEach(c => c.width = newCellWidth);
+				cell.width = newCellWidth + filling;
+				
 				scope.$apply();
 				if(!(item instanceof Cell)){
 					await cell.setContent(JSON.parse(JSON.stringify(item)));

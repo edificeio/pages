@@ -12,7 +12,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             let firstScroll = true;
             let placeToolbar = () => {
                 if(firstScroll){
-                    initialPosition = $('sticky-row').offset().top - parseInt(element.css('margin-top'));
+                    initialPosition = $('sticky-row').offset().top;
                     maxDistance = $('.height-marker').height();
                     firstScroll = false;
                 }
@@ -26,8 +26,22 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                     element.find('editor-toolbar').css({
                         top: newPosition + 'px'
                     });
+                    $('.icons-tabs').css({
+                        top: '156px'
+                    });
+                    $('.toggle-panel').css({
+                        top: '156px',
+                        height: 'calc(100% - 159px)'
+                    });
                 }
                 else{
+                    $('.icons-tabs').css({
+                        top: '80px'
+                    });
+                    $('.toggle-panel').css({
+                        top: '80px',
+                        height: 'calc(100% - 85px)'
+                    });
                     element.find('editor-toolbar').offset({
                         top: initialPosition
                     });

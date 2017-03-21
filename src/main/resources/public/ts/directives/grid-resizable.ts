@@ -189,7 +189,6 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 							let neighbour = findResizableNeighbour(element, distance - element.width() + 4);
 							let neighbourWidth = parentRemainingSpace(neighbour);
 								if(diff > 0){
-									console.log(diff);
 									diff += 10;
 									neighbourWidth -= diff;
 								}
@@ -241,7 +240,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
                         if ($(cell).parent().length === 0) {
                             return;
                         }
-						let width = $(cell).width();
+						let width = $(cell).width() + 4;
 						let height = parseInt($(cell).css('padding-bottom'));
 						if(height < cellWidth / 2){
 							height = 0;
