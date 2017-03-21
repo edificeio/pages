@@ -5,21 +5,30 @@ import { Row, Media, Blocks, Cell, cellSizes } from '../model';
 import { Mix } from 'toolkit';
 
 
-let flashCell = (element) => {
-    let addFlash = async () => {
-        await ui.scrollToId('flash');
-        element.removeAttr('id');
+let flashCell = (element): Promise<any> => {
+    let addFlash = () => {
+        return new Promise<any>((resolve, reject) => {
+            ui.scrollToId('flash').then(() => {
+                element.removeAttr('id');
 
-        let flash = $('<div></div>')
-            .appendTo(element)
-            .addClass('flash')
-            .fadeOut();
+                let flash = $('<div></div>')
+                    .appendTo(element)
+                    .addClass('flash')
+                    .fadeOut('slow', () => {
+                        flash.remove();
+                        resolve();
+                    });
+            });
+        });
     };
 
-    setTimeout(() => {
-        element.attr('id', 'flash');
-        addFlash();
-    }, 100);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            element.attr('id', 'flash');
+            addFlash().then(() => resolve());
+        }, 100);
+    });
+    
 };
 
 export let gridCell = ng.directive('gridCell', function($compile){
@@ -38,7 +47,9 @@ export let gridCell = ng.directive('gridCell', function($compile){
 		transclude: true,
 		link: function (scope, element, attributes) {
             if(scope.cell.flash){
-                flashCell(element);
+                flashCell(element).then(() => {
+                    scope.cell.flash = false;
+                });
             }
             
             setTimeout(() => {
@@ -135,6 +146,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 let newRow = new Row(scope.row.page);
                 let newCell: Cell = Mix.castAs(Cell, JSON.parse(JSON.stringify(scope.cell)));
                 newCell.flash = true;
+                newCell.width = 12;
                 newRow.addCell(newCell);
                 let currentRow = scope.row as Row;
 
