@@ -23,7 +23,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 }
 
                 if($('sticky-row').hasClass('floating')){
-                    element.find('editor-toolbar').css({
+                    element.find('editor-toolbar, editor > popover').css({
                         top: newPosition + 'px'
                     });
                     $('.icons-tabs').css({
@@ -42,7 +42,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                         top: '80px',
                         height: 'calc(100% - 85px)'
                     });
-                    element.find('editor-toolbar').offset({
+                    element.find('editor-toolbar, editor > popover').offset({
                         top: initialPosition
                     });
                 }
