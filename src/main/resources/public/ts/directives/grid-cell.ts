@@ -151,7 +151,6 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 let currentRow = scope.row as Row;
 
                 currentRow.page.rows.insertAfter(newRow, currentRow);
-                scope.$apply();
             };
 
             scope.setColor = () => {
