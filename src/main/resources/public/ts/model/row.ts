@@ -65,16 +65,15 @@ export class Row {
     }
 
     moveCell(cell: Cell, index: number){
-        this.cells.forEach(c => {
-            if(c.index >= index){
-                c.index ++;
-            }
-        });
-        cell.index = index;
-        this.cells.all.sort((c1, c2) => c1.index - c2.index);
+        let i = this.cells.all.indexOf(cell);
+        this.cells.all.splice(i, 1);
+        this.cells.all.splice(index, 0, cell)
+        
         this.cells.forEach((c, i) => {
             c.index = i;
         });
+        this.cells.all.sort((c1, c2) => c1.index - c2.index);
+        this.cells.all = [].concat(this.cells.all);
     }
 
     addCell(cell: Cell): Cell {

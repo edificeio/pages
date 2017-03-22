@@ -8,7 +8,6 @@ import { main } from './controllers/main';
 
 import { gridCell } from './directives/grid-cell';
 import { gridRow } from './directives/grid-row';
-import { gridDraggable } from './directives/grid-draggable';
 import { gridResizable } from './directives/grid-resizable';
 import { drawingGrid } from './directives/drawing-grid';
 import { panel } from './directives/panel';
@@ -21,7 +20,6 @@ ng.controllers.push(main);
 
 ng.directives.push(gridCell);
 ng.directives.push(gridRow);
-ng.directives.push(gridDraggable);
 ng.directives.push(gridResizable);
 ng.directives.push(drawingGrid);
 ng.directives.push(panel);

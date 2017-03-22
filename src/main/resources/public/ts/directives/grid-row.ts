@@ -32,6 +32,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			let previousElementIndex;
 
 			let timerToken;
+			let heightToken;
 			let marginTime = false;
 
 			let newLength;
@@ -64,12 +65,11 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			element.on("dragover", function (event, e) {
                 event.preventDefault();
                 event.stopPropagation();
+				clearTimeout(heightToken);
+				element.height(element.height());
 				if(firstDrag){
 					initialCalc();
-					gridCells.each((index, item) => {
-						$(item).height($(item).height());
-						$(item).css('overflow', 'hidden');
-					});
+					
 					if(!dragCell){
 						gridCells.each((index, item) => {
 							$(item).removeClass(cellSizes[row.cells.all[index].width]);
@@ -108,12 +108,16 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				initialCalc();
                 event.preventDefault();
                 event.stopPropagation();
-				gridCells.each((index, gc) => {
-					if(!$(gc).hasClass('dragging')){
-						$(gc).attr('style', '');
-					}
-				});
-				element.css({ height: '' });
+				
+				heightToken = setTimeout(() => {
+					element.css('height', '');
+					gridCells.each((index, gc) => {
+						if(!$(gc).hasClass('dragging')){
+							$(gc).css({ 'margin-left': '' });
+						}
+					});
+				}, 100);
+				
 				firstDrag = true;
 				marginTime = false;
 				previousElementIndex = undefined;
@@ -128,7 +132,6 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			element.on('drop', async (event, item) => {
 				firstDrag = true;
 				previousElementIndex = undefined;
-				gridCells.attr('style', '');
 
 				if(item instanceof Cell && dragCell){
 					row.moveCell(item, elementIndex);
@@ -154,6 +157,8 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					await cell.setContent(JSON.parse(JSON.stringify(item)));
 					scope.$apply();
 				}
+
+				gridCells.attr('style', '');
             });
 		}
 	}

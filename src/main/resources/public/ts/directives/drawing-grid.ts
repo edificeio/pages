@@ -95,7 +95,9 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             });
             element.on('editor-blur', 'editor', () => {
                 placeToolbar();
-                $('sticky-row').removeClass('hide');
+                if($('editor.focus').length === 0){
+                    $('sticky-row').removeClass('hide');
+                }
             });
 
             $(window).on('scroll', () => {

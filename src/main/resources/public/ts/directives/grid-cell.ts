@@ -51,6 +51,37 @@ export let gridCell = ng.directive('gridCell', function($compile){
                     scope.cell.flash = false;
                 });
             }
+
+            element.on('startDrag', (e, data) => {
+                element.parent().height(element.parent().height());
+                setTimeout(() => {
+                    element.find('.media-wrapper').animate({
+                        'margin-top': (-data.mouse.y + data.elementDistance.y + element.parent().offset().top) + 'px',
+                        'margin-left': (-data.mouse.x + data.elementDistance.x + element.parent().offset().left) + 'px'
+                    });
+                }, 10);
+
+                $('grid-cell').each((index, item) => {
+                    $(item).height($(item).height());
+                    $(item).css('overflow', 'hidden');
+                });
+                element.find('.media-wrapper').width(element.find('.media-wrapper').width());
+            });
+
+            element.on('stopDrag', () => {
+                element.find('.media-wrapper').css({
+                    'margin-top': '',
+                    'margin-left': '',
+                    'width': ''
+                });
+                $('grid-cell').each((index, item) => {
+                    $(item).css('height', '');
+                    $(item).css('overflow', '');
+                });
+                $('grid-row').each((index, item) => {
+                    $(item).css('height', '');
+                })
+            });
             
             setTimeout(() => {
                 element.find('.media-container, .text-wrapper').css(scope.cell.style);
