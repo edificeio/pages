@@ -36,27 +36,33 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         $scope.$apply();
     }
 
+    function applyIfNeeded(){
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
+    }
+
     route({
         listSites: async () => {
             await sniplets.load();
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             template.open('main', 'library');
             Autosave.unwatchAll();
-            $scope.$apply();
+            applyIfNeeded();
         },
         site: async (params) => {
             await sniplets.load();
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
-            $scope.$apply();
+            applyIfNeeded();
         },
         page: async (params) => {
             await sniplets.load();
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
-            $scope.$apply();
+            applyIfNeeded();
         },
         previewSite: async (params) => {
             await sniplets.load();
@@ -64,7 +70,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
-            $scope.$apply();
+            applyIfNeeded();
         },
         previewPage: async (params) => {
             await sniplets.load();
@@ -72,7 +78,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
-            $scope.$apply();
+            applyIfNeeded();
         }
     });
 

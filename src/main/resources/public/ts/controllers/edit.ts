@@ -94,6 +94,9 @@ export let edit = ng.controller('EditController', [
         };
 
         $scope.previewPath = () => {
+            if(!$scope.website){
+                return '';
+            }
             if ($scope.website.visibility === 'PUBLIC') {
                 if (params.pageId) {
                     return '/pages/p/website#/preview/' + params.siteId + '/' + params.pageId;
