@@ -1,5 +1,12 @@
 <drawing-grid class="edit pages-grid">
-    <div class="new-row droppable" ng-repeat-start="row in page.rows.all"></div>
+    <div class="new-row droppable" ng-repeat-start="row in page.rows.all">
+        <div class="show-default">
+            +
+        </div>
+        <div class="show-highlight">
+            <i18n>addrow</i18>
+        </div>
+    </div>
 	<div class="row" ng-repeat-end>
 		<grid-row index="row.index" row="row">
             <grid-cell class="media cell editor-media" ng-repeat="cell in row.cells.all"
@@ -56,5 +63,12 @@
             </grid-cell>
 		</grid-row>
 	</div>
-    <div class="new-row droppable"></div>
+    <div class="new-row droppable">
+        <div class="show-default">
+            +
+        </div>
+        <div class="show-highlight">
+            <i18n>addrow</i18>
+        </div>
+    </div>
 </drawing-grid>

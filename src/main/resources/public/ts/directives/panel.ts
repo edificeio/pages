@@ -51,6 +51,10 @@ export let panel = ng.directive('panel', () => {
                 togglePanel.addClass('hide');
                 icon.removeClass('active');
                 togglePanel.css({ overflow: 'visible' });
+                $('grid-cell').each((index, item) => {
+                    $(item).height($(item).height());
+                    $(item).css('overflow', 'hidden');
+                });
                 $('grid-cell').one('drop', () => {
                     togglePanel.removeClass('hide');
                     togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
@@ -61,6 +65,12 @@ export let panel = ng.directive('panel', () => {
 
             element.on('stopdrag', '[drag-item]', () => {
                 togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
+                $('grid-cell').each((index, item) => {
+                    $(item).css({
+                        height: '',
+                        overflow: ''
+                    });
+                });
             });
         }
     }
