@@ -11,7 +11,8 @@
                     <div bind-html="cell.media.source" style="pointer-events: none;"></div>
                 </div>
                 <div ng-if="cell.media.type === 'image'" class="image-wrapper">
-                    <img ng-src="[[cell.media.source]]?thumbnail=1600x0" />
+                    <img ng-src="[[cell.media.source]]?thumbnail=1600x0" ng-if="cell.media.source" />
+                    <img skin-src="/img/illustrations/pages-default.png" ng-if="!cell.media.source" />
                 </div>
                 <div ng-if="cell.media.type === 'sound'" class="audio-wrapper">
                     <audio ng-src="[[cell.media.source]]" controls></audio>

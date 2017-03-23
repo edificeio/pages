@@ -42,18 +42,21 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             template.open('main', 'library');
             Autosave.unwatchAll();
+            $scope.$apply();
         },
         site: async (params) => {
             await sniplets.load();
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
+            $scope.$apply();
         },
         page: async (params) => {
             await sniplets.load();
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
+            $scope.$apply();
         },
         previewSite: async (params) => {
             await sniplets.load();
@@ -61,6 +64,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
+            $scope.$apply();
         },
         previewPage: async (params) => {
             await sniplets.load();
@@ -68,6 +72,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
+            $scope.$apply();
         }
     });
 
