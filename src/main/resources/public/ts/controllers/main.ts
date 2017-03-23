@@ -37,24 +37,34 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     }
 
     route({
-        listSites: function () {
+        listSites: async () => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             template.open('main', 'library');
             Autosave.unwatchAll();
         },
-        site: async function (params) {
+        site: async (params) => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
         },
-        page: function (params) {
+        page: async (params) => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             openSite(params);
         },
-        previewSite: async function (params) {
+        previewSite: async (params) => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
         },
-        previewPage: function (params) {
+        previewPage: async (params) => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             params.preview = true;
             openSite(params);
@@ -81,7 +91,5 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         $scope.display.currentTemplate = undefined;
     };
 
-    await sniplets.load();
-    $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
     $scope.$apply();
 }]);

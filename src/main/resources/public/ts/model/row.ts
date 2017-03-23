@@ -191,7 +191,10 @@ export class Rows {
     }
 
     set all(list: Row[]) {
-        list = Mix.castArrayAs(Row, list);
+        if(list.length && !(list[0] instanceof Row)){
+            list = Mix.castArrayAs(Row, list);
+        }
+        
         this._all = list;
     }
 

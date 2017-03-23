@@ -30,7 +30,7 @@
                     <i class="prive" ng-if="!page.published" tooltip="page.unpublished"></i>
                 </div>
             </div>
-            <button class="cancel" ng-click="preview()"><i18n>preview</i18n></button>
+            <a class="button cancel" ng-href="[[previewPath()]]" ng-click="preview()"><i18n>preview</i18n></a>
 
         </div>
         <div class="five cell right-magnet">

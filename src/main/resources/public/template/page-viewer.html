@@ -17,12 +17,12 @@
     </div>
     <div class="row zero-mobile">
         <resource-right resource="website" name="update">
-            <button ng-click="edit()"><i18n>edit</i18n></button>
-            <div class="info inline cell" ng-if="page.published">
-                <i18n>page.published</i18n>
-            </div>
-            <div class="info inline cell" ng-if="!page.published">
-                <i18n>page.unpublished</i18n>
+            <div class="buttons-set">
+                <button ng-click="edit()"><i18n>edit</i18n></button>
+                <div class="tip">
+                    <i class="public" ng-if="page.published" tooltip="page.published"></i>
+                    <i class="prive" ng-if="!page.published" tooltip="page.unpublished"></i>
+                </div>
             </div>
         </resource-right>
     </div>

@@ -51,7 +51,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				if(element.children('.dragging').length > 0){
 					newLength--;
 					dragCell = true;
-					margin = (element.children('.dragging').width() - 4) + 'px';
+					margin = (element.children('.dragging').data('initial-width') - 4) + 'px';
 				}
 				firstDrag = true;
 				elementWidth = element.width();
@@ -157,8 +157,9 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					await cell.setContent(JSON.parse(JSON.stringify(item)));
 					scope.$apply();
 				}
-
-				gridCells.attr('style', '');
+				gridCells.css({ 'transition': 'none', 'margin-left': '', 'width': '' });
+				setTimeout(() => gridCells.attr('style', ''), 20);
+				
             });
 		}
 	}

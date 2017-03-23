@@ -93,21 +93,21 @@ export let edit = ng.controller('EditController', [
             $scope.$apply();
         };
 
-        $scope.preview = () => {
+        $scope.previewPath = () => {
             if ($scope.website.visibility === 'PUBLIC') {
                 if (params.pageId) {
-                    window.location.href = '/pages/p/website#/preview/' + params.siteId + '/' + params.pageId;
+                    return '/pages/p/website#/preview/' + params.siteId + '/' + params.pageId;
                 }
                 else {
-                    window.location.href = '/pages/p/website#/preview/' + params.siteId;
+                    return '/pages/p/website#/preview/' + params.siteId;
                 }
             }
             else {
                 if (params.pageId) {
-                    $location.path('/preview/' + params.siteId + '/' + params.pageId)
+                    return '/pages#/preview/' + params.siteId + '/' + params.pageId;
                 }
                 else {
-                    $location.path('/preview/' + params.siteId);
+                    return '/pages#/preview/' + params.siteId;
                 }
             }
         };

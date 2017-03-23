@@ -11,6 +11,10 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             let maxDistance;
             let firstScroll = true;
             let placeToolbar = () => {
+                if($('sticky-row').length === 0){
+                    return;
+                }
+                
                 if(firstScroll){
                     initialPosition = $('sticky-row').offset().top;
                     maxDistance = $('.height-marker').height();

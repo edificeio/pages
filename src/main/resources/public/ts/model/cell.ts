@@ -140,7 +140,10 @@ export class Cells {
     }
 
     set all(list: Cell[]) {
-        list = Mix.castArrayAs(Cell, list);
+        if(list.length && !(list[0] instanceof Cell)){
+            list = Mix.castArrayAs(Cell, list);
+        }
+        
         this._all = list;
     }
 
