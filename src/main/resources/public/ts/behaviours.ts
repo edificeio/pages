@@ -68,7 +68,7 @@ Behaviours.register('pages', {
 			title: 'pages.navigation.title',
 			description: 'pages.navigation.desc',
 			controller: {
-				init: async function(){
+				init: function(){
 					var source = this.source;
 					this.me = model.me;
 					this.lang = lang;
@@ -78,15 +78,8 @@ Behaviours.register('pages', {
 						this.snipletDisplay = {};
 						return;
 					}
-                    let response;
-                    if (model.me) {
-                        response = await http.get('/pages/' + this.source._id);
-                    }
-                    else {
-                        response = await http.get('/pages/pub/' + this.source._id);
-                    }
-                    this.source.landingPage = response.data.landingPage;
-                    this.links = _.map(response.data.pages, (page) => {
+                    this.source.landingPage = this.snipletResource.landingPage;
+                    this.links = _.map(this.snipletResource.pages.all, (page) => {
                         let href = '#/website/' + this.source._id + '/' + page.titleLink;
                         if (window.location.hash.startsWith('#/preview/')) {
                             href = '#/preview/' + this.source._id + '/' + page.titleLink;
@@ -94,10 +87,13 @@ Behaviours.register('pages', {
 						return {
 							title: page.title,
                             href: href,
-                            published: page.published
+                            published: page.published,
+							index: page.index
 						}
                     });
+					console.log(this.links);
                     this.links = _.reject(this.links, (l) => l.published === false);
+					model.one('refresh-nav', () => this.init());
 					this.$apply('links')
 				},
 				initSource: function(){

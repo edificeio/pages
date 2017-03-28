@@ -45,6 +45,10 @@ export let edit = ng.controller('EditController', [
             { type: 'image' }
         ];
 
+        $scope.updateNav = () => {
+            model.trigger('refresh-nav');
+        }
+
         $scope.currentVisibility = () => {
             if($scope.website.visibility !== 'PUBLIC'){
                 return 'protected';

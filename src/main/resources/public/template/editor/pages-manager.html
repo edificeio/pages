@@ -3,7 +3,7 @@
         <h2><i18n>pages.manage.title</i18n></h2>
 
         <div class="twelve cell card">
-            <ul class="twelve list-view row" sortable-list>
+            <ul class="twelve list-view row" sortable-list on-change="updateNav()">
                 <li ng-repeat="page in website.pages.all | orderBy:'index'" sortable-element ng-model="page.index">
                     <div class="one cell">
                         <i class="drag"></i>
