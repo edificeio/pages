@@ -3,7 +3,7 @@ import { Pages, Page } from './page';
 import { Cell, Cells } from './cell';
 import { Row, Rows } from './row'; 
 import http from 'axios';
-import { Rights, Shareable, model } from 'entcore';
+import { Rights, Shareable, model, idiom } from 'entcore';
 import { Mix, Provider, Selection, Selectable, Eventer } from 'toolkit';
 import { _ } from 'entcore/libs/underscore/underscore';
 
@@ -28,6 +28,13 @@ class HierarchicalFolder extends BaseFolder{
         super();
         this.children = new Selection([]);
         this.websitesIds = [];
+    }
+
+    get displayName(): string{
+        if(this.name === "root"){
+            return idiom.translate("projects.root");
+        }
+        return this.name;
     }
 
     async moveSelectionTo(folder: Folder) {

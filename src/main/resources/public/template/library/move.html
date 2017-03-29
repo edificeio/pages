@@ -6,7 +6,7 @@
        ng-class="{ selected: display.targetFolder === f }" 
        ng-click="display.targetFolder = f"
         ng-if="!selectionContains(f)">
-        [[f.name || idiom.translate('root')]]
+        [[f.displayName]]
     </a>
     <ul class="row" ng-if="!selectionContains(f)">
         <li ng-repeat="f in f.children.all" ng-include="'folder-management'"></li>
