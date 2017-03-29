@@ -122,11 +122,20 @@ export class Page implements Selectable {
         let titleLink = encodeURIComponent(lang.removeAccents(
             this.title.replace(/\ |\:|\?|#|%|\$|£|\^|\*|€|°|\(|\)|\[|\]|§|'|"|&|ç|ù|`|=|\+|<|@/g, '')
         ).toLowerCase());
-        if (_.findWhere(this.website.pages.all, { titleLink: titleLink }) !== undefined) {
-            titleLink += '-1';
+
+        let i = 1;
+        let findName = (append) => {
+            if (_.findWhere(this.website.pages.all, { titleLink: titleLink + append }) !== undefined) {
+                append = '-' + i;
+                i++;
+                return findName(append);
+            }
+            else{
+                return titleLink + append;
+            }
         }
-        
-        this.titleLink = titleLink;
+        let foundName = findName('');
+        this.titleLink = foundName;
     }
 
     copyFrom(page: Page){
