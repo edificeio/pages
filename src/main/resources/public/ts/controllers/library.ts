@@ -148,6 +148,9 @@ export let library = ng.controller('LibraryController', [
         await actualItem.moveTo(targetItem);
         await $scope.currentFolder.sync();
         $scope.$apply();
+        if(targetItem instanceof Folder){
+            targetItem.save();
+        }
     };
 
     $scope.selectionContains = (folder: Folder) => {

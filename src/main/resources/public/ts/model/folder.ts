@@ -34,6 +34,12 @@ class HierarchicalFolder extends BaseFolder{
         for (let item of this.selection) {
             await item.moveTo(folder);
         }
+        if(folder instanceof Folder){
+            folder.save();
+        }
+        if(this instanceof Folder){
+            this.save();
+        }
     }
 
     contains(folder: Folder): boolean {
