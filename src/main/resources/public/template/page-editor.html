@@ -46,7 +46,10 @@
             <div class="cell right-magnet button-info">
                 <i18n>editing</i18n>
                 <select-list display="page" display-as="title" class="button">
-                    <opt ng-repeat="page in website.pages.all" ng-click="redirectTo('/website/' + website._id + '/' + page.titleLink)" value="font">[[page.title]]</opt>
+                    <opt ng-repeat="page in website.pages.all" ng-click="redirectTo('/website/' + website._id + '/' + page.titleLink)" value="font">
+                        <i ng-if="website.landingPage === page.titleLink" class="home"></i>
+                        [[page.title]]
+                    </opt>
                 </select-list>
             </div>
         </div>
