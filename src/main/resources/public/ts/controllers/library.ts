@@ -163,6 +163,7 @@ export let library = ng.controller('LibraryController', [
     }
 
     $scope.move = async () => {
+        $scope.lightbox('move')
         let folder = $scope.currentFolder as Folder;
         await folder.moveSelectionTo($scope.display.targetFolder);
         await Folders.root.sync();
