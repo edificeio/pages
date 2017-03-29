@@ -182,7 +182,7 @@
   "video.pick": "Sélectionnez une vidéo",
   "page.published": "Page publiée",
   "page.unpublished": "Page non-publiée",
-  "editing": "Vous éditez : [[page.title]]",
+  "editing": "Vous éditez : ",
   "pages.manage": "Gérer les pages",
   "open": "Ouvrir",
   "projects.root": "Mes projets",
