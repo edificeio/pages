@@ -111,7 +111,7 @@ export let library = ng.controller('LibraryController', [
         $scope.display.currentTemplate = undefined;
         $scope.website.newPage.title = idiom.translate('landingpage');
         await $scope.website.useNewPage();
-        $scope.website.folderId = $scope.currentFolder._id;
+        $scope.website.moveTo($scope.currentFolder);
         $scope.lightbox('newSite');
         $location.path('/website/' + $scope.website._id);
         $scope.$apply()
