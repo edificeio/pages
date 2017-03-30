@@ -51,7 +51,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     };
 
     get lastModified(): string {
-        return moment(this.modified.$date).format('dddd DD MMMM YYYY');
+        return moment(this.modified.$date).format('DD/MM/YYYY');    
     }
 
     async toTrash(): Promise<void> {
@@ -158,7 +158,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         Folders.unprovide(this);
         await http.delete('/pages/' + this._id);
     }
-    
+
     async setTemplate(): Promise<void> {
         await this.newPage.fromTemplate(this);
     }
