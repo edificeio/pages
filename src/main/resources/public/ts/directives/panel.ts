@@ -10,26 +10,29 @@ export let panel = ng.directive('panel', () => {
             let togglePanel = element.children('.toggle-panel');
             let icon = element.children('ul').children('li');
 
-            $('body').on('click', (e) => {
-                if (element.find(e.target).length === 0 && $(e.target).parents('.icons-tabs').length === 0 && !$(e.target).parents('.side-panel-opener').length) {
-                    togglePanel.addClass('hide');
-                    icon.removeClass('active');
-                    setTimeout(() => {
-                        if(togglePanel.hasClass('hide')){
-                            Blocks.index = 0;
-                            scope.$apply();
-                        }
-                    }, 200)
-                }
-            });
+            //ignore edit opening click
+            setTimeout(() => {
+                $('body').on('click.openpanel', (e) => {
+                    if (element.find(e.target).length === 0 && $(e.target).parents('.icons-tabs').length === 0 && !$(e.target).parents('.side-panel-opener').length) {
+                        togglePanel.addClass('hide');
+                        icon.removeClass('active');
+                        setTimeout(() => {
+                            if(togglePanel.hasClass('hide')){
+                                Blocks.index = 0;
+                                scope.$apply();
+                            }
+                        }, 200)
+                    }
+                });
 
-            $('body').on('click', '.side-panel-opener', () => {
-                togglePanel.removeClass('hide');
-                togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
-                icon.addClass('active');
-                Blocks.index = 4;
-                scope.$apply();
-            });
+                $('body').on('click.openpanel', '.side-panel-opener', () => {
+                    togglePanel.removeClass('hide');
+                    togglePanel.css({ 'overflow-y': 'auto', 'overflow-x': 'hidden' });
+                    icon.addClass('active');
+                    Blocks.index = 4;
+                    scope.$apply();
+                });
+            }, 1);
 
             icon.on('click', () => {
                 if (togglePanel.hasClass('hide')) {
@@ -71,6 +74,10 @@ export let panel = ng.directive('panel', () => {
                         overflow: ''
                     });
                 });
+            });
+
+            scope.$on("$destroy", function() {
+                $('body').off('click.openpanel');
             });
         }
     }
