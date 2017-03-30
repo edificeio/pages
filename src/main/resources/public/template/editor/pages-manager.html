@@ -17,7 +17,7 @@
                                    ng-if="page.show.rename"
                                    type="text" 
                                    ng-model="page.title" 
-                                   complete-change="page.show.rename = false;" />
+                                   complete-change="page.show.rename = false; updateNav();" />
                         </a>
                     </div>
                     <div class="one cell">
@@ -28,11 +28,11 @@
                         <dots-menu class="right-magnet">
                             <opt ng-click="lightbox('confirmRemovePage', page)"><i18n>remove</i18n></opt>
                             <opt ng-click="page.setLanding()"><i18n>mainpage</i18n></opt>
-                            <opt ng-click="page.duplicate()"><i18n>duplicate</i18n></opt>
+                            <opt ng-click="page.duplicate(); updateNav();"><i18n>duplicate</i18n></opt>
                             <opt ng-if="!page.show.url" ng-click="page.show.url = true"><i18n>page.showurl</i18n></opt>
                             <opt ng-if="page.show.url" ng-click="page.show.url = false"><i18n>page.showtitle</i18n></opt>
-                            <opt ng-click="page.unpublish()" ng-if="page.published"><i18n>unpublish</i18n></opt>
-                            <opt ng-click="page.publish()" ng-if="!page.published"><i18n>publish</i18n></opt>
+                            <opt ng-click="page.unpublish(); updateNav();" ng-if="page.published"><i18n>unpublish</i18n></opt>
+                            <opt ng-click="page.publish(); updateNav();" ng-if="!page.published"><i18n>publish</i18n></opt>
                             <opt ng-click="website.showStyle = page"><i18n>page.editstyle</i18n></opt>
                             <opt ng-click="page.show.rename = true"><i18n>rename</i18n></opt>
                         </dots-menu>
@@ -82,6 +82,6 @@
     <p><i18n>remove.page.confirm</i18n></p>
     <div class="row">
         <button class="cancel right-magnet" ng-click="lightbox('confirmRemovePage')"><i18n>cancel</i18n></button>
-        <button class="right-magnet" ng-click="removePage()"><i18n>remove</i18n></button>
+        <button class="right-magnet" ng-click="removePage(); updateNav();"><i18n>remove</i18n></button>
     </div>
 </lightbox>
