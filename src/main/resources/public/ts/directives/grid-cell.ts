@@ -120,18 +120,21 @@ export let gridCell = ng.directive('gridCell', function($compile){
             });
 
             element.on('stopDrag', () => {
-                element.find('.media-wrapper').css({
-                    'margin-top': '',
-                    'margin-left': '',
-                    'width': ''
-                });
-                $('grid-cell').each((index, item) => {
-                    $(item).css('height', '');
-                    $(item).css('overflow', '');
-                });
-                $('grid-row').each((index, item) => {
-                    $(item).css('height', '');
-                })
+                setTimeout(() => {
+                    element.find('.media-wrapper').css({
+                        'margin-top': '',
+                        'margin-left': '',
+                        'width': ''
+                    });
+                    $('grid-cell').css({
+                        height: '',
+                        width: '',
+                        overflow: ''
+                    });
+                    $('grid-row').each((index, item) => {
+                        $(item).css('height', '');
+                    });
+                }, 300);
             });
             
             setTimeout(() => {
