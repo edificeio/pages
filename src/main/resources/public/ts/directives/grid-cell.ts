@@ -3,7 +3,10 @@ import { $ } from 'entcore/libs/jquery/jquery';
 import { _ } from 'entcore/libs/underscore/underscore';
 import { Row, Media, Blocks, Cell, cellSizes } from '../model';
 import { Mix } from 'toolkit';
+import http from 'axios';
 
+declare function setSpectrum (): void;
+declare let angular: any;
 
 let flashCell = (element): Promise<any> => {
     let addFlash = () => {
@@ -50,6 +53,52 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 flashCell(element).then(() => {
                     scope.cell.flash = false;
                 });
+            }
+
+            let polyfillColor = () => {
+                let colorButtonElement = undefined;
+                $('.color-button').spectrum({
+                    preferredFormat: 'hex',
+                    change: (color, e) => {
+                        let cellScope = angular.element(
+                            $(colorButtonElement).parents('grid-cell')[0]
+                        ).scope();
+                        cellScope.cell.style['background-color'] = color.toHexString();
+                        $(colorButtonElement).parents('grid-cell').find('.media-container, .text-wrapper').css(cellScope.cell.style);
+                        cellScope.row.page.eventer.trigger('save');
+                     }
+                });
+                $('.color-button').on('click', (e) => {
+                    colorButtonElement = e.target;
+                })
+            }
+
+            let loadSpectrum = async (): Promise<void> => {
+                if (!$.spectrum || !$.spectrum.palettes) {
+                    $.spectrum = {};
+                    let script = $('<script type="text/javascript"></script>')
+                        .attr('src', '/infra/public/spectrum/spectrum.js')
+                        .appendTo('body');
+                    let stylesheet = $('<link rel="stylesheet" type="text/css" href="/infra/public/spectrum/spectrum.css" />');
+                    $('head').prepend(stylesheet);
+                    
+                    script.onload = () => {
+                        setSpectrum();
+                        if (element.find('input')[0].type === 'text') {
+                            setTimeout(() => {
+                                polyfillColor();
+                                setSpectrum();
+                            }, 1000);
+                        }
+                    }
+                }
+                else{
+                    polyfillColor();
+                }
+            }
+
+            if(element.find('.color-picker')[0].type === 'text'){
+                loadSpectrum();
             }
 
             element.on('startDrag', (e, data) => {
