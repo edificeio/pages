@@ -222,7 +222,7 @@ export class Pages {
     }
 
     matchingPath(path: string, website: Website, editMode: boolean = false): Page {
-        let match = this.all.filter(p => p.titleLink === path && p.published || editMode);
+        let match = this.all.filter(p => p.titleLink === path && (p.published || editMode));
         if (match.length) {
             return match[0];
         }
