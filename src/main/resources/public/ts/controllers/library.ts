@@ -6,6 +6,7 @@ export let library = ng.controller('LibraryController', [
     '$scope', 'model', '$rootScope', '$location', function ($scope, model, $rootScope, $location) {
 
     $scope.display.lightbox['managePages'] = false;
+    $scope.display.lightbox['properties'] = false;
     template.open('library/folder-content', 'library/folder-content');
     $scope.localAdmin = LocalAdmin;
     $scope.currentFolder = Folders.root;
