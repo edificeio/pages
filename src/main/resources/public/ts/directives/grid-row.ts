@@ -39,6 +39,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 			let dragCell = false;
 
 			let margin = '';
+			let draggedCell;
 
 			scope.$watch('row', () => {
 				row = scope.row;
@@ -52,6 +53,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					newLength--;
 					dragCell = true;
 					margin = (element.children('.dragging').data('initial-width') - 4) + 'px';
+					draggedCell = element.children('.dragging');
 				}
 				firstDrag = true;
 				elementWidth = element.width();
@@ -90,12 +92,24 @@ export let gridRow = ng.directive('gridRow', function($compile){
 						}
 					});
 
-					if((elementIndex < gridCells.length - 1 && dragCell) || (elementIndex < gridCells.length && !dragCell)){
-						if(!$(gridCells[elementIndex]).hasClass('dragging')){
-							$(gridCells[elementIndex]).css({ 'margin-left': margin });
+					if(dragCell)
+					{
+						if(elementIndex < gridCells.length - 1){
+							let i = elementIndex;
+							if(draggedCell.index() < elementIndex){
+								i++;
+							}
+							if(!$(gridCells[i]).hasClass('dragging')){
+								$(gridCells[i]).css({ 'margin-left': margin });
+							}
+							else{
+								$(gridCells[i]).next().css({ 'margin-left': margin });
+							}
 						}
-						else{
-							$(gridCells[elementIndex]).next().css({ 'margin-left': margin });
+					}
+					else{
+						if(elementIndex < gridCells.length){
+							$(gridCells[elementIndex]).css({ 'margin-left': margin });
 						}
 					}
 
