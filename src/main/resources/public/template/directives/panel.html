@@ -2,17 +2,17 @@
     <div class="toggle cell">
         <div class="row">
             <infotip name="pages-panel-tutorial" class="info">
-                <h4><i18n>panel.help.title</i18n></h4>
-                <i18n>panel.help.content</i18n>
+                <h2 class="no-margin"><i18n>panel.help.title</i18n></h2>
+                <div class="top-spacing-twice"><i18n>panel.help.content</i18n></div>
             </infotip>
 
-            <h4><i18n>panel.media.title</i18n></h4>
+            <h2><i18n>panel.media.title</i18n></h2>
             <div class="row sniplets">
                 <div class="sniplet" ng-repeat="medium in media" drag-item="medium">
                     <i class="[[medium.type]]" tooltip="[[medium.type]]"></i>
                 </div>
             </div>
-            <h4><i18n>panel.sniplets.title</i18n></h4>
+            <h2><i18n>panel.sniplets.title</i18n></h2>
             <div class="row sniplets" ng-if="website.visibility !== 'PUBLIC'">
                 <div class="sniplet" ng-repeat="sniplet in snipletsSources" drag-item="sniplet">
                     <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
@@ -23,7 +23,7 @@
                     <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
                 </div>
             </div>
-            <h4><i18n>panel.blocks.title</i18n></h4>
+            <h2><i18n>panel.blocks.title</i18n></h2>
             <div class="row">
                 <input type="text" class="twelve cell search" placeholder="[[lang.translate('blocks.search-block-style')]]" ng-model="display.searchBlocks" /><i class="search"></i>
             </div>
