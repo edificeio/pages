@@ -12,14 +12,18 @@ export let view = ng.controller('ViewController', [
             let website: Website = websites.find((w) => w._id === params.siteId);
             $scope.website = website;
             $scope.page = website.pages.matchingPath(params.pageId, website);
-            $scope.page.applySASS();
+            if($scope.page){
+                $scope.page.applySASS();
+            }
         }
         else {
             let websites = await Folders.websites();
             let website: Website = websites.find((w) => w._id === params.siteId);
             $scope.website = website;
             $scope.page = website.pages.landingPage(website);
-            $scope.page.applySASS();
+            if($scope.page){
+                $scope.page.applySASS();
+            }
         }
 
         $scope.websites = await Folders.websites();
