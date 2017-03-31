@@ -13,10 +13,10 @@ export let edit = ng.controller('EditController', [
             $scope.website = website;
 
             if (params.pageId) {
-                $scope.page = website.pages.matchingPath(params.pageId, website);
+                $scope.page = website.pages.matchingPath(params.pageId, website, true);
             }
             else {
-                $scope.page = website.pages.landingPage(website);
+                $scope.page = website.pages.landingPage(website, true);
             }
 
             let page: Page = $scope.page;

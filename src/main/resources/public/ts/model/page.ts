@@ -209,20 +209,20 @@ export class Pages {
         return this._all;
     }
 
-    landingPage(website: Website): Page {
-        let match = this.all.filter(p => p.titleLink === website.landingPage && p.published !== false);
+    landingPage(website: Website, editMode: boolean = false): Page {
+        let match = this.all.filter(p => p.titleLink === website.landingPage && (p.published !== false || editMode));
         if (match.length) {
             return match[0];
         }
-        let published = this.all.filter((p) => p.published !== false);
+        let published = this.all.filter((p) => p.published !== false || editMode);
         if (published.length) {
             return published[0];
         }
         return undefined;
     }
 
-    matchingPath(path: string, website: Website): Page {
-        let match = this.all.filter(p => p.titleLink === path);
+    matchingPath(path: string, website: Website, editMode: boolean = false): Page {
+        let match = this.all.filter(p => p.titleLink === path && p.published || editMode);
         if (match.length) {
             return match[0];
         }

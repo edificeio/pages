@@ -7,7 +7,7 @@
     "@types/core-js": "0.9.36",
     "axios": "^0.15.2",
     "bower": "^1.7.9",
-    "core-js": "^2.4.1",
+    "core-js": "2.4.1",
     "gulp": "^3.9.1",
     "gulp-bower": "0.0.13",
     "gulp-clean": "^0.3.2",
