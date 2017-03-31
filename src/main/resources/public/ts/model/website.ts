@@ -43,6 +43,14 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         return this.rights.myRights;
     }
 
+    get shortenedTitle(): string{
+        let shortenedTitle = this.title;
+        if(shortenedTitle.length > 23){
+            shortenedTitle = shortenedTitle.substr(0, 20) + '...';
+        }
+        return shortenedTitle;
+    }
+
     modified: {
         $date: number
     };
@@ -51,7 +59,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     };
 
     get lastModified(): string {
-        return moment(this.modified.$date).format('DD/MM/YYYY');    
+        return moment(this.modified.$date).format('DD/MM/YYYY');
     }
 
     async toTrash(): Promise<void> {

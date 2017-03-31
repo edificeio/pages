@@ -1,7 +1,7 @@
 import { Websites, Website } from './website';
 import { Pages, Page } from './page';
 import { Cell, Cells } from './cell';
-import { Row, Rows } from './row'; 
+import { Row, Rows } from './row';
 import http from 'axios';
 import { Rights, Shareable, model, idiom } from 'entcore';
 import { Mix, Provider, Selection, Selectable, Eventer } from 'toolkit';
@@ -37,6 +37,17 @@ class HierarchicalFolder extends BaseFolder{
         return this.name;
     }
 
+    get shortenedName(): string{
+        let shortenedName = this.name;
+        if(shortenedName === "root"){
+            shortenedName = idiom.translate("projects.root");
+        }
+        if(shortenedName.length > 38){
+            shortenedName = shortenedName.substr(0, 35) + '...';
+        }
+        return shortenedName;
+    }
+
     async moveSelectionTo(folder: Folder) {
         for (let item of this.selection) {
             await item.moveTo(folder);
@@ -70,7 +81,7 @@ class HierarchicalFolder extends BaseFolder{
     get selectedLength(): number {
         return this.websites.sel.selected.length + this.children.selected.length;
     }
-    
+
     async sync(): Promise<void> {
         await this.websites.fill(this.websitesIds);
         let folders = await Folders.folders();
@@ -178,7 +189,7 @@ export class Folder extends HierarchicalFolder implements Shareable{
                 await this.toTrash();
             }
         }
-        
+
         await this.saveChanges();
     }
 
@@ -277,7 +288,7 @@ export class Folders{
         else {
             websites = await this.publicWebsiteProvider.data();
         }
-        
+
         return websites;
     }
 

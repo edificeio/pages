@@ -1,4 +1,9 @@
 <div class="toggle-buttons" ng-class="{ hide: currentFolder.selectedLength < 1 }">
+    <div class="toggle-buttons-label" ng-if="currentFolder.selectedLength === 1 ">
+        <i class="info-pic"></i>
+        <em ng-if="currentFolder.selectionIsFolders">[[currentFolder.selection[0].name]]</em>
+        <em ng-if="currentFolder.selectionIsWebsites">[[currentFolder.selection[0].title]]</em>
+    </div>
     <div class="row toggle">
         <div>
             <!-- Both-->
