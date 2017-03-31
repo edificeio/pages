@@ -187,6 +187,7 @@
   "open": "Ouvrir",
   "projects.root": "Mes projets",
   "root": "Mes projets",
+  "project.path": "Adresse du projet",
   "folder.trash": "Corbeille",
   "pages.manage.title": "Gérer les pages",
   "name": "Nom",

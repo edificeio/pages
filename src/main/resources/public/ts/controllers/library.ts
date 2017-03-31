@@ -5,6 +5,7 @@ import { _ } from 'entcore/libs/underscore/underscore';
 export let library = ng.controller('LibraryController', [
     '$scope', 'model', '$rootScope', '$location', function ($scope, model, $rootScope, $location) {
 
+    $scope.display.lightbox['managePages'] = false;
     template.open('library/folder-content', 'library/folder-content');
     $scope.localAdmin = LocalAdmin;
     $scope.currentFolder = Folders.root;
@@ -19,6 +20,7 @@ export let library = ng.controller('LibraryController', [
     template.open('library/create-website', 'library/create-website');
     template.open('library/toaster', 'library/toaster');
     template.open('library/publish', 'library/publish');
+    template.open('library/properties', 'library/properties');
     template.open('library/move', 'library/move');
 
     BaseFolder.eventer.on('refresh', () => $scope.$apply());
@@ -202,5 +204,14 @@ export let library = ng.controller('LibraryController', [
         $scope.website.newPage = undefined;
         $scope.website.showStyle = undefined;
         $scope.website.save()
+    };
+
+    $scope.previewPath = (website) => {
+        if (website.visibility === 'PUBLIC') {
+            return '/pages/p/website#/preview/' + website._id;
+        }
+        else {
+            return '/pages#/preview/' + website._id;
+        }
     };
 }]);
