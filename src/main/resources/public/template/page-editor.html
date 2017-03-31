@@ -15,7 +15,7 @@
             <h1 class="breadcrumbs"><a ng-click="redirectTo('/')"><i18n>pages.title</i18n></a><a ng-href="#/website/[[website._id]]">[[website.title]]</a></h1>
         </app-title>
     </div>
-    
+
     <sticky-row>
         <div class="six cell">
             <div class="buttons-set">
@@ -30,7 +30,7 @@
                     <i class="prive" ng-if="!page.published" tooltip="page.unpublished"></i>
                 </div>
             </div>
-            <a class="button cancel" ng-href="[[previewPath()]]" ng-click="preview()"><i18n>preview</i18n></a>
+            <a class="button cancel no-margin" ng-href="[[previewPath()]]" ng-click="preview()"><i18n>preview</i18n></a>
 
         </div>
         <div class="cell right-magnet">
@@ -56,6 +56,7 @@
     </sticky-row>
 
     <div class="row">
+        <br>
         <div class="warning" ng-if="page.weight > 17">
             <i18n>page.warning.heavy</i18n>
         </div>
