@@ -45,8 +45,8 @@ export class Website extends Model<Website> implements Selectable, Shareable {
 
     get shortenedTitle(): string{
         let shortenedTitle = this.title;
-        if(shortenedTitle.length > 23){
-            shortenedTitle = shortenedTitle.substr(0, 20) + '...';
+        if(shortenedTitle.length > 32){
+            shortenedTitle = shortenedTitle.substr(0, 28) + '...';
         }
         return shortenedTitle;
     }
