@@ -1,32 +1,28 @@
 # Notes d'utilisation
 
-## Construction
+## Installation
+
+Builder l'application :
 
 <pre>
-		gradle copyMod
+	npm install
+	gulp build
+	gradle clean install
 </pre>
 
-## Déploier dans ent-core
+Puis l'ajouter à la liste des applications à installer dans le springboard dans le fichier build.gradle. Ensuite, rebuilder le springboard :
 
-
-## Configuration
-
-Dans le fichier `/infra/src/main/resources/mod.json` :
-
-
-Déclarer l'application dans `"one-modules"`:
 <pre>
-	{
-		"name": "fr.wseduc~scrap-book~0.1-SNAPSHOT"
-	}
+	gradle clean init
+	gradle generateTestConf
 </pre>
 
-
-Associer une route d'entée à la configuration du module proxy intégré (`"name": "com.wse~http-proxy~1.0.0"`) :
+Enfin, lancer le springboard. Sous windows :
 <pre>
-	{
-		"location": "/scrapbook",
-		"proxy_pass": "http://localhost:8020"
-	}
+	run.bat
 </pre>
 
+Sous Mac/Linux :
+<pre>
+	sh run.sh
+</pre>
