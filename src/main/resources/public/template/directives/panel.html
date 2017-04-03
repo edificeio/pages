@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="row sniplets" ng-if="website.visibility === 'PUBLIC'">
-                <div class="sniplet" ng-repeat="sniplet in publicSnipletsSources" drag-item="sniplet">
+                <div class="sniplet [[sniplet.source.template]] [[sniplet.source.application]]" ng-repeat="sniplet in publicSnipletsSources" drag-item="sniplet">
                     <i class="[[sniplet.source.template]] [[sniplet.source.application]]" tooltip="[[sniplet.source.title]]"></i>
                 </div>
             </div>
