@@ -151,6 +151,7 @@
   "website.pages": "Liste des pages",
   "remove.confirm": "Voulez-vous vraiment supprimer le projet ?",
   "remove.page.confirm": "Voulez-vous vraiment supprimer la page ?",
+  "remove.cell.confirm": "Voulez-vous vraiment supprimer la cellule ?",
   "page.form.title": "Titre de la nouvelle page",
   "page.create.title": "Nouvelle page",
   "page.create": "Nouvelle page",

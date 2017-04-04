@@ -82,4 +82,13 @@
             <button class="right-magnet cancel" ng-click="closeCellTitle()"><i18n>cancel</i18n></button>
         </div>
     </lightbox>
+
+    <lightbox show="display.lightbox.confirmRemoveCell" on-close="lightbox('confirmRemoveCell')">
+        <h2><i18n>remove</i18n></h2>
+        <p><i18n>remove.cell.confirm</i18n></p>
+        <div class="row">
+            <button class="right-magnet" ng-click="confirmRemoveCell()"><i18n>remove</i18n></button>
+            <button class="right-magnet cancel" ng-click="lightbox('confirmRemoveCell')"><i18n>cancel</i18n></button>
+        </div>
+    </lightbox>
 </div>

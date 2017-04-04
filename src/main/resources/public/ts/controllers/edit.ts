@@ -136,4 +136,9 @@ export let edit = ng.controller('EditController', [
             delete $scope.display.data.newTitle;
             $scope.lightbox('setCellTitle');
         };
+
+        $scope.confirmRemoveCell = () => {
+            $scope.display.data.row.removeCell($scope.display.data.cell);
+            $scope.lightbox('confirmRemoveCell');
+        }
 }])

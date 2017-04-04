@@ -176,7 +176,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
             };
 
             scope.removeCell = () => {
-                scope.row.removeCell(scope.cell);
+                scope.$parent.lightbox('confirmRemoveCell', { cell: scope.cell, row: scope.row });
             };
 
 			scope.$watch('w', function(newVal, oldVal){
