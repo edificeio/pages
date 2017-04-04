@@ -308,6 +308,7 @@ export class Websites {
         for (let website of this.sel.selected) {
             let copy = website.copy();
             await copy.save();
+            await copy.rights.fromBehaviours();
             this.all.push(copy);
             Folders.provideWebsite(copy);
         }
