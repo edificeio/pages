@@ -234,13 +234,9 @@
   "blocks.image-right.description": "Ajoutez un texte accompagné d'une illustration",
   "blocks.image-right.keywords": "right droite illustration image img texte paragraphe",
 
-  "blocks.two-col.title": "Deux colonnes",
-  "blocks.two-col.description": "Ajoutez du contenu séparé en deux colonnes",
-  "blocks.two-col.keywords": "colonnes double deux texte image",
-
-  "blocks.three-col.title": "Trois colonnes",
-  "blocks.three-col.description": "Ajoutez du contenu séparé en trois colonnes",
-  "blocks.three-col.keywords": "colonnes triple trois texte image",
+  "blocks.image-col.title": "Colonne image et texte",
+  "blocks.image-col.description": "Ajoutez une colonne composée d'une image suivie de texte",
+  "blocks.image-col.keywords": "colonne texte image img paragraphe",
 
   "blocks.quote.title": "Citation",
   "blocks.quote.description": "Ajoutez une citation",
@@ -254,9 +250,6 @@
   "blocks.quote-right.description": "Ajoutez une citation accompagnée d'une image",
   "blocks.quote-right.keywords": "texte paragraphe citation illustration image gauche",
 
-  "blocks.accordions.title": "Accordéons",
-  "blocks.accordions.description": "Ajoutez du contenu dans un module déroulant",
-  "blocks.accordions.keywords": "accordeons deroulant menu selection",
 
   "tooltip.grid": "Afficher/masquer la grille",
   "tooltip.newpage": "Créer une page",
