@@ -88,6 +88,8 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 cell.width = 12;
                 scope.$apply();
                 $('.new-row').show();
+                $('.grid-row').css('height', '');
+
                 if(!(item instanceof Cell)){
                     await cell.setContent(JSON.parse(JSON.stringify(item)));
                     scope.$apply();
