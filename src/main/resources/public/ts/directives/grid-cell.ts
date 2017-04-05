@@ -104,7 +104,10 @@ export let gridCell = ng.directive('gridCell', function($compile){
             element.on('startDrag', (e, data) => {
                 element.data('initial-width', element.width());
                 let offsetLeft = element.offset().left;
-                element.parent().height(element.parent().height());
+                if(element.parent().children().length === 1){
+                    element.parent().height(element.parent().height());
+                }
+                
                 setTimeout(() => {
                     element.find('.media-wrapper').animate({
                         'margin-top': (-data.mouse.y + data.elementDistance.y + element.parent().offset().top) + 'px',
