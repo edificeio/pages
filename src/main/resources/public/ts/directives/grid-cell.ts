@@ -112,6 +112,11 @@ export let gridCell = ng.directive('gridCell', function($compile){
                     });
                 }, 10);
 
+                if(element.parent().children().length === 1){
+                    element.parent().parent().prev().hide();
+                    element.parent().parent().next().hide();
+                }
+
                 $('grid-cell').each((index, item) => {
                     $(item).height($(item).height());
                     $(item).css('overflow', 'hidden');
@@ -134,6 +139,9 @@ export let gridCell = ng.directive('gridCell', function($compile){
                     $('grid-row').each((index, item) => {
                         $(item).css('height', '');
                     });
+
+                    element.parent().parent().prev().show();
+                    element.parent().parent().next().show();
                 }, 300);
             });
             

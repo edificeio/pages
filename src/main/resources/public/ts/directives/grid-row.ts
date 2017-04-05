@@ -124,7 +124,10 @@ export let gridRow = ng.directive('gridRow', function($compile){
                 event.stopPropagation();
 				
 				heightToken = setTimeout(() => {
-					element.css('height', '');
+					if(element.children().length > 1 || !element.children().hasClass('dragging')){
+						element.css('height', '');
+					}
+					
 					gridCells.each((index, gc) => {
 						if(!$(gc).hasClass('dragging')){
 							$(gc).css({ 'margin-left': '' });
