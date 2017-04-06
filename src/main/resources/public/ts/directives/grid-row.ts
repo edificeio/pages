@@ -60,11 +60,14 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				elementOffset = element.offset();
 				cellWidth = elementWidth / 12;
 				gridCells = element.find('grid-cell');
-				newCellWidth = parseInt(12 / newLength);
+				newCellWidth = Math.floor(12 / newLength);
 				filling = 12 % (newCellWidth * newLength);
 			};
 
 			element.on("dragover", function (event, e) {
+				if(event.toElement || !e){
+					return;
+				}
                 event.preventDefault();
                 event.stopPropagation();
 				clearTimeout(heightToken);
