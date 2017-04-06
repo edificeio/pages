@@ -129,10 +129,6 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         if (this.visibility === 'PUBLIC') {
             path = '/pages/p';
         }
-        this.pages.setLinks();
-        if (this.pages.all.length) {
-            this.landingPage = this.pages.all[0].titleLink;
-        }
         let response = await http.post(path, this);
 
         response.data.owner = {
@@ -189,11 +185,15 @@ export class Website extends Model<Website> implements Selectable, Shareable {
 
     async useNewPage(): Promise<Page> {
         await this.save();
+        
         let page = this.newPage;
         this.newPage.published = true;
         this.newPage.setTitleLink();
         this.newPage.fromTemplate(this);
         this.pages.push(this.newPage);
+        if(!this.landingPage){
+            this.landingPage = this.pages.all[0].titleLink;
+        }
         this.newPage = undefined;
         this.eventer.trigger('page-added');
         return page;
