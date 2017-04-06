@@ -33,8 +33,7 @@
             <div class="row">
 
                 <div class="block-preview" ng-repeat="block in blocks.all | filter: searchBlocks | limitTo: blocks.index" drag-item="block">
-                    <div class="block-description">
-                        <h4>[[block.title]]</h4>
+                    <div class="block-description flex-row align-center justify-center">
                         <div>[[block.description]]</div>
                     </div>
                     <div class="block-template [[block.name]]">
