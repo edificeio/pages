@@ -136,17 +136,19 @@ export let gridRow = ng.directive('gridRow', function($compile){
 							$(gc).css({ 'margin-left': '' });
 						}
 					});
+					setTimeout(() => {
+						gridCells.each((index, item) => {
+							if(!$(item).hasClass('dragging')){
+								$(item).removeClass(cellSizes[newCellWidth]);
+								$(item).addClass(cellSizes[row.cells.all[index].width]);
+							}
+						});
+					}, 30);
 				}, 100);
 				
 				firstDrag = true;
 				marginTime = false;
 				previousElementIndex = undefined;
-				gridCells.each((index, item) => {
-					if(!$(item).hasClass('dragging')){
-						$(item).removeClass(cellSizes[newCellWidth]);
-						$(item).addClass(cellSizes[row.cells.all[index].width]);
-					}
-				});
             });
 
 			element.on('drop', async (event, item) => {
