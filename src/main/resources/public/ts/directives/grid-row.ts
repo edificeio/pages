@@ -60,7 +60,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				elementOffset = element.offset();
 				cellWidth = elementWidth / 12;
 				gridCells = element.find('grid-cell');
-				newCellWidth = Math.floor(12 / newLength);
+				newCellWidth = parseInt(12 / newLength);
 				filling = 12 % (newCellWidth * newLength);
 			};
 
