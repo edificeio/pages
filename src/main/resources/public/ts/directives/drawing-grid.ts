@@ -72,6 +72,9 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                     }
                 });
 
+                let page: Page = scope.page;
+                let row = page.addRowAt(index);
+
                 let cell: Cell = new Cell();
                 if(item instanceof Cell){
                     item.removeFromRow();
@@ -81,8 +84,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 if(!cell.media){
                     cell.media = { type: 'empty' };
                 }
-                let page: Page = scope.page;
-                let row = page.addRowAt(index);
+                
                 console.log('Adding row at index : ' + index);
                 row.addCell(cell);
                 cell.width = 12;

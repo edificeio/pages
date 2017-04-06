@@ -147,6 +147,8 @@ export let gridRow = ng.directive('gridRow', function($compile){
             });
 
 			element.on('drop', async (event, item) => {
+				$('.new-row').show();
+				
 				firstDrag = true;
 				previousElementIndex = undefined;
 
