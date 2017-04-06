@@ -24,9 +24,12 @@
                 </div>
             </div>
             <h2><i18n>panel.blocks.title</i18n></h2>
-            <div class="row">
+
+            <!-- uncomment when additionals blocks-templates -->
+            <!-- <div class="row">
                 <input type="text" class="twelve cell search" placeholder="[[lang.translate('blocks.search-block-style')]]" ng-model="display.searchBlocks" /><i class="search"></i>
-            </div>
+            </div> -->
+
             <div class="row">
 
                 <div class="block-preview" ng-repeat="block in blocks.all | filter: searchBlocks | limitTo: blocks.index" drag-item="block">
