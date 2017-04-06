@@ -58,6 +58,9 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             let rows;
 
             element.on('dragover', '.new-row', (e, p) => {
+                if(e.toElement || !p){
+					return;
+				}
                 $(e.target).addClass('highlight');
             });
 
@@ -103,7 +106,6 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 if(element.find('editor.focus').find(e.target).length === 0){
                     e.preventDefault();
                 }
-                
             });
 
             element.on('editor-focus', 'editor', () => {
