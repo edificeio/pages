@@ -1,7 +1,7 @@
 import { Mix } from 'toolkit';
 import { Page } from './page';
 import { Rows, Row } from './row';
-import { cleanJSON } from 'entcore/entcore';
+import { cleanJSON, idiom } from 'entcore/entcore';
 import http from 'axios';
 
 export let cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
@@ -49,6 +49,9 @@ export class Cell {
     }
 
     setContent(item: any): Promise<any>{
+        if(item.type === 'sniplet'){
+            this.title = idiom.translate(item.source.title);
+        }
         this.media = { type: 'empty' };
         return new Promise((resolve, reject) => {
             setTimeout(() => {
