@@ -128,6 +128,11 @@ export let gridCell = ng.directive('gridCell', function($compile){
             });
 
             element.on('stopDrag', () => {
+                element.find('.media-wrapper').css({
+                    'margin-top': '',
+                    'margin-left': '',
+                    'width': ''
+                });
                 setTimeout(() => {
                     element.find('.media-wrapper').css({
                         'margin-top': '',
@@ -136,8 +141,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
                     });
                     $('grid-cell').css({
                         height: '',
-                        width: '',
-                        overflow: ''
+                        width: ''
                     });
                     $('grid-row').each((index, item) => {
                         $(item).css('height', '');
@@ -145,6 +149,13 @@ export let gridCell = ng.directive('gridCell', function($compile){
 
                     element.parent().parent().prev().show();
                     element.parent().parent().next().show();
+
+                    setTimeout(() => {
+                        $('grid-cell').css({
+                            overflow: ''
+                        });
+                    }, 250);
+
                 }, 300);
             });
             
