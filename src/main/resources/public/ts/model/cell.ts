@@ -27,6 +27,7 @@ export interface Media {
 }
 
 export class Cell {
+    focus: boolean;
     width: number;
     height: number;
     media: Media;

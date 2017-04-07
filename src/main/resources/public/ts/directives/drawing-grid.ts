@@ -112,11 +112,15 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 placeToolbar();
                 $('sticky-row').addClass('hide');
             });
-            element.on('editor-blur', 'editor', () => {
+            element.on('editor-blur', 'editor', (e) => {
                 placeToolbar();
                 if($('editor.focus').length === 0){
                     $('sticky-row').removeClass('hide');
                 }
+                let cell = $(e.target).parents('grid-cell');
+                let cellScope = angular.element(cell[0]).scope();
+                cellScope.cell.focus = false;
+                scope.$apply();
             });
 
             $(window).on('scroll', () => {

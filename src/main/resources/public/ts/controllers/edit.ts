@@ -3,6 +3,7 @@ import { template, idiom } from 'entcore/entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
 import { _ } from 'entcore/libs/underscore/underscore';
 import { Autosave } from 'toolkit';
+import { $ } from 'entcore/libs/jquery/jquery';
 
 export let edit = ng.controller('EditController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {
@@ -117,6 +118,30 @@ export let edit = ng.controller('EditController', [
                     return '/pages#/preview/' + params.siteId;
                 }
             }
+        };
+
+        $scope.focusEditor = (cell: Cell, $event) => {
+            if(cell.focus){
+                return;
+            }
+            cell.focus = true;
+            let range = window.getSelection().getRangeAt(0);
+            let startOffset = range.startOffset;
+            let gridCell = $($event.target).parents('grid-cell');
+            setTimeout(() => {
+                gridCell.find('[contenteditable]')[0].focus();
+                gridCell.find('[contenteditable]')[0].click();
+                let e = document.createEvent("MouseEvent");
+                let el: Node = document.elementFromPoint($event.pageX, $event.pageY);
+                while(el && el.nodeType === 1){
+                    el = el.firstChild;
+                }
+                let newRange = document.createRange();
+                newRange.setStart(el, startOffset);
+                newRange.setEnd(el, startOffset);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(newRange);
+            }, 200);
         };
 
         $scope.applySASS = (page: Page) => {

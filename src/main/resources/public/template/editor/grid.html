@@ -21,8 +21,12 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="cell.media.type === 'text'" class="text-wrapper">
-                    <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
+                <div ng-if="cell.media.type === 'text'" class="text-wrapper" style="cursor: initial" ng-click="focusEditor(cell, $event)">
+                    <div bind-html="cell.media.source" ng-if="cell.media.source && !cell.focus" style="border: none" contenteditable="true"></div>
+                    <div ng-if="!cell.media.source || cell.focus">
+                        <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
+                    </div>
+                    
                 </div>
                 <div ng-if="cell.media.type === 'video'" class="video-wrapper">
                     <embedder ng-model="cell.media.source" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
