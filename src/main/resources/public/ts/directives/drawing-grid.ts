@@ -117,7 +117,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 if($('editor.focus').length === 0){
                     $('sticky-row').removeClass('hide');
                 }
-                let cell = $(e.target).parents('grid-cell');
+                let cell = $(e.target).parents('grid-cell .media-wrapper');
                 let cellScope = angular.element(cell[0]).scope();
                 cellScope.cell.focus = false;
                 scope.$apply();

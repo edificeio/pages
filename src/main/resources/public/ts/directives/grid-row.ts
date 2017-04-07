@@ -55,7 +55,6 @@ export let gridRow = ng.directive('gridRow', function($compile){
 					margin = (element.children('.dragging').data('initial-width') - 4) + 'px';
 					draggedCell = element.children('.dragging');
 				}
-				firstDrag = true;
 				elementWidth = element.width();
 				elementOffset = element.offset();
 				cellWidth = parseInt(elementWidth / 12);
@@ -72,19 +71,23 @@ export let gridRow = ng.directive('gridRow', function($compile){
                 event.stopPropagation();
 				clearTimeout(heightToken);
 				element.height(element.height());
-				if(firstDrag){
-					initialCalc();
-					
-					if(!dragCell){
-						gridCells.each((index, item) => {
-							$(item).removeClass(cellSizes[row.cells.all[index].width]);
-							$(item).addClass(cellSizes[newCellWidth]);
-						});
-					}
 
+				initialCalc();
+					
+				if(!dragCell){
+					gridCells.each((index, item) => {
+						$(item).removeClass(cellSizes[row.cells.all[index].width]);
+						$(item).addClass(cellSizes[newCellWidth]);
+					});
+				}
+
+				if(firstDrag){
+					clearTimeout(timerToken);
 					timerToken = setTimeout(() => {
 						marginTime = true;
-					}, 100);
+						previousElementIndex = -1;
+					}, 200);
+					firstDrag = false;
 				}
 				
 				elementIndex = parseInt((e.x - elementOffset.left) / (newCellWidth * cellWidth));
