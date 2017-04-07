@@ -12,6 +12,9 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
             let firstScroll = true;
             let placeToolbar = () => {
                 if($('sticky-row').length === 0){
+                    element.find('editor-toolbar, editor > popover').css({
+                        top:  $('.height-marker').height() + 'px'
+                    });
                     return;
                 }
                 
