@@ -133,6 +133,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
                     'margin-left': '',
                     'width': ''
                 });
+                $('grid-cell').css({ 'transition': 'none', 'margin-left': ''})
                 setTimeout(() => {
                     element.find('.media-wrapper').css({
                         'margin-top': '',
