@@ -178,7 +178,7 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 
 						//horizontal resizing
 						if(resizeLimits.horizontal){
-							let distance = mouse.x - p.left;
+							let distance = parseInt(mouse.x - p.left);
 							newWidth = distance;
 							if (newWidth < cellWidth) {
 								newWidth = cellWidth;
@@ -188,16 +188,16 @@ export let gridResizable = ng.directive('gridResizable', function($compile){
 							//neighbour resizing
 							let neighbour = findResizableNeighbour(element, distance - element.width() + 4);
 							let neighbourWidth = parentRemainingSpace(neighbour);
-								if(diff > 0){
-									diff += 10;
-									neighbourWidth -= diff;
-								}
-								if(neighbourWidth < cellWidth * 2){
-									newWidth += neighbourWidth - cellWidth * 2;
-									neighbourWidth = cellWidth * 2;
-								}
-								element.width(newWidth);
-								neighbour.width(neighbourWidth);
+							if(diff > 0){
+								diff += 10;
+								neighbourWidth -= diff;
+							}
+							if(neighbourWidth < cellWidth * 2){
+								newWidth += neighbourWidth - cellWidth * 2;
+								neighbourWidth = cellWidth * 2;
+							}
+							element.width(newWidth - 1);
+							neighbour.width(neighbourWidth);
 						}
 
 						//vertical resizing
