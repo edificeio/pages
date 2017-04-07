@@ -132,7 +132,7 @@ export let edit = ng.controller('EditController', [
                 gridCell.find('[contenteditable]')[0].focus();
                 gridCell.find('[contenteditable]')[0].click();
                 let e = document.createEvent("MouseEvent");
-                let el: Node = document.elementFromPoint($event.pageX, $event.pageY);
+                let el: Node = document.elementFromPoint($event.clientX, $event.clientY);
                 while(el && el.nodeType === 1){
                     el = el.firstChild;
                 }
