@@ -116,8 +116,18 @@ export let gridCell = ng.directive('gridCell', function($compile){
                 }, 10);
 
                 if(element.parent().children().length === 1){
-                    element.parent().parent().prev().hide();
-                    element.parent().parent().next().hide();
+                    element.parent().parent().prev().css({ 
+                        opacity: 0, 
+                        'pointer-events': 'none',
+                        height: element.parent().parent().prev().height() + 'px'
+                    });
+                    element.parent().parent().next().css({ 
+                        opacity: 0, 
+                        'pointer-events': 'none' ,
+                        height: element.parent().parent().next().height() + 'px'
+                    });
+                    element.parent().parent().prev().removeClass('droppable');
+                    element.parent().parent().next().removeClass('droppable');
                 }
 
                 $('grid-cell').each((index, item) => {
@@ -148,8 +158,8 @@ export let gridCell = ng.directive('gridCell', function($compile){
                         $(item).css('height', '');
                     });
 
-                    element.parent().parent().prev().show();
-                    element.parent().parent().next().show();
+                    $('.new-row').attr('style', '');
+                    $('.new-row').addClass('droppable');
 
                     setTimeout(() => {
                         $('grid-cell').css({

@@ -155,7 +155,8 @@ export let gridRow = ng.directive('gridRow', function($compile){
             });
 
 			element.on('drop', async (event, item) => {
-				$('.new-row').show();
+				$('.new-row').attr('style', '');
+				$('.new-row').addClass('droppable');
 				
 				firstDrag = true;
 				previousElementIndex = undefined;

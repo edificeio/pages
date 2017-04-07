@@ -96,7 +96,8 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 row.addCell(cell);
                 cell.width = 12;
                 scope.$apply();
-                $('.new-row').show();
+                $('.new-row').attr('style', '');
+                $('.new-row').addClass('droppable');
                 $('.grid-row').css('height', '');
 
                 if(!(item instanceof Cell)){
