@@ -6,21 +6,21 @@ export let view = ng.controller('ViewController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {
 
     let params = $route.current.params;
-    let findPage = async (): Promise<void> => {
+    const findPage = async (): Promise<void> => {
+        const websites = await Folders.websites();
+        const website: Website = websites.find((w) => w._id === params.siteId);
+        const editMode = website.myRights.update;
+        $scope.website = website;
+
         if (params.pageId) {
-            let websites = await Folders.websites();
-            let website: Website = websites.find((w) => w._id === params.siteId);
-            $scope.website = website;
-            $scope.page = website.pages.matchingPath(params.pageId, website);
+            $scope.page = website.pages.matchingPath(params.pageId, website, editMode);
             if($scope.page){
                 $scope.page.applySASS();
             }
         }
         else {
-            let websites = await Folders.websites();
-            let website: Website = websites.find((w) => w._id === params.siteId);
             $scope.website = website;
-            $scope.page = website.pages.landingPage(website);
+            $scope.page = website.pages.landingPage(website, editMode);
             if($scope.page){
                 $scope.page.applySASS();
             }

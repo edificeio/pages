@@ -21,11 +21,11 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     template.open('editor/pages-manager', 'editor/pages-manager');
     template.open('editor/templates', 'editor/templates');
 
-    let openSite = async (params) => {
-        let websites = await Folders.websites();
-        let website: Website = websites.find(w => w._id === params.siteId);
+    const openSite = async (params) => {
+        const websites = await Folders.websites();
+        const website: Website = websites.find(w => w._id === params.siteId);
         $scope.snipletResource = website;
-        await website.rights.fromBehaviours()
+        await website.rights.fromBehaviours();
         if (website.myRights['update'] && !params.preview && $(window).width() > ui.breakpoints.tablette) {
             template.open('main', 'page-editor');
         }
@@ -94,6 +94,11 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     $scope.lightbox = function (lightboxName: string, data: any) {
         $scope.display.data = data;
         $scope.display.lightbox[lightboxName] = !$scope.display.lightbox[lightboxName];
+    };
+
+    $scope.closeLightbox = function (lightboxName: string, data: any) {
+        $scope.display.data = data;
+        $scope.display.lightbox[lightboxName] = false;
     };
 
     $scope.addPage = (website: Website) => {

@@ -8,7 +8,7 @@ import { $ } from 'entcore/libs/jquery/jquery';
 export let edit = ng.controller('EditController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {
         let params = $route.current.params;
-        let findPage = async (): Promise<void> => {
+        const findPage = async (): Promise<void> => {
             let websites = await Folders.websites();
             let website: Website = websites.find((w) => w._id === params.siteId);
             $scope.website = website;
@@ -149,7 +149,7 @@ export let edit = ng.controller('EditController', [
         };
 
         $scope.closeManagePages = () => {
-            $scope.lightbox('managePages');
+            $scope.closeLightbox('managePages');
             $scope.website.newPage = undefined;
             $scope.website.showStyle = undefined;
         };
