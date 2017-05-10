@@ -9,7 +9,7 @@
                         <i class="drag"></i>
                     </div>
                     <div class="nine cell text">
-                        <a ng-href="[[previewPath()]]"  ng-if="page.show.url && !page.show.rename">[[previewPath()]]</a>
+                        <a ng-href="[[previewPath()]]/[[page.titleLink]]"  ng-if="page.show.url && !page.show.rename">[[previewPath()]]/[[page.titleLink]]</a>
                         <a href="#/website/[[website._id]]/[[page.titleLink]]" ng-if="!page.show.url || page.show.rename">
                             <i ng-if="website.landingPage === page.titleLink" class="home"></i>
                             <span ng-if="!page.show.rename">[[page.title]]</span>

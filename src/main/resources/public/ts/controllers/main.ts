@@ -15,7 +15,8 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     $scope.display = {
         lightbox: {},
         currentTemplate: '',
-        sliderTest: 1
+        sliderTest: 1,
+        host: 'https://' + location.host
     };
 
     template.open('editor/pages-manager', 'editor/pages-manager');
