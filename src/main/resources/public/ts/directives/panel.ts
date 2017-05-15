@@ -53,7 +53,7 @@ export let panel = ng.directive('panel', () => {
             element.on('startdrag', '[drag-item]', () => {
                 togglePanel.addClass('hide');
                 icon.removeClass('active');
-                togglePanel.css({ overflow: 'visible' });
+                togglePanel.attr('style', 'overflow: visible');
                 $('grid-cell').each((index, item) => {
                     $(item).height($(item).height());
                     $(item).css('overflow', 'hidden');
