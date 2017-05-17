@@ -41,6 +41,7 @@
   "cell.setBackground": "Changer la couleur de fond",
   "cell.removeBackground": "Supprimer la couleur de fond",
   "cell.set.title": "Choisir un titre",
+  "cell.change.title": "Modifier le titre",
   "cell.remove.title":  "Supprimer le titre",
   "website.title": "Titre",
   "pages.publish": "Publier dans les applications",

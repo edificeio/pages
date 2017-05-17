@@ -73,7 +73,8 @@
 
     <container template="editor/pages-manager"></container>
     <lightbox show="display.lightbox.setCellTitle" on-close="closeCellTitle()">
-        <h2><i18n>cell.set.title</i18n></h2>
+        <h2 ng-if="!display.data.title"><i18n>cell.set.title</i18n></h2>
+        <h2 ng-if="display.data.title"><i18n>cell.change.title</i18n></h2>
         <div class="row">
             <input type="text" class="twelve cell" ng-model="display.data.newTitle" i18n-placeholder="title" />
         </div>
