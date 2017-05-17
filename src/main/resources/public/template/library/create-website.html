@@ -1,5 +1,5 @@
 <wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()">
-	<step workflow="pages.createPublic" internal-next>
+	<step internal-next>
         <h1><i18n>wizard.type.title</i18n></h1>
 
 		<div class="seven centered">
@@ -9,7 +9,7 @@
                 <i18n>wizard.type.private</i18n>
             </button>
 
-            <button class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PUBLIC';" internal-next style="float: none">
+            <button workflow="pages.createPublic" class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PUBLIC';" internal-next style="float: none">
                 <i class="public type cell horizontal-spacing"></i>
                 <i18n>wizard.type.public</i18n>
             </button>

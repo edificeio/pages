@@ -123,12 +123,12 @@ gulp.task('build', ['drop-temp'], function () {
     var refs = updateRefs();
     var copyBehaviours = gulp.src('./src/main/resources/public/dist/behaviours.js')
         .pipe(gulp.dest('./src/main/resources/public/js'));
-    return merge[refs, copyBehaviours];
+    return merge([refs, copyBehaviours]);
 });
 
 gulp.task('build-local', ['webpack-entcore-local'], function () {
     var refs = updateRefs();
     var copyBehaviours = gulp.src('./src/main/resources/public/dist/behaviours.js')
         .pipe(gulp.dest('./src/main/resources/public/js'));
-    return merge[refs, copyBehaviours];
+    return merge([refs, copyBehaviours]);
 });
