@@ -1,4 +1,4 @@
-import { Mix } from 'toolkit';
+import { Mix } from 'entcore-toolkit';
 import { Page } from './page';
 import { Rows, Row } from './row';
 import { cleanJSON, idiom } from 'entcore/entcore';

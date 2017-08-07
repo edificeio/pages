@@ -2,7 +2,7 @@ import { Website } from './website';
 import { Row, Rows } from './row';
 import { Cell } from './cell';
 import { idiom as lang } from 'entcore/entcore';
-import { Mix, Selectable, Eventer } from 'toolkit';
+import { Mix, Selectable, Eventer } from 'entcore-toolkit';
 import { $ } from 'entcore/libs/jquery/jquery';
 import { _ } from 'entcore/libs/underscore/underscore';
 

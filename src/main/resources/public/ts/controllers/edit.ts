@@ -2,7 +2,7 @@ import { ng, sniplets } from 'entcore/entcore';
 import { template, idiom } from 'entcore/entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
 import { _ } from 'entcore/libs/underscore/underscore';
-import { Autosave } from 'toolkit';
+import { Autosave } from 'entcore-toolkit';
 import { $ } from 'entcore/libs/jquery/jquery';
 
 export let edit = ng.controller('EditController', [

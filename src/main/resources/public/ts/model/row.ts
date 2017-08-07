@@ -1,6 +1,6 @@
 import { Cell, Cells } from './cell';
 import { Page } from './page';
-import { Mix, Eventer } from 'toolkit';
+import { Mix, Eventer } from 'entcore-toolkit';
 
 export class Row {
     cells: Cells;

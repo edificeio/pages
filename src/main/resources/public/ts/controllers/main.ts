@@ -3,7 +3,7 @@ import { $ } from 'entcore/libs/jquery/jquery';
 import { moment } from 'entcore/libs/moment/moment';
 import { _ } from 'entcore/libs/underscore/underscore';
 import { Folders, Website } from '../model';
-import { Autosave } from 'toolkit';
+import { Autosave } from 'entcore-toolkit';
 
 export let main = ng.controller('MainController', ['$scope', 'model', 'route', '$location',
     async function ($scope, model, route, $location): Promise<void> {

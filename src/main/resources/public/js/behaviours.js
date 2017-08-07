@@ -275,6 +275,7 @@
 	var utils = __webpack_require__(16);
 	var bind = __webpack_require__(17);
 	var Axios = __webpack_require__(18);
+	var defaults = __webpack_require__(19);
 	
 	/**
 	 * Create an instance of Axios
@@ -296,14 +297,14 @@
 	}
 	
 	// Create the default instance to be exported
-	var axios = createInstance();
+	var axios = createInstance(defaults);
 	
 	// Expose Axios class to allow class inheritance
 	axios.Axios = Axios;
 	
 	// Factory for creating new instances
-	axios.create = function create(defaultConfig) {
-	  return createInstance(defaultConfig);
+	axios.create = function create(instanceConfig) {
+	  return createInstance(utils.merge(defaults, instanceConfig));
 	};
 	
 	// Expose Cancel & CancelToken
@@ -661,10 +662,10 @@
 	/**
 	 * Create a new instance of Axios
 	 *
-	 * @param {Object} defaultConfig The default config for the instance
+	 * @param {Object} instanceConfig The default config for the instance
 	 */
-	function Axios(defaultConfig) {
-	  this.defaults = utils.merge(defaults, defaultConfig);
+	function Axios(instanceConfig) {
+	  this.defaults = instanceConfig;
 	  this.interceptors = {
 	    request: new InterceptorManager(),
 	    response: new InterceptorManager()
@@ -768,7 +769,7 @@
 	  return adapter;
 	}
 	
-	module.exports = {
+	var defaults = {
 	  adapter: getDefaultAdapter(),
 	
 	  transformRequest: [function transformRequest(data, headers) {
@@ -806,15 +807,6 @@
 	    return data;
 	  }],
 	
-	  headers: {
-	    common: {
-	      'Accept': 'application/json, text/plain, */*'
-	    },
-	    patch: utils.merge(DEFAULT_CONTENT_TYPE),
-	    post: utils.merge(DEFAULT_CONTENT_TYPE),
-	    put: utils.merge(DEFAULT_CONTENT_TYPE)
-	  },
-	
 	  timeout: 0,
 	
 	  xsrfCookieName: 'XSRF-TOKEN',
@@ -826,6 +818,22 @@
 	    return status >= 200 && status < 300;
 	  }
 	};
+	
+	defaults.headers = {
+	  common: {
+	    'Accept': 'application/json, text/plain, */*'
+	  }
+	};
+	
+	utils.forEach(['delete', 'get', 'head'], function forEachMehtodNoData(method) {
+	  defaults.headers[method] = {};
+	});
+	
+	utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+	  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+	});
+	
+	module.exports = defaults;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
@@ -1045,7 +1053,7 @@
 	var parseHeaders = __webpack_require__(27);
 	var isURLSameOrigin = __webpack_require__(28);
 	var createError = __webpack_require__(24);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(29);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
