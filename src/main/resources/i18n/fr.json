@@ -17,7 +17,7 @@
   "group.class.Relative": "Tous les parents de la classe {0}.",
   "group.class.Guest": "Tous les invités de la classe {0}.",
   "group.AdminLocal": "Tous les administrateurs locaux du groupe {0}.",
-  "group.manager": "Tous les gestionnnaires de la communauté {0}.",
+  "group.manager": "Tous les gestionnaires de la communauté {0}.",
   "group.contrib": "Tous les contributeurs de la communauté {0}.",
   "group.read": "Tous les lecteurs de la communauté {0}.",
   "page.read": "Consulter",
@@ -148,7 +148,7 @@
 
   "blocks.quote-left.title": "Citation avec image à droite",
   "blocks.quote-left.description": "Ajoutez une citation accompagnée d'une image",
-  "blocks.quote-left.keywords": "texte paragraphe citation illustration image doite",
+  "blocks.quote-left.keywords": "texte paragraphe citation illustration image droite",
 
   "blocks.quote-right.title": "Citation avec image à gauche",
   "blocks.quote-right.description": "Ajoutez une citation accompagnée d'une image",
