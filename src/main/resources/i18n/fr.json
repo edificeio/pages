@@ -1,5 +1,6 @@
 {
-  "pages.title": "Projets",
+  "pages.title": "Projets", 
+  "pages.app.title": "Pages",  
   "pages.widget.title": "pages",
   "pages.widget.empty": "Aucune page n'a été créée",
   "group.Teacher": "Tous les enseignants du groupe {0}.",
