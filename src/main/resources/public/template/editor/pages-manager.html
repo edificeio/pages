@@ -26,7 +26,7 @@
                     </div>
                     <div class="one cell">
                         <dots-menu class="right-magnet">
-                            <opt ng-click="lightbox('confirmRemovePage', page)"><i18n>remove</i18n></opt>
+                            <opt ng-if="canRemovePage(page)" ng-click="lightbox('confirmRemovePage', page)"><i18n>remove</i18n></opt>
                             <opt ng-click="page.setLanding()"><i18n>mainpage</i18n></opt>
                             <opt ng-click="page.duplicate(); updateNav();"><i18n>duplicate</i18n></opt>
                             <opt ng-if="!page.show.url" ng-click="page.show.url = true"><i18n>page.showurl</i18n></opt>

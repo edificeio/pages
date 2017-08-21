@@ -1,4 +1,4 @@
-import { ng, sniplets } from 'entcore/entcore';
+import { ng, sniplets, Behaviours } from 'entcore/entcore';
 import { template, idiom } from 'entcore/entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
 import { _ } from 'entcore/libs/underscore/underscore';
@@ -85,6 +85,11 @@ export let edit = ng.controller('EditController', [
         $scope.dropContent = (row, cell, $item) => {
             cell.source($item);
             row.page.trigger('save');
+        };
+
+        $scope.canRemovePage = (page: Page) => {
+            let isOwner = ($scope.website && $scope.website.owner && $scope.website.owner.userId ===  model.me.userId) ||  model.me.userId === page.owner;
+            return isOwner || model.me.hasRight($scope.website, Behaviours.applicationsBehaviours.pages.rights.resource.manager);
         };
 
         $scope.removePage = () => {

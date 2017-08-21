@@ -28,7 +28,7 @@
             <button class="zero-mobile" ng-click="openPublish()" user-role="ADMIN_LOCAL" ng-if="currentFolder.selection.length === 1">
                 <i18n>pages.publish</i18n>
             </button>
-            <resource-right name="update" resource="currentFolder.selection">
+            <resource-right name="manager" resource="currentFolder.selection">
                 <button class="zero-mobile" ng-click="editWebsiteProperties()" ng-if="currentFolder.selection.length === 1">
                     <i18n>properties</i18n>
                 </button>

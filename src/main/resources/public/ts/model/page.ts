@@ -1,7 +1,7 @@
 import { Website } from './website';
 import { Row, Rows } from './row';
 import { Cell } from './cell';
-import { idiom as lang } from 'entcore/entcore';
+import { idiom as lang, model } from 'entcore/entcore';
 import { Mix, Selectable, Eventer } from 'entcore-toolkit';
 import { $ } from 'entcore/libs/jquery/jquery';
 import { _ } from 'entcore/libs/underscore/underscore';
@@ -23,6 +23,7 @@ export class Page implements Selectable {
     show: any;
     sass: string;
     hasGrids: boolean;
+    owner: string;
 
     constructor(pageName?: string) {
         if (pageName && typeof pageName === 'string') {
@@ -30,6 +31,7 @@ export class Page implements Selectable {
             this.setTitleLink();
         }
 
+        this.owner = model.me.userId;
         this.eventer = new Eventer();
         this.rows = new Rows(this);
     }
@@ -73,7 +75,8 @@ export class Page implements Selectable {
             rows: this.rows,
             index: this.index,
             published: this.published,
-            sass: this.sass
+            sass: this.sass,
+            owner: this.owner
         }
     }
 
