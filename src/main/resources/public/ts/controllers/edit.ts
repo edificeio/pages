@@ -25,6 +25,7 @@ export let edit = ng.controller('EditController', [
 
             website.watchChanges();
             $scope.websites = await Folders.websites();
+            $scope.websites = $scope.websites.filter(w => !w.trashed);
             await Blocks.sync();
             $scope.blocks = Blocks;
             $scope.$apply();

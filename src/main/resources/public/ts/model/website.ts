@@ -1,6 +1,6 @@
 import { Folder, Folders, Filters } from './folder';
 import { Pages, Page, Row, Cell, SnipletSource } from './index';
-import { Structure, Group, Publication } from './publish';
+import { Structure, Group, Publication, Application, Role } from './publish';
 import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'entcore-toolkit';
 import http from "axios";
 import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } from 'entcore/entcore';
@@ -12,7 +12,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     selected: boolean;
     pages: Pages;
     newPage: Page;
-    published: any;
+    published: { [structure:string]: { application: Application, groups: Group[], role: Role }};
     icon: string;
     title: string;
     eventer: Eventer;
@@ -64,6 +64,16 @@ export class Website extends Model<Website> implements Selectable, Shareable {
 
     async toTrash(): Promise<void> {
         this.trashed = true;
+        if(this.published){
+            for(let structure in this.published){
+                try{
+                    await http.delete('/appregistry/application/external/' + this.published[structure].application.id)
+                }
+                catch(e){}
+            }
+        }
+        delete this.published;
+        await this.save();
         Folders.trash.sync();
         await this.save();
     }

@@ -27,6 +27,7 @@ export let view = ng.controller('ViewController', [
         }
 
         $scope.websites = await Folders.websites();
+        $scope.websites = $scope.websites.filter(w => !w.trashed);
         $scope.$apply();
     };
 
