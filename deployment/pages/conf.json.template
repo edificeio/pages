@@ -1,5 +1,5 @@
     {
-      "name": "fr.wseduc~pages~0.14.0",
+      "name": "fr.wseduc~pages~0.14.1",
       "config": {
         "main" : "fr.wseduc.pages.Pages",
         "port" : 8025,
