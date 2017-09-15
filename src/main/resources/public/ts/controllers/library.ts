@@ -57,6 +57,12 @@ export let library = ng.controller('LibraryController', [
         return _.find(folder.websites.sel.selected, (w: Website) => !w.myRights[right]) === undefined;
     };
 
+    $scope.saveProperties = () => {
+        $scope.lightbox('properties');
+        $scope.website.save();
+        $scope.website.updateApplication();
+    }
+
     $scope.editWebsiteProperties = () => {
         $scope.website = $scope.currentFolder.selection[0];
         $scope.lightbox('properties');
