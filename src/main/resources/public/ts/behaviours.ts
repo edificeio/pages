@@ -79,6 +79,7 @@ Behaviours.register('pages', {
 						return;
 					}
                     this.source.landingPage = this.snipletResource.landingPage;
+		    this.source._id = this.snipletResource._id;
                     this.links = _.map(this.snipletResource.pages.all, (page) => {
                         let href = '#/website/' + this.source._id + '/' + page.titleLink;
                         if (window.location.hash.startsWith('#/preview/')) {
