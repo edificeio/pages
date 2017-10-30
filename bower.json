@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "entcore": "git://github.com/entcore/infra-front#0.4.2",
+    "entcore": "git://github.com/entcore/infra-front#2.0.4",
     "sass.js": "^0.10.3"
   }
 }
