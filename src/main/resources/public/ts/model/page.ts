@@ -31,7 +31,7 @@ export class Page implements Selectable {
             this.setTitleLink();
         }
 
-        this.owner = model.me.userId;
+        if (model.me) this.owner = model.me.userId;
         this.eventer = new Eventer();
         this.rows = new Rows(this);
     }
