@@ -1,5 +1,5 @@
 ﻿import http from "axios";
-import { _ } from 'entcore/libs/underscore/underscore';
+import { _ } from 'entcore';
 import { idiom } from 'entcore';
 
 export interface Block {

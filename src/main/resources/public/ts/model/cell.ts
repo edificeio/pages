@@ -1,7 +1,7 @@
 import { Mix } from 'entcore-toolkit';
 import { Page } from './page';
 import { Rows, Row } from './row';
-import { cleanJSON, idiom } from 'entcore/entcore';
+import { cleanJSON, idiom } from 'entcore';
 import http from 'axios';
 
 export let cellSizes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];

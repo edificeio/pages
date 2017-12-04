@@ -1,5 +1,5 @@
-﻿import { ng } from 'entcore/entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
+﻿import { ng, angular } from 'entcore';
+import { $ } from 'entcore';
 import { Row, Cell, Media, Page } from '../model';
 import http from 'axios';
 

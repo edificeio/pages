@@ -1,7 +1,7 @@
-import { ng, idiom, template, sniplets, Behaviours, ui } from 'entcore/entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
-import { moment } from 'entcore/libs/moment/moment';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { ng, idiom, template, sniplets, Behaviours, ui } from 'entcore';
+import { $ } from 'entcore';
+import { moment } from 'entcore';
+import { _ } from 'entcore';
 import { Folders, Website } from '../model';
 import { Autosave } from 'entcore-toolkit';
 

@@ -1,6 +1,6 @@
-import { ng, template, idiom } from 'entcore/entcore';
+import { ng, template, idiom } from 'entcore';
 import { LocalAdmin, Folders, Folder, Website, Filters, BaseFolder, Group } from '../model';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { _ } from 'entcore';
 
 export let library = ng.controller('LibraryController', [
     '$scope', 'model', '$rootScope', '$location', function ($scope, model, $rootScope, $location) {

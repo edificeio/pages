@@ -1,0 +1,49 @@
+{
+  "name": "sass.js",
+  "version": "0.10.6",
+  "main": [
+    "./dist/sass.js",
+    "./dist/sass.worker.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.html",
+    "*.md",
+    "*.js",
+    "*.json",
+    "bin",
+    "scss",
+    "libsass",
+    "grunt-tasks",
+    "bin",
+    "src",
+    "test"
+  ],
+  "keywords": [
+    "libsass",
+    "sass",
+    "scss",
+    "css"
+  ],
+  "authors": [
+    "Rodney Rehm <mail+github@rodneyrehm.de> (http://rodneyrehm.de)",
+    "Sebastian Golasch (http://asciidisco.com)",
+    "Christian Kruse (http://http://wwwtech.de)"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/medialize/sass.js",
+  "_release": "0.10.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.10.6",
+    "commit": "0fb9cdbc039de556d7457cf85add1e06b903a1b4"
+  },
+  "_source": "https://github.com/medialize/sass.js.git",
+  "_target": "^0.10.3",
+  "_originalSource": "sass.js"
+}

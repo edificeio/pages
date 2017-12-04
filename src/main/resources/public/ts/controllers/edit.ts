@@ -1,9 +1,9 @@
-import { ng, sniplets, Behaviours } from 'entcore/entcore';
-import { template, idiom } from 'entcore/entcore';
+import { ng, sniplets, Behaviours } from 'entcore';
+import { template, idiom } from 'entcore';
 import { Website, Cell, Page, Folders, Media, Rows, Blocks, Block } from '../model';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { _ } from 'entcore';
 import { Autosave } from 'entcore-toolkit';
-import { $ } from 'entcore/libs/jquery/jquery';
+import { $ } from 'entcore';
 
 export let edit = ng.controller('EditController', [
     '$scope', 'model', 'route', '$route', '$location', function ($scope, model, route, $route, $location) {

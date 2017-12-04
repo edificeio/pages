@@ -5,7 +5,7 @@ import { Row, Rows } from './row';
 import http from 'axios';
 import { Rights, Shareable, model, idiom } from 'entcore';
 import { Mix, Provider, Selection, Selectable, Eventer } from 'entcore-toolkit';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { _ } from 'entcore';
 
 export class BaseFolder implements Selectable {
     websites: Websites;

@@ -1,8 +1,8 @@
 console.log('pages behaviours file')
 
-import { Behaviours, model, idiom as lang } from 'entcore/entcore';
+import { Behaviours, model, idiom as lang } from 'entcore';
 import http from 'axios';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { _ } from 'entcore';
 
 Behaviours.register('pages', {
 	rights: {

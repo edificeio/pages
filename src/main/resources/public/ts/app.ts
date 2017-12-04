@@ -1,4 +1,4 @@
-import { model, routes, ng } from 'entcore/entcore';
+import { model, routes, ng } from 'entcore';
 import { Websites } from './model';
 
 import { library } from './controllers/library';

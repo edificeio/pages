@@ -1,13 +1,13 @@
 import { Website } from './website';
 import { Row, Rows } from './row';
 import { Cell } from './cell';
-import { idiom as lang, model } from 'entcore/entcore';
+import { idiom as lang, model } from 'entcore';
 import { Mix, Selectable, Eventer } from 'entcore-toolkit';
-import { $ } from 'entcore/libs/jquery/jquery';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { $ } from 'entcore';
+import { _ } from 'entcore';
 
 let Sass = require('sass.js');
-Sass.setWorkerUrl('/pages/public/dist/sass-js/sass.worker.js');
+Sass.setWorkerUrl('/pages/public/sass-js/sass.worker.js');
 
 let sass = new Sass();
 

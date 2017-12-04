@@ -1,5 +1,5 @@
-import { ng, ui } from 'entcore/entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
+import { ng, ui, angular } from 'entcore';
+import { $ } from 'entcore';
 
 interface Directions{
 	horizontal?: boolean;

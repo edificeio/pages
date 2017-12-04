@@ -3,9 +3,9 @@ import { Pages, Page, Row, Cell, SnipletSource } from './index';
 import { Structure, Group, Publication, Application, Role } from './publish';
 import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'entcore-toolkit';
 import http from "axios";
-import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } from 'entcore/entcore';
-import { _ } from 'entcore/libs/underscore/underscore';
-import { moment } from 'entcore/libs/moment/moment';
+import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } from 'entcore';
+import { _ } from 'entcore';
+import { moment } from 'entcore';
 
 export class Website extends Model<Website> implements Selectable, Shareable {
     static eventer = new Eventer();

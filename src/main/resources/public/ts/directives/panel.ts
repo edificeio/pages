@@ -1,5 +1,5 @@
 ﻿import { ng } from 'entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
+import { $ } from 'entcore';
 import { Blocks } from '../model';
 
 export let panel = ng.directive('panel', () => {

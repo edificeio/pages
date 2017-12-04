@@ -2,36 +2,35 @@
 var path = require('path');
 
 module.exports = {
+    context: path.resolve(__dirname, './src/main/resources/public/'),
     entry: {
-        application: './src/main/resources/public/temp/app.js',
-        behaviours: './src/main/resources/public/temp/behaviours.js'
+        application: './ts/app.ts',
+        behaviours: './ts/behaviours.ts'
     },
     output: {
-        filename: '[name].js',
-        path: __dirname + 'dest'
+        filename: './[name].js'
     },
     externals: {
         "entcore/entcore": "entcore",
         "entcore": "entcore",
-        "entcore/libs/moment/moment": "entcore",
-        "entcore/libs/underscore/underscore": "_",
-        "entcore/libs/jquery/jquery": "entcore",
+        "moment": "entcore",
+        "underscore": "entcore",
+        "jquery": "entcore",
         "angular": "angular"
     },
     resolve: {
-        modulesDirectories: ['bower_components', 'node_modules'],
-        root: path.resolve(__dirname),
-        extensions: ['', '.js'],
+        modulesDirectories: ['node_modules'],
+        extensions: ['', '.ts', '.js'],
         alias: {
-            'sass.js': path.resolve('./bower_components/sass.js/dist/sass.js')
+            'sass.js': path.resolve('./src/main/resources/public/sass.js/dist/sass.js')
         }
     },
     devtool: "source-map",
     module: {
-        preLoaders: [
+        loaders: [
             {
-                test: /\.js$/,
-                loader: 'source-map-loader'
+                test: /\.ts$/,
+                loader: 'ts-loader'
             }
         ]
     }

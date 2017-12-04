@@ -1,5 +1,5 @@
 ﻿import { ng, http } from 'entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
+import { $ } from 'entcore';
 
 declare let Prism: any;
 declare let css_beautify: any;

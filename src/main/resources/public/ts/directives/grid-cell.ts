@@ -1,6 +1,6 @@
-import { ng, ui } from 'entcore/entcore';
-import { $ } from 'entcore/libs/jquery/jquery';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { ng, ui } from 'entcore';
+import { $ } from 'entcore';
+import { _ } from 'entcore';
 import { Row, Media, Blocks, Cell, cellSizes } from '../model';
 import { Mix } from 'entcore-toolkit';
 import http from 'axios';

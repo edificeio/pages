@@ -1,5 +1,5 @@
-﻿import { ng, sniplets } from 'entcore/entcore';
-import { template, model } from 'entcore/entcore';
+﻿import { ng, sniplets } from 'entcore';
+import { template, model } from 'entcore';
 import { Website, Cell, Page, Folders } from '../model';
 
 export let view = ng.controller('ViewController', [

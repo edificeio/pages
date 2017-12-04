@@ -1,7 +1,7 @@
 ﻿import { Eventer } from 'entcore-toolkit';
 import http from 'axios';
-import { model, notify } from 'entcore/entcore';
-import { _ } from 'entcore/libs/underscore/underscore';
+import { model, notify } from 'entcore';
+import { _ } from 'entcore';
 import { Website } from './website';
 
 export class Group {
