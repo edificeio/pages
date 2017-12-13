@@ -135,6 +135,11 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    image-select{
+        > div > i{
+            display: none;
+        }
+    }
 }
 
 body grid-cell editor {
