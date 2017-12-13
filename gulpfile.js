@@ -70,7 +70,7 @@ gulp.task('watch', () => {
 
     fs.readFile("./gradle.properties", "utf8", function(error, content){
         var modName = getModName(content);
-        gulp.watch(['./src/main/resources/public/template/**/*.html', '!./src/main/resources/public/template/entcore/*.html'], () => {
+        gulp.watch(['./src/main/resources/public/template/**/*.html', '!./src/main/resources/public/template/entcore/*.html', './src/main/resources/public/sass/**/*.scss'], () => {
             console.log('Copying resources to ' + springboard + 'mods/' + modName);
             gulp.src('./src/main/resources/**/*')
                 .pipe(gulp.dest(springboard + 'mods/' + modName));
