@@ -9,12 +9,12 @@ import fr.wseduc.pages.filters.FolderOwner;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.user.UserInfos;
 import org.entcore.common.user.UserUtils;
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.http.HttpServerRequest;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.JsonObject;
 import org.vertx.java.core.http.RouteMatcher;
-import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.platform.Container;
+
 
 import java.util.List;
 import java.util.Map;
@@ -28,9 +28,9 @@ public class FoldersController extends MongoDbControllerHelper {
 	}
 
 	@Override
-	public void init(Vertx vertx, Container container, RouteMatcher rm,
+	public void init(Vertx vertx, JsonObject config, RouteMatcher rm,
 					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
-		super.init(vertx, container, rm, securedActions);
+		super.init(vertx, config, rm, securedActions);
 	}
 
 	@Override

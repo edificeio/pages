@@ -35,13 +35,13 @@ import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.user.UserInfos;
 import org.entcore.common.user.UserUtils;
-import org.vertx.java.core.Handler;
-import org.vertx.java.core.Vertx;
-import org.vertx.java.core.eventbus.Message;
-import org.vertx.java.core.http.HttpServerRequest;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.eventbus.Message;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.JsonObject;
 import org.vertx.java.core.http.RouteMatcher;
-import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.platform.Container;
+
 
 import java.util.List;
 import java.util.Map;
@@ -54,9 +54,9 @@ public class PagesController extends MongoDbControllerHelper {
 	private enum PagesEvent { ACCESS }
 
 	@Override
-	public void init(Vertx vertx, Container container, RouteMatcher rm,
+	public void init(Vertx vertx, JsonObject config, RouteMatcher rm,
 					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
-		super.init(vertx, container, rm, securedActions);
+		super.init(vertx, config, rm, securedActions);
 		eventStore = EventStoreFactory.getFactory().getEventStore(Pages.class.getSimpleName());
 	}
 
@@ -74,10 +74,10 @@ public class PagesController extends MongoDbControllerHelper {
 
 	@Get("/p/website")
 	public void websiteView(final HttpServerRequest request) {
-		UserUtils.getUserInfos(eb, request, new org.vertx.java.core.Handler<UserInfos>() {
+		UserUtils.getUserInfos(eb, request, new io.vertx.core.Handler<UserInfos>() {
 			@Override
 			public void handle(UserInfos user) {
-				JsonObject context = new JsonObject().putBoolean("notLoggedIn", user == null);
+				JsonObject context = new JsonObject().put("notLoggedIn", user == null);
 				renderView(request, context, "website.html", null);
 			}
 		});
@@ -163,10 +163,10 @@ public class PagesController extends MongoDbControllerHelper {
 					}
 
 					JsonObject params = new JsonObject()
-							.putString("uri", "/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
-							.putString("username", user.getUsername())
-							.putString("pageUri", "/pages#/website/" + id);
-					params.putString("resourceUri", params.getString("pageUri"));
+							.put("uri", "/userbook/annuaire#" + user.getUserId() + "#" + user.getType())
+							.put("username", user.getUsername())
+							.put("pageUri", "/pages#/website/" + id);
+					params.put("resourceUri", params.getString("pageUri"));
 
 					shareJsonSubmit(request, "pages.shared", false, params, "title");
 				}
@@ -188,14 +188,14 @@ public class PagesController extends MongoDbControllerHelper {
 		final String pageId = message.body().getString("pageId");
 		switch (action) {
 			case "create" :
-				UserInfos user = UserUtils.sessionToUserInfos(message.body().getObject("user"));
-				JsonObject page = message.body().getObject("page");
+				UserInfos user = UserUtils.sessionToUserInfos(message.body().getJsonObject("user"));
+				JsonObject page = message.body().getJsonObject("page");
 				crudService.create(page, user, busResponseHandler(message));
 				break;
 			case "share" :
 				String userId = message.body().getString("userId");
 				String groupId = message.body().getString("groupId");
-				List<String> actions = message.body().getArray("actions").toList();
+				List<String> actions = message.body().getJsonArray("actions").getList();
 				shareService.groupShare(userId, groupId, pageId, actions, busResponseHandler(message));
 				break;
 			case "delete" :
@@ -205,11 +205,11 @@ public class PagesController extends MongoDbControllerHelper {
 				crudService.retrieve(pageId, busResponseHandler(message));
 				break;
 			case "update" :
-				crudService.update(pageId, message.body().getObject("page"), busResponseHandler(message));
+				crudService.update(pageId, message.body().getJsonObject("page"), busResponseHandler(message));
 				break;
 			default:
-				message.reply(new JsonObject().putString("status", "error")
-						.putString("message", "invalid.action"));
+				message.reply(new JsonObject().put("status", "error")
+						.put("message", "invalid.action"));
 		}
 	}
 

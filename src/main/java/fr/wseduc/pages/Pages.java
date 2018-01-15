@@ -34,7 +34,7 @@ import org.entcore.common.mongodb.MongoDbConf;
 public class Pages extends BaseServer {
 
 	@Override
-	public void start() {
+	public void start() throws Exception {
 		super.start();
 		
 		setDefaultResourceFilter(new ShareAndOwner());
