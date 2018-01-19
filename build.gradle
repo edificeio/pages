@@ -93,6 +93,14 @@ publishing {
       groupId "${modowner}"
       artifact("build/libs/${modowner}~${modname}~$version-fat.jar") { classifier "fat" }
     }
+    maven(MavenPublication) {
+      groupId "${modowner}"
+      artifact("build/libs/${modname}-$version-deployment.jar") { classifier "deployment" }
+    }
+    maven(MavenPublication) {
+      groupId "${modowner}"
+      artifact("build/libs/${modname}-$version-tests.jar") { classifier "tests" }
+    }
   }
 }
 
