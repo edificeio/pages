@@ -6,14 +6,24 @@ plugins {
   id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
+if (!hasProperty('odeUsername')) {
+  ext.odeUsername = ''
+}
+if (!hasProperty('odePassword')) {
+  ext.odePassword = ''
+}
+
 repositories {
   mavenLocal()
     maven {
-      url "http://maven.web-education.net/nexus/content/repositories/releases/"
+      url "https://maven.opendigitaleducation.com/nexus/content/groups/public"
     }
   mavenCentral()
     maven {
       url "https://oss.sonatype.org/content/repositories/iovertx-3720/"
+    }
+    maven {
+      url "https://oss.sonatype.org/content/repositories/snapshots"
     }
 }
 
@@ -42,10 +52,9 @@ compileTestJava {
   sourceCompatibility = project.sourceCompatibility
     targetCompatibility = project.targetCompatibility
 }
-
 dependencies {
   compileOnly "io.vertx:vertx-core:$vertxVersion"
-	compile "org.entcore:common:$entCoreVersion"
+  compile "org.entcore:common:$entCoreVersion"
   testCompile "org.entcore:tests:$entCoreVersion"
   testCompile 'io.gatling.highcharts:gatling-charts-highcharts:2.2.2'
 }
@@ -91,14 +100,17 @@ publishing {
   publications {
     maven(MavenPublication) {
       groupId "${modowner}"
+      artifactId "${modname}"
       artifact("build/libs/${modowner}~${modname}~$version-fat.jar") { classifier "fat" }
     }
     maven(MavenPublication) {
       groupId "${modowner}"
+      artifactId "${modname}"
       artifact("build/libs/${modname}-$version-deployment.jar") { classifier "deployment" }
     }
     maven(MavenPublication) {
       groupId "${modowner}"
+      artifactId "${modname}"
       artifact("build/libs/${modname}-$version-tests.jar") { classifier "tests" }
     }
   }
@@ -116,42 +128,18 @@ test {
 
 task testJar(type: Jar) {
   classifier = 'tests'
+  baseName = "${modname}"
   from sourceSets.test.output
 }
 
 task deploymentJar(type: Jar) {
   classifier = 'deployment'
+  baseName = "${modname}"
   from 'deployment'
 }
 
 artifacts {
   archives testJar
   archives deploymentJar
-}
-
-
-def configurePom(def pom) {
-	pom.project {
-		description 'Template (ent-core)'
-		inceptionYear '2014'
-		packaging 'zip'
-		url 'http://code.web-education.net/wse/template'
-
-		developers {
-			developer {
-				id 'cwin'
-				name 'Camille Wintz'
-				email 'camille.wintz@web-education.net'
-			}
-		}
-
-		scm {
-			url 'git@code.web-education.net:wse/template.git'
-		}
-
-		properties {
-			setProperty('project.build.sourceEncoding', 'UTF8')
-		}
-	}
 }
 
