@@ -70,6 +70,7 @@ export class Structure {
                 address: website.url({ relative: true }),
                 icon: icon,
                 target: "",
+                appLocked : true,
                 scope: "",
                 name: website.title + " - " + this.id
             });
