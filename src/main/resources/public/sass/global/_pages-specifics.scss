@@ -91,7 +91,7 @@
         
         editor.both, editor.html, editor.edit  > div > [contenteditable] {
             border-color: transparent !important;
-            min-height: 100% !important;
+            min-height: 35px !important;
             padding: 0;
         }
     }
