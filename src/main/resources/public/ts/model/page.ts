@@ -7,7 +7,7 @@ import { $ } from 'entcore';
 import { _ } from 'entcore';
 
 let Sass = require('sass.js');
-Sass.setWorkerUrl('/pages/public/sass-js/sass.worker.js');
+Sass.setWorkerUrl('/pages/public/sass.js/dist/sass.worker.js');
 
 let sass = new Sass();
 
