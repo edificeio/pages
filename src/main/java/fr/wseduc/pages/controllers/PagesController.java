@@ -29,6 +29,7 @@ import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
 import fr.wseduc.security.SecuredAction;
 
+import fr.wseduc.webutils.I18n;
 import org.entcore.common.events.EventStore;
 import org.entcore.common.events.EventStoreFactory;
 import org.entcore.common.http.filter.ResourceFilter;
@@ -167,6 +168,17 @@ public class PagesController extends MongoDbControllerHelper {
 							.put("username", user.getUsername())
 							.put("pageUri", "/pages#/website/" + id);
 					params.put("resourceUri", params.getString("pageUri"));
+
+					JsonObject pushNotif = new JsonObject()
+                            .put("title", "pages.push.notif.shared")
+                            .put("body", I18n.getInstance()
+                                    .translate(
+                                            "pages.push.notif.shared.body",
+                                            getHost(request),
+                                            I18n.acceptLanguage(request),
+                                            user.getUsername()
+                                    ));
+					params.put("pushNotif", pushNotif);
 
 					shareJsonSubmit(request, "pages.shared", false, params, "title");
 				}
