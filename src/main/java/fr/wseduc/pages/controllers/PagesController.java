@@ -206,6 +206,17 @@ public class PagesController extends MongoDbControllerHelper {
 							.put("pageUri", "/pages#/website/" + id);
 					params.put("resourceUri", params.getString("pageUri"));
 
+                    JsonObject pushNotif = new JsonObject()
+                            .put("title", "pages.push.notif.shared")
+                            .put("body", I18n.getInstance()
+                                    .translate(
+                                            "pages.push.notif.shared.body",
+                                            getHost(request),
+                                            I18n.acceptLanguage(request),
+                                            user.getUsername()
+                                    ));
+                    params.put("pushNotif", pushNotif);
+
 					shareResource(request, "pages.shared", false, params, "title");
 				}
 			}
