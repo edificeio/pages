@@ -2,7 +2,7 @@
     <nav class="vertical twelve cell">
         <ul>
             <li ng-repeat="link in links | orderBy:'index'">
-                <a ng-href="[[link.href]]" ng-if="link.external" target="_blank">
+                <a ng-click="redirectTo(link.href.split('#')[1])" ng-if="link.external" target="_blank">
                     [[link.text]]
                     <behaviour name="update" resource="snipletResource">
                         <i ng-if="link.external" class="close" ng-click="removeLink($index, $event)"></i>
@@ -23,7 +23,7 @@
     <nav class="vertical twelve cell" side-nav>
         <ul>
             <li ng-repeat="link in links | orderBy:'index'">
-                <a ng-href="[[link.href]]" ng-class="{ selected: currentLink(link) }" ng-click="refreshIfNeeded(link)">
+                <a ng-class="{ selected: currentLink(link) }" ng-click="redirectTo(link.href.split('#')[1])">
                     [[link.title]]
                 </a>
             </li>
