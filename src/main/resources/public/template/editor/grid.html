@@ -29,8 +29,8 @@
                     
                 </div>
                 <div ng-if="cell.media.type === 'video'" class="video-wrapper">
-                    <embedder ng-model="cell.media.source" on-change="applyHtml()" show="display.lightbox.selectVideo"></embedder>
-                    <button ng-if="!cell.media.source" ng-click="lightbox('selectVideo')">
+                    <embedder ng-model="cell.media.source" on-change="applyHtml()" show="cell.media.showEmbedder"></embedder>
+                    <button ng-if="!cell.media.source" ng-click="cell.media.showEmbedder=true;">
                         <i18n>video.pick</i18n>
                     </button>
                     <div bind-html="cell.media.source" style="pointer-events: none;"></div>

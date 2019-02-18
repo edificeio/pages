@@ -174,7 +174,7 @@ export let gridRow = ng.directive('gridRow', function($compile){
 				}
 
 				if(!cell.media){
-					cell.media = { type: 'empty' };
+					cell.media = { type: 'empty', showEmbedder: false };
 				}
 				row.addCellAt(cell, elementIndex);
 				row.cells.forEach(c => c.width = newCellWidth);

@@ -253,7 +253,7 @@ export let gridCell = ng.directive('gridCell', function($compile){
 
             element.on('click', '.start-write', () => {
                 let cell: Cell = scope.cell;
-                cell.source({ type: 'text' });
+                cell.source({ type: 'text', showEmbedder: false });
                 setTimeout(() => {
                     element.find('[contenteditable]').click();
                     element.find('[contenteditable]').focus();

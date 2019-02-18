@@ -89,7 +89,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                 }
 
                 if(!cell.media){
-                    cell.media = { type: 'empty' };
+                    cell.media = { type: 'empty', showEmbedder: false };
                 }
                 
                 console.log('Adding row at index : ' + index);

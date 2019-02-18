@@ -24,6 +24,7 @@ export interface SnipletSource{
 export interface Media {
     source?: string | SnipletSource | Page;
     type?: string;
+    showEmbedder: boolean;
 }
 
 export class Cell {
@@ -40,7 +41,7 @@ export class Cell {
     flash: boolean;
 
     constructor() {
-        this.media = {};
+        this.media = {showEmbedder: false};
         this.style = {};
     }
 
@@ -52,14 +53,15 @@ export class Cell {
         if(item.type === 'sniplet'){
             this.title = idiom.translate(item.source.title);
         }
-        this.media = { type: 'empty' };
+        this.media = { type: 'empty', showEmbedder: false };
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 if (item.path) {
                     http.get(item.path).then(response => {
                         let media: Media = {
                             type: 'text',
-                            source: response.data
+                            source: response.data,
+                            showEmbedder: false
                         };
                         item = media;
                         this.source(JSON.parse(JSON.stringify(item)));
@@ -81,12 +83,19 @@ export class Cell {
     }
 
     toJSON() {
+        const media: {source?, type?} = {};
+        if(this.media.source) {
+            media.source = this.media.source;
+        }
+        if(this.media.type) {
+            media.type = this.media.type;
+        }
         return {
             width: this.width,
             height: this.height,
             index: this.index,
             className: this.className,
-            media: cleanJSON(this.media),
+            media: cleanJSON(media),
             style: cleanJSON(this.style),
             title: this.title
         }
@@ -96,6 +105,7 @@ export class Cell {
         if (data.media.type === 'grid') {
             let source = Mix.castAs(Page, data.media.source);
             this.media.source = source;
+            this.media.showEmbedder = false;
         }
     }
 
