@@ -89,7 +89,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     });
 
     $scope.redirectTo = (path) => {
-        if (window.location.href.indexOf('/p/') === -1) {
+        if (window.location.href.indexOf('/p/') === -1 || window.notLoggedIn) {
             $location.path(path);
         }
         else {
