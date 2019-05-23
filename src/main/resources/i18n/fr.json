@@ -112,6 +112,8 @@
   "folder.new": "Nouveau dossier",
   "folder.new.create": "Créer un nouveau dossier",
   "pages.list.title": "Projets",
+  "pages.share.varyingrights": "Attention, vous allez modifier des droits de partage sur plusieurs projets : tous les projets sélectionnés seront affectés et disposeront uniquement du nouveau partage.",
+
 
 
   "blocks.search-block-style": "Rechercher un style de modèle",
