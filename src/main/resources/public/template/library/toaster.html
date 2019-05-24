@@ -16,7 +16,7 @@
         <div ng-if="currentFolder.selectionIsWebsites">
             <!-- Exclusive to websites-->
             <resource-right name="share" resource="currentFolder.selection">
-                <button class="zero-mobile" ng-click="display.showSharePanel = true">
+                <button ng-click="display.showSharePanel = true">
                     <i18n>share</i18n>
                 </button>
             </resource-right>
@@ -29,7 +29,7 @@
                 <i18n>pages.publish</i18n>
             </button>
             <resource-right name="manager" resource="currentFolder.selection">
-                <button class="zero-mobile" ng-click="editWebsiteProperties()" ng-if="currentFolder.selection.length === 1">
+                <button ng-click="editWebsiteProperties()" ng-if="currentFolder.selection.length === 1">
                     <i18n>properties</i18n>
                 </button>
             </resource-right>
