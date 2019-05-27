@@ -42,7 +42,7 @@
                            dragdrop="dropTo('root', $originalEvent)"
                         >
                             <i class="arrow" ng-if="root.children.length"></i>
-                            <i18n>projects.root</i18n></a>
+                            <i18n>pages.projects.root</i18n></a>
                             <ul>
                                 <div ng-if="root.contains(currentFolder)">
                                     <li ng-repeat="folder in root.children.all">
@@ -71,13 +71,13 @@
 		<section class="margin-four">
 			<div class="twelve cell chips">
                 <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.protected }" class="chip">
-                    <i class="mine" tooltip="filters.mine"></i>
+                    <i class="mine" tooltip="pages.filters.mine"></i>
                     <i18n>filters.privateSites</i18n>
                     <input type="checkbox" ng-model="filters.protected" />
                 </label>
                 <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.public }" class="chip">
-                    <i class="public" tooltip="filters.publicSites"></i>
-                    <i18n>filters.publicSites</i18n>
+                    <i class="public" tooltip="pages.filters.publicSites"></i>
+                    <i18n>pages.filters.publicSites</i18n>
                     <input type="checkbox" ng-model="filters.public" />
                 </label>
 

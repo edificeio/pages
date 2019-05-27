@@ -31,10 +31,10 @@
                         <div class="content">
                             <strong class="block overflow-hd">[[website.shortenedTitle]]</strong>
                             <span class="cell-ellipsis block">[[website.owner.displayName]]</span>
-                            <em class="smaller-text block"><i18n>modified.on</i18n> [[website.lastModified]]</em>
+                            <em class="smaller-text block"><i18n>pages.modified.on</i18n></em>
                             <br />
                             <div class="icons">
-                                <i ng-if="website.shared.length > 0" class="shared inline" tooltip="tooltip.shared"></i>
+                                <i ng-if="website.shared.length > 0" class="shared inline" tooltip="pages.tooltip.shared"></i>
                                 <i ng-if="website.visibility === 'PUBLIC'" class="public" tooltip="tooltip.public"></i>
                                 <i class="manage" ng-if="website.myRights.manager" tooltip="tooltip.manager"></i>
                                 <i class="edit" ng-if="!website.myRights.manager && website.myRights.update" tooltip="tooltip.update"></i>

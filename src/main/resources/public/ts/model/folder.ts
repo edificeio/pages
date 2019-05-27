@@ -32,7 +32,7 @@ class HierarchicalFolder extends BaseFolder{
 
     get displayName(): string{
         if(this.name === "root"){
-            return idiom.translate("projects.root");
+            return idiom.translate("pages.projects.root");
         }
         return this.name;
     }
@@ -40,7 +40,7 @@ class HierarchicalFolder extends BaseFolder{
     get shortenedName(): string{
         let shortenedName = this.name;
         if(shortenedName === "root"){
-            shortenedName = idiom.translate("projects.root");
+            shortenedName = idiom.translate("pages.projects.root");
         }
         if(shortenedName.length > 38){
             shortenedName = shortenedName.substr(0, 35) + '...';
