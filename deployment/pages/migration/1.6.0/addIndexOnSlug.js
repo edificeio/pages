@@ -1,0 +1,1 @@
+db.pages.createIndex( {"slug": 1}, {unique:true} );

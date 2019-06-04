@@ -6,12 +6,41 @@
     <div class="row">
         <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven" />
     </div>
-    <div class="row vertical-spacing">
-        <strong><i18n>project.path</i18n></strong>
-        <br /><a ng-href="[[previewPath(website)]]">[[display.host]][[previewPath(website)]]</a>
+    <div ng-if="website.visibility == 'PUBLIC'">
+        <div class="horizontal-spacing-twice top-spacing flex-row align-baseline" ng-show="website.enablePublic">
+            <a class="url-ellipsis" href="javascript:void(0)">[[website.slugDomain]]</a>
+            <div class="cell" style="flex:1;max-width: 500px">
+                <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
+                    i18n-placeholder="website.url.title" />
+                <span class="warning-color italic-text" ng-if="display.warningDuplicate">
+                    <i18n>website.slug.duplicate.errmsg</i18n>
+                </span>
+            </div>
+        </div>
+        <div class="twelve">
+            <a class="cell right-magnet top-spacing-four" ng-click="copyToClipboard()">
+                <i18n>website.url.copy</i18n>
+            </a>
+        </div>
     </div>
 </div>
 <div class="row">
     <button class="right-magnet" ng-click="saveProperties()"><i18n>save</i18n></button>
     <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
 </div>
+<!--LIGHTBOX-->
+<lightbox show="display.warningEditPage" on-close="display.warningEditPage=false">
+	<div class="horizontal-spacing-twice">
+		<h2>
+			<i18n>website.slug.duplicate.title</i18n>
+		</h2>
+		<p>
+			<i18n>website.slug.duplicate.body</i18n>
+		</p>
+		<div class="row">
+			<button ng-click="display.warningEditPage=false" class="right-magnet">
+				<i18n>website.understood</i18n>
+			</button>
+		</div>
+	</div>
+</lightbox>

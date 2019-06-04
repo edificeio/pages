@@ -10,7 +10,7 @@ export let edit = ng.controller('EditController', [
         let params = $route.current.params;
         const findPage = async (): Promise<void> => {
             let websites = await Folders.websites();
-            let website: Website = websites.find((w) => w._id === params.siteId);
+            let website: Website = websites.find((w) => w._id === params.siteId ||  w.slug === params.siteId);
             $scope.website = website;
 
             if (params.pageId) {

@@ -230,7 +230,11 @@ export class Root extends HierarchicalFolder {
         BaseFolder.eventer.trigger('refresh');
     }
 }
-
+function timeout(ms:number){
+    return new Promise((resolve)=>{
+        setTimeout(resolve,ms)
+    })
+}
 export class Trash extends HierarchicalFolder {
     name: string;
     filtered: (Website | Folder)[];
@@ -243,6 +247,7 @@ export class Trash extends HierarchicalFolder {
     }
 
     async sync(): Promise<void> {
+        await timeout(10)
         let websites = await Folders.websites();
         this.websites.all = websites.filter(
             w => w.trashed && w.myRights.manager
@@ -274,7 +279,6 @@ export class Trash extends HierarchicalFolder {
         await this.sync();
     }
 }
-
 export class Folders{
     private static publicWebsiteProvider: Provider<Website> = new Provider<Website>('/pages/pub/list/all', Website);
     private static websiteProvider: Provider<Website> = new Provider<Website>('/pages/list/all', Website);

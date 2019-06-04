@@ -24,7 +24,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
 
     const openSite = async (params) => {
         const websites = await Folders.websites();
-        const website: Website = websites.find(w => w._id === params.siteId);
+        const website: Website = websites.find(w => w._id === params.siteId || w.slug === params.siteId);
         if(!website || website.trashed){
             template.open('main', 'e404');
             $scope.$apply();
@@ -89,7 +89,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
     });
 
     $scope.redirectTo = (path) => {
-        if (window.location.href.indexOf('/p/') === -1 || window.notLoggedIn) {
+        if (window.location.href.indexOf('/p/') === -1 || (window as any).notLoggedIn) {
             $location.path(path);
         }
         else {

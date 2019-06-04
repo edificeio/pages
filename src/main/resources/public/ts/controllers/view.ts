@@ -8,7 +8,7 @@ export let view = ng.controller('ViewController', [
     let params = $route.current.params;
     const findPage = async (): Promise<void> => {
         const websites = await Folders.websites();
-        const website: Website = websites.find((w) => w._id === params.siteId);
+        const website: Website = websites.find((w) => w._id === params.siteId||  w.slug === params.siteId);
         const editMode = website.myRights.update;
         $scope.website = website;
 

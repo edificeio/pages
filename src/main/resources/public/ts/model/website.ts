@@ -7,6 +7,22 @@ import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } fro
 import { _ } from 'entcore';
 import { moment } from 'entcore';
 
+const slugify = function(string:string) {
+	if(!string) return "";
+	const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;'
+	const b = 'aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------'
+	const p = new RegExp(a.split('').join('|'), 'g')
+  
+	return string.toString().toLowerCase()
+	  .replace(/\s+/g, '-') // Replace spaces with -
+	  .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+	  .replace(/&/g, '-and-') // Replace & with ‘and’
+	  .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+	  .replace(/\-\-+/g, '-') // Replace multiple - with single -
+	  .replace(/^-+/, '') // Trim - from start of text
+	  .replace(/-+$/, '') // Trim - from end of text
+}
+
 export class Website extends Model<Website> implements Selectable, Shareable {
     static eventer = new Eventer();
     selected: boolean;
@@ -26,6 +42,8 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     shared: any;
     _backup: string;
     trashed: boolean;
+    slug: string;
+    showStyle:any
 
     constructor() {
         super({
@@ -37,6 +55,44 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         this.eventer = new Eventer();
         this.eventer.on('save', () => Website.eventer.trigger('save'));
         this.rights = new Rights(this);
+    }
+
+    get dynTitle(){ return this.title; }
+    
+    set dynTitle(a:string){ 
+        this.title = a
+		this.tryUpdateSlug(true);
+    }
+    
+    get enablePublic(){ return this.visibility=="PUBLIC"; }
+
+    set enablePublic(a:boolean){ 
+        this.visibility = a?"PUBLIC":"PRIVATE";
+		this.tryUpdateSlug();
+    }
+
+    get safeSlug(){
+        return this.slug;
+    }
+
+    set safeSlug(a:string){
+        this.slug = slugify(a)
+    }
+    
+    get slugDomain(){
+        return `${window.location.origin}/pages/p/website#/website/`
+    }
+    
+    get fullUrl(){
+        return `${this.slugDomain}${this.slug}`
+    }
+    
+    private tryUpdateSlug(force:boolean=false) {
+        if(this.enablePublic && (!this.slug || force)){
+            this.safeSlug = this.title;
+        }else if(!this.enablePublic){
+            this.slug = null;
+        }
     }
 
     get myRights() {
@@ -246,7 +302,8 @@ export class Website extends Model<Website> implements Selectable, Shareable {
             referencedResources: referencedResources,
             visibility: this.visibility,
             icon: this.icon,
-            trashed: this.trashed
+            trashed: this.trashed,
+            slug: this.slug
         };
     }
 

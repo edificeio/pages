@@ -1,9 +1,78 @@
-import { ng, template, idiom } from 'entcore';
-import { LocalAdmin, Folders, Folder, Website, Filters, BaseFolder, Group } from '../model';
+import { ng, template, idiom, notify } from 'entcore';
+import { LocalAdmin, Folders, Root, Folder, Website, Filters, BaseFolder, Group } from '../model';
 import { _ } from 'entcore';
 
+//===Types
+export interface LibraryControllerScope {
+    display: {
+        searchWebsites: string
+        searchGroups: string
+        lightbox: {
+            managePages: boolean,
+            properties: boolean
+        }
+        //
+        warningDuplicate: boolean
+        warningEditPage: boolean
+        currentTemplate: string
+        targetFolder: Folder
+        wizardStep:number;
+    }
+    localAdmin: typeof LocalAdmin
+    currentFolder: Folder | Root
+    root: Root
+    folder: Folder
+    website: Website
+    filters: typeof Filters
+    can(right: string): boolean
+    searchWebsites(item: Website): void
+    searchGroups(item: Group): void
+    saveProperties(): void
+    lightbox(name: string): void
+    editWebsiteProperties(): void
+    openFolder(folder: Folder): void
+    openPublish(): void
+    createFolder(): void
+    removeSelection(): void
+    openTrash(): void
+    openRoot(): void
+    createWebsiteView(): void
+    createWebsite(): void
+    copyToClipboard(): void
+    viewSite(website: Website): void
+    open(item: Website | Folder): void
+    dropTo(targetItem: string | Folder, $originalEvent): void
+    selectionContains(folder: Folder): void
+    managePagesView(website: Website): void
+    duplicateWebsites(): void
+    closeManagePages(): void
+    restore(): void
+    addPage(): void
+    move(): void
+    previewPath(website: Website): void
+    $apply: any
+}
+
+//=== Utils
+const copyStringToClipboard = (str: string) => {
+    // Create new element
+    var el = document.createElement('textarea');
+    // Set value (string to be copied)
+    el.value = str;
+    // Set non-editable to avoid focus and move outside of view
+    el.setAttribute('readonly', '');
+    (el as any).style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(el);
+}
+
 export let library = ng.controller('LibraryController', [
-    '$scope', 'model', '$rootScope', '$location', function ($scope, model, $rootScope, $location) {
+    '$scope', 'model', '$rootScope', '$location', function ($scope: LibraryControllerScope, model, $rootScope, $location) {
 
     $scope.display.lightbox['managePages'] = false;
     $scope.display.lightbox['properties'] = false;
@@ -17,6 +86,7 @@ export let library = ng.controller('LibraryController', [
     $scope.website.visibility = 'PRIVATE';
     $scope.filters = Filters;
     $scope.filters.protected = true;
+    $scope.display.wizardStep = 0;
 
     template.open('library/create-website', 'library/create-website');
     template.open('library/toaster', 'library/toaster');
@@ -28,9 +98,9 @@ export let library = ng.controller('LibraryController', [
     Website.eventer.on('save', () => $scope.$apply());
 
     $rootScope.$on('share-updated', async (event, changes) => {
-        for(let website of $scope.currentFolder.selection){
+        for (let website of $scope.currentFolder.selection) {
             await (website as Website).sync();
-            website.synchronizeRights();
+            (website as Website).synchronizeRights();
         }
 
         $scope.$apply();
@@ -53,18 +123,32 @@ export let library = ng.controller('LibraryController', [
     };
 
     $scope.can = (right: string) => {
-        let folder: Folder = $scope.currentFolder;
+        let folder: Folder = $scope.currentFolder as Folder;
         return _.find(folder.websites.sel.selected, (w: Website) => !w.myRights[right]) === undefined;
     };
 
-    $scope.saveProperties = () => {
-        $scope.lightbox('properties');
-        $scope.website.save();
-        $scope.website.updateApplication();
+    $scope.saveProperties = async () => {
+        try{
+            $scope.display.warningDuplicate = false;
+            $scope.display.warningEditPage = false;
+            await $scope.website.save();
+            $scope.lightbox('properties');
+            $scope.website.updateApplication();
+        }catch(e){
+            if (e.response && e.response.status == 409) {
+                $scope.display.warningDuplicate = true;
+                $scope.display.warningEditPage = true;
+                //avoid skip saving next time
+                $scope.website._backup = null;
+                $scope.$apply();
+            } else {
+                console.error(e);
+            }
+        }
     }
 
     $scope.editWebsiteProperties = () => {
-        $scope.website = $scope.currentFolder.selection[0];
+        $scope.website = $scope.currentFolder.selection[0] as Website;
         $scope.lightbox('properties');
     };
 
@@ -76,7 +160,7 @@ export let library = ng.controller('LibraryController', [
 
     $scope.openPublish = async () => {
         $scope.lightbox('showPublish');
-        $scope.website = $scope.currentFolder.selection[0];
+        $scope.website = $scope.currentFolder.selection[0] as Website;
         if (!LocalAdmin.synced) {
             await LocalAdmin.structures.sync();
             $scope.$apply();
@@ -117,15 +201,38 @@ export let library = ng.controller('LibraryController', [
     };
 
     $scope.createWebsite = async () => {
-        $scope.display.currentTemplate = undefined;
-        $scope.website.newPage.title = idiom.translate('landingpage');
-        await $scope.website.useNewPage();
-        $scope.website.moveTo($scope.currentFolder);
-        $scope.lightbox('newSite');
-        $location.path('/website/' + $scope.website._id);
-        $scope.$apply()
+        try {
+            $scope.display.warningDuplicate = false;
+            $scope.display.warningEditPage = false;
+            $scope.display.currentTemplate = undefined;
+            $scope.website.newPage.title = idiom.translate('landingpage');
+            await $scope.website.useNewPage();
+            $scope.website.moveTo($scope.currentFolder as Folder);
+            $scope.lightbox('newSite');
+            $location.path('/website/' + $scope.website._id);
+            $scope.$apply()
+        } catch (e) {
+            if (e.response && e.response.status == 409) {
+                $scope.display.warningDuplicate = true;
+                $scope.display.warningEditPage = true;
+                //avoid skip saving next time
+                $scope.website._backup = null;
+                $scope.display.wizardStep = 0;
+                setTimeout(()=>{
+                    $scope.display.wizardStep = 1;
+                    $scope.$apply();
+                })
+                $scope.$apply();
+            } else {
+                console.error(e);
+            }
+        }
     };
-
+    $scope.copyToClipboard = () => {
+        const url = `${$scope.website.slugDomain}${$scope.website.slug}`
+        copyStringToClipboard(url)
+        notify.info("website.copy.clipboard")
+    }
     $scope.viewSite = (website: Website) => {
         $location.path('/website/' + website._id);
     };
@@ -150,14 +257,14 @@ export let library = ng.controller('LibraryController', [
         }
         let websites = await Folders.websites();
         let actualItem: Website | Folder = websites.find(w => w._id === originalItem);
-        if(!actualItem) {
+        if (!actualItem) {
             let folders = await Folders.folders();
             actualItem = folders.find(f => f._id === originalItem);
         }
         await actualItem.moveTo(targetItem);
         await $scope.currentFolder.sync();
         $scope.$apply();
-        if(targetItem instanceof Folder){
+        if (targetItem instanceof Folder) {
             targetItem.save();
         }
     };

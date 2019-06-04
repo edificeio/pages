@@ -22,18 +22,24 @@
 
 package fr.wseduc.pages.controllers;
 
+import com.mongodb.QueryBuilder;
 import fr.wseduc.bus.BusAddress;
+import fr.wseduc.mongodb.MongoQueryBuilder;
 import fr.wseduc.pages.Pages;
 import fr.wseduc.pages.filters.PageReadFilter;
 import fr.wseduc.rs.*;
 import fr.wseduc.security.ActionType;
 import fr.wseduc.security.SecuredAction;
 
+import fr.wseduc.webutils.Either;
 import fr.wseduc.webutils.I18n;
+import fr.wseduc.webutils.Utils;
+import fr.wseduc.webutils.request.RequestUtils;
 import org.entcore.common.events.EventStore;
 import org.entcore.common.events.EventStoreFactory;
 import org.entcore.common.http.filter.ResourceFilter;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
+import org.entcore.common.service.VisibilityFilter;
 import org.entcore.common.user.UserInfos;
 import org.entcore.common.user.UserUtils;
 import io.vertx.core.Handler;
@@ -46,6 +52,7 @@ import org.vertx.java.core.http.RouteMatcher;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.entcore.common.bus.BusResponseHandler.busResponseHandler;
 
@@ -53,7 +60,7 @@ public class PagesController extends MongoDbControllerHelper {
 
 	private EventStore eventStore;
 	private enum PagesEvent { ACCESS }
-
+	public static final String PAGES_COLLECTION = "pages";
 	@Override
 	public void init(Vertx vertx, JsonObject config, RouteMatcher rm,
 					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
@@ -96,14 +103,26 @@ public class PagesController extends MongoDbControllerHelper {
 	@ApiDoc("Add page.")
 	@SecuredAction("pages.add")
 	public void add(HttpServerRequest request) {
-		create(request);
+		hasConflict(Optional.empty(),request, res->{
+			if(res){
+				conflict(request);
+			}else{
+				create(request);
+			}
+		});
 	}
 
 	@Post("/p")
 	@ApiDoc("Add page.")
 	@SecuredAction("pages.add.public")
 	public void addPublic(HttpServerRequest request) {
-		create(request);
+		hasConflict(Optional.empty(),request, res->{
+			if(res){
+				conflict(request);
+			}else{
+				create(request);
+			}
+		});
 	}
 
 	@Get("/:id")
@@ -119,7 +138,14 @@ public class PagesController extends MongoDbControllerHelper {
 	@ApiDoc("Update page by id.")
 	@SecuredAction(value = "page.contrib", type = ActionType.RESOURCE)
 	public void update(HttpServerRequest request) {
-		super.update(request);
+		String id = request.params().get("id");
+		hasConflict(Optional.ofNullable(id),request, res->{
+			if(res){
+				conflict(request);
+			}else{
+				super.update(request);
+			}
+		});
 	}
 
 	@Override
@@ -133,7 +159,8 @@ public class PagesController extends MongoDbControllerHelper {
 	@Get("/pub/:id")
 	@ApiDoc("Get public page by id.")
 	public void getPublic(HttpServerRequest request) {
-		retrieve(request);
+		String slug = request.params().get("id");
+		getPublicBySlugOrId(slug, request);
 	}
 
 	@Get("/pub/list/:filter")
@@ -251,4 +278,37 @@ public class PagesController extends MongoDbControllerHelper {
 		}
 	}
 
+	private void hasConflict(Optional<String> pageId, HttpServerRequest request, Handler<Boolean> handler){
+		RequestUtils.bodyToJson(request, data -> {
+			String slug = data.getString("slug");
+			String visibility = data.getString("visibility");
+			//validate slug only for public pages
+			if (VisibilityFilter.PUBLIC.name().equals(visibility)) {
+				QueryBuilder queryM = QueryBuilder.start("slug").is(slug);
+				if (pageId.isPresent()) {
+					queryM = queryM.and("_id").notEquals(pageId.get());
+				}
+				JsonObject query = MongoQueryBuilder.build(queryM);
+				mongo.count(PAGES_COLLECTION, query, event -> {
+					JsonObject res = (JsonObject) event.body();
+					handler.handle(res != null && "ok".equals(res.getString("status")) && 0 != res.getInteger("count"));
+				});
+			} else {
+				handler.handle(false);
+			}
+		});
+	}
+
+	private void getPublicBySlugOrId(String slug, HttpServerRequest request) {
+		// get by public first then by id (legacy links)
+		QueryBuilder querySlug = QueryBuilder.start("slug").is(slug);
+		mongo.findOne(PAGES_COLLECTION, MongoQueryBuilder.build(querySlug),event -> {
+			Either<String,JsonObject> eitherPage = Utils.validResult(event);
+			if(eitherPage.isRight()){
+				renderJson(request, eitherPage.right().getValue());
+			}else{
+				retrieve(request);
+			}
+		});
+	}
 }

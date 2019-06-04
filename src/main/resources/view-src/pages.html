@@ -11,6 +11,17 @@
         {{/notLoggedIn}}
 		<script type="text/ng-template" id="empty">
 		</script>
+		<style>
+		.create-website nav.steps{
+			display:none !important;
+		}
+		.url-ellipsis{
+			max-width: 50%;
+			text-overflow: ellipsis;
+			display: block;
+			overflow: hidden;
+		}
+		</style>
 	</head>
 	<body ng-controller="MainController">
 		<portal>

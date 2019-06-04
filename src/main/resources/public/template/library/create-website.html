@@ -1,29 +1,64 @@
-<wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()">
-	<step internal-next>
-        <h1><i18n>wizard.type.title</i18n></h1>
+<div class="create-website">
+    <wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()" goto-step="display.wizardStep">
+        <step internal-next>
+            <h1><i18n>wizard.type.title</i18n></h1>
 
-		<div class="seven centered">
+            <div class="seven centered">
 
-            <button class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PRIVATE';" internal-next style="float: none">
-                <i class="mine type cell horizontal-spacing"></i>
-                <i18n>wizard.type.private</i18n>
-            </button>
+                <button class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PRIVATE';" internal-next style="float: none">
+                    <i class="mine type cell horizontal-spacing"></i>
+                    <i18n>wizard.type.private</i18n>
+                </button>
 
-            <button workflow="pages.createPublic" class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PUBLIC';" internal-next style="float: none">
-                <i class="public type cell horizontal-spacing"></i>
-                <i18n>wizard.type.public</i18n>
-            </button>
+                <button workflow="pages.createPublic" class="cancel twelve flex-row centered justify-center" ng-click="website.visibility = 'PUBLIC';" internal-next style="float: none">
+                    <i class="public type cell horizontal-spacing"></i>
+                    <i18n>wizard.type.public</i18n>
+                </button>
 
-        </div>
+            </div>
 
-	</step>
-	<step next-condition="website.title !== undefined">
-        <h1><i18n>wizard.properties.title</i18n></h1>
-        <div class="four cell clip height-four three-mobile">
-            <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
-        </div>
-        <div class="eight cell">
-            <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven right-magnet" />
-        </div>
-	</step>
-</wizard>
+        </step>
+        <step next-condition="website.title !== undefined">
+            <h1><i18n>wizard.properties.title</i18n></h1>
+            <div class="four cell clip height-four three-mobile">
+                <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
+            </div>
+            <div class="eight cell">
+                <input type="text" ng-model="website.dynTitle" required i18n-placeholder="title" class="eleven right-magnet" />
+                <div ng-if="website.visibility == 'PUBLIC'">
+                    <div class="horizontal-spacing-twice top-spacing flex-row align-baseline" ng-show="website.enablePublic">
+                        <a class="url-ellipsis" href="javascript:void(0)">[[website.slugDomain]]</a>
+                        <div class="cell" style="flex:1;max-width: 500px">
+                            <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
+                                i18n-placeholder="website.url.title" />
+                            <span class="warning-color italic-text" ng-if="display.warningDuplicate">
+                                <i18n>website.slug.duplicate.errmsg</i18n>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="twelve">
+                        <a class="cell right-magnet top-spacing-four" ng-click="copyToClipboard()">
+                            <i18n>website.url.copy</i18n>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </step>
+    </wizard>
+</div>
+<!--LIGHTBOX-->
+<lightbox show="display.warningEditPage" on-close="display.warningEditPage=false">
+	<div class="horizontal-spacing-twice">
+		<h2>
+			<i18n>website.slug.duplicate.title</i18n>
+		</h2>
+		<p>
+			<i18n>website.slug.duplicate.body</i18n>
+		</p>
+		<div class="row">
+			<button ng-click="display.warningEditPage=false" class="right-magnet">
+				<i18n>website.understood</i18n>
+			</button>
+		</div>
+	</div>
+</lightbox>
