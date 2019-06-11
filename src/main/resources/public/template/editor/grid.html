@@ -4,7 +4,7 @@
             +
         </div>
         <div class="show-highlight">
-            <i18n>addrow</i18>
+            <i18n>addrow</i18n>
         </div>
     </div>
 	<div class="row" ng-repeat-end>
@@ -26,7 +26,7 @@
                     <div ng-if="!cell.media.source || cell.focus">
                         <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
                     </div>
-                    
+
                 </div>
                 <div ng-if="cell.media.type === 'video'" class="video-wrapper">
                     <embedder ng-model="cell.media.source" on-change="applyHtml()" show="cell.media.showEmbedder"></embedder>
