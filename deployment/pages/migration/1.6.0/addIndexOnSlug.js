@@ -1,1 +1,1 @@
-db.pages.createIndex( {"slug": 1}, {unique:true} );
+db.pages.createIndex( {"slug": 1}, {unique:true, sparse: true }  );

@@ -34,10 +34,13 @@ import fr.wseduc.security.SecuredAction;
 import fr.wseduc.webutils.Either;
 import fr.wseduc.webutils.I18n;
 import fr.wseduc.webutils.Utils;
+import fr.wseduc.webutils.http.Renders;
 import fr.wseduc.webutils.request.RequestUtils;
+import org.entcore.common.controller.ControllerHelper;
 import org.entcore.common.events.EventStore;
 import org.entcore.common.events.EventStoreFactory;
 import org.entcore.common.http.filter.ResourceFilter;
+import org.entcore.common.http.response.DefaultResponseHandler;
 import org.entcore.common.mongodb.MongoDbControllerHelper;
 import org.entcore.common.service.VisibilityFilter;
 import org.entcore.common.user.UserInfos;
@@ -99,6 +102,43 @@ public class PagesController extends MongoDbControllerHelper {
 		super.list(request);
 	}
 
+	private JsonObject beforeSave(JsonObject body){
+		String visibility = body.getString("visibility", "");
+		if(!"PUBLIC".equals(visibility)){
+			body.remove("slug"); // sparse unique index
+		}
+		return body;
+	}
+
+	protected void doCreate(HttpServerRequest request){
+		UserUtils.getUserInfos(this.eb, request, user -> {
+			if (user != null) {
+				RequestUtils.bodyToJson(request, object -> {
+					object = beforeSave(object);
+					crudService.create(object, user, DefaultResponseHandler.notEmptyResponseHandler(request));
+				});
+			} else {
+				ControllerHelper.log.debug("User not found in session.");
+				Renders.unauthorized(request);
+			}
+		});
+	}
+
+	protected void doUpdate(final HttpServerRequest request) {
+		UserUtils.getUserInfos(this.eb, request, user -> {
+			if (user != null) {
+				RequestUtils.bodyToJson(request, object -> {
+					String id = request.params().get("id");
+					object = beforeSave(object);
+					crudService.update(id, object, user, DefaultResponseHandler.notEmptyResponseHandler(request));
+				});
+			} else {
+				ControllerHelper.log.debug("User not found in session.");
+				Renders.unauthorized(request);
+			}
+		});
+	}
+
 	@Post("")
 	@ApiDoc("Add page.")
 	@SecuredAction("pages.add")
@@ -107,7 +147,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if(res){
 				conflict(request);
 			}else{
-				create(request);
+				doCreate(request);
 			}
 		});
 	}
@@ -120,7 +160,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if(res){
 				conflict(request);
 			}else{
-				create(request);
+				doCreate(request);
 			}
 		});
 	}
@@ -143,7 +183,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if(res){
 				conflict(request);
 			}else{
-				super.update(request);
+				doUpdate(request);
 			}
 		});
 	}
