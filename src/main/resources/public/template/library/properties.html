@@ -2,13 +2,13 @@
 <div class="four cell clip height-four three-mobile">
     <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
 </div>
-<div class="eight cell horizontal-spacing-twice">
-    <div class="row">
-        <input type="text" ng-model="website.title" required i18n-placeholder="title" class="eleven" />
+<div class="eight cell horizontal-spacing-twice flex-row f-column">
+    <div class="flex-row">
+        <input type="text" ng-model="website.title" required i18n-placeholder="title" class="flex-all-remains" />
     </div>
     <div ng-if="website.visibility == 'PUBLIC'">
-        <div class="horizontal-spacing-twice top-spacing flex-row align-baseline" ng-show="website.enablePublic">
-            <a class="url-ellipsis" href="javascript:void(0)">[[website.slugDomain]]</a>
+        <div class="top-spacing flex-row align-baseline" ng-show="website.enablePublic">
+            <a class="url-ellipsis" href="javascript:void(0)" ng-attr-title="[[website.slugDomain]]">[[website.slugDomain]]</a>
             <div class="cell" style="flex:1;max-width: 500px">
                 <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
                     i18n-placeholder="website.url.title" />
@@ -25,7 +25,10 @@
     </div>
 </div>
 <div class="row">
-    <button class="right-magnet" ng-click="saveProperties()"><i18n>save</i18n></button>
+    <i class="loading left-spacing right-magnet top-spacing-twice"  ng-if="display.saving"></i>
+    <button class="right-magnet text-flow" ng-click="saveProperties()" ng-disabled="display.saving">
+        <i18n>save</i18n>
+    </button>
     <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
 </div>
 <!--LIGHTBOX-->

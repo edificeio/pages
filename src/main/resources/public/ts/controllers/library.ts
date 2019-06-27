@@ -17,6 +17,7 @@ export interface LibraryControllerScope {
         currentTemplate: string
         targetFolder: Folder
         wizardStep:number;
+        saving: boolean
     }
     localAdmin: typeof LocalAdmin
     currentFolder: Folder | Root
@@ -69,6 +70,17 @@ const copyStringToClipboard = (str: string) => {
     document.execCommand('copy');
     // Remove temporary element
     document.body.removeChild(el);
+}
+function safeApply(that) {
+	return new Promise((resolve, reject) => {
+		let phase = that.$root.$$phase;
+		if (phase === '$apply' || phase === '$digest') {
+			if (resolve && (typeof (resolve) === 'function')) resolve();
+		} else {
+			if (resolve && (typeof (resolve) === 'function')) that.$apply(resolve);
+			else that.$apply();
+		}
+	});
 }
 
 export let library = ng.controller('LibraryController', [
@@ -131,6 +143,7 @@ export let library = ng.controller('LibraryController', [
         try{
             $scope.display.warningDuplicate = false;
             $scope.display.warningEditPage = false;
+            $scope.display.saving = true;
             await $scope.website.save();
             $scope.lightbox('properties');
             $scope.website.updateApplication();
@@ -144,6 +157,9 @@ export let library = ng.controller('LibraryController', [
             } else {
                 console.error(e);
             }
+        } finally {
+            $scope.display.saving = false;
+            safeApply($scope);
         }
     }
 
@@ -206,6 +222,7 @@ export let library = ng.controller('LibraryController', [
             $scope.display.warningEditPage = false;
             $scope.display.currentTemplate = undefined;
             $scope.website.newPage.title = idiom.translate('landingpage');
+            $scope.display.saving = true;
             await $scope.website.useNewPage();
             $scope.website.moveTo($scope.currentFolder as Folder);
             $scope.lightbox('newSite');
@@ -226,6 +243,8 @@ export let library = ng.controller('LibraryController', [
             } else {
                 console.error(e);
             }
+        } finally {
+            $scope.display.saving = false;
         }
     };
     $scope.copyToClipboard = () => {
