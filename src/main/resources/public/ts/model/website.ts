@@ -117,7 +117,14 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     get lastModified(): string {
         return moment(this.modified.$date).format('DD/MM/YYYY');
     }
-
+    async restore(){
+        this.trashed = false;
+        await this.save();
+        const shouldUnlink = await this.isParentTrashed();
+        if(shouldUnlink){
+            await this.unlinkParent();
+        }
+    }
     async toTrash(): Promise<void> {
         this.trashed = true;
         if(this.published){
@@ -132,6 +139,23 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         await this.save();
         Folders.trash.sync();
         await this.save();
+    }
+    async unlinkParent(){
+        const origins = await Folders.findFoldersContaining(this);
+        const promises = origins.map(async origin => {
+            origin.detachRessource(this._id);
+            await origin.save();
+        });
+        await Promise.all(promises);
+    }
+    async isParentTrashed(){
+        const origins = await Folders.findFoldersContaining(this);
+        for(let or of origins){
+            if(or.trashed){
+                return true;
+            }
+        }
+        return false;
     }
 
     watchChanges(){
@@ -393,7 +417,7 @@ export class Websites {
         this.sel.removeSelection();
         notify.info('pages.websites.removed');
     }
-
+    
     async toTrash(): Promise<any> {
         for (let website of this.all) {
             await website.toTrash();

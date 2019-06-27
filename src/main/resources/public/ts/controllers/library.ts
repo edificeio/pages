@@ -335,7 +335,7 @@ export let library = ng.controller('LibraryController', [
     };
 
     $scope.restore = async () => {
-        await Folders.trash.restoreSelection();
+        await $scope.currentFolder.restoreSelection();
         $scope.$apply();
     };
 
