@@ -118,27 +118,34 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         return moment(this.modified.$date).format('DD/MM/YYYY');
     }
     async restore(){
-        this.trashed = false;
-        await this.save();
-        const shouldUnlink = await this.isParentTrashed();
-        if(shouldUnlink){
-            await this.unlinkParent();
+        if(this.owner.userId==model.me.userId || this.myRights.manager){
+            this.trashed = false;
+            await this.save();
+            const shouldUnlink = await this.isParentTrashed();
+            if(shouldUnlink){
+                await this.unlinkParent();
+            }
         }
     }
     async toTrash(): Promise<void> {
-        this.trashed = true;
-        if(this.published){
-            for(let structure in this.published){
-                try{
-                    await http.delete('/appregistry/application/external/' + this.published[structure].application.id)
+        if(this.owner.userId==model.me.userId || this.myRights.manager){
+            this.trashed = true;
+            if(this.published){
+                for(let structure in this.published){
+                    try{
+                        await http.delete('/appregistry/application/external/' + this.published[structure].application.id)
+                    }
+                    catch(e){}
                 }
-                catch(e){}
             }
+            delete this.published;
+            await this.save();
+            Folders.trash.sync();
+            await this.save();//TODO remove it?
+        }else{
+            //shared ressources are moved to root
+            await this.unlinkParent();
         }
-        delete this.published;
-        await this.save();
-        Folders.trash.sync();
-        await this.save();
     }
     async unlinkParent(){
         const origins = await Folders.findFoldersContaining(this);
