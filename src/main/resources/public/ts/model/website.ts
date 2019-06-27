@@ -324,11 +324,16 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     }
 
     async moveTo(target: string | Folder): Promise<void> {
-        await Folders.toRoot(this);
-
+        const origins = await Folders.findFoldersContaining(this);
+        const promises = origins.map(async origin => {
+            origin.detachRessource(this._id);
+            await origin.save();
+        });
+        await Promise.all(promises);
         if (target instanceof Folder && target._id) {
-            target.websitesIds.push(this._id);
-            await target.sync();
+            target.attachRessource(this._id);
+            await target.save();
+            await Folders.root.sync();
         }
         else {
             await Folders.root.sync();
@@ -336,7 +341,6 @@ export class Website extends Model<Website> implements Selectable, Shareable {
                 await this.toTrash();
             }
         }
-        await this.save();
     }
 
     copy(): Website {

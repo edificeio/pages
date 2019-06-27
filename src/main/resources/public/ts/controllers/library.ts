@@ -224,10 +224,17 @@ export let library = ng.controller('LibraryController', [
             $scope.website.newPage.title = idiom.translate('landingpage');
             $scope.display.saving = true;
             await $scope.website.useNewPage();
-            $scope.website.moveTo($scope.currentFolder as Folder);
+            //
+            if ($scope.currentFolder && $scope.currentFolder._id) {
+                await $scope.website.moveTo($scope.currentFolder as Folder);
+            }
+            if ($scope.currentFolder) {
+                await $scope.currentFolder.sync();
+            }
             $scope.lightbox('newSite');
             $location.path('/website/' + $scope.website._id);
-            $scope.$apply()
+            safeApply($scope);
+            //
         } catch (e) {
             if (e.response && e.response.status == 409) {
                 $scope.display.warningDuplicate = true;

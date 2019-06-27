@@ -16,6 +16,9 @@ export class BaseFolder implements Selectable {
     constructor(){
         this.websites = new Websites();
     }
+    findRessource(id: string): Website | undefined {
+        return this.websites && this.websites.all.find(r => r._id == id);
+    }
 }
 
 class HierarchicalFolder extends BaseFolder{
@@ -118,6 +121,34 @@ class HierarchicalFolder extends BaseFolder{
         this.children.deselectAll();
         this.websites.deselectAll();
         await this.sync();
+    }
+
+    findRessource(id: string): Website | undefined {
+        const founded = super.findRessource(id);
+        if (founded) {
+            return founded;
+        }
+        for (let c of this.children.all) {
+            const founded = c.findRessource(id);
+            if (founded) {
+                return founded;
+            }
+        }
+        return undefined;
+    }
+
+    hasAttachedRessource(id: string): boolean {
+        return this.websitesIds.filter(r => r == id).length > 0;
+    }
+
+    attachRessource(id: string) {
+        //add uniq
+        this.detachRessource(id);
+        this.websitesIds.push(id);
+    }
+
+    detachRessource(id: string) {
+        this.websitesIds = this.websitesIds.filter(r => r != id);
     }
 }
 
@@ -283,6 +314,14 @@ export class Folders{
     private static publicWebsiteProvider: Provider<Website> = new Provider<Website>('/pages/pub/list/all', Website);
     private static websiteProvider: Provider<Website> = new Provider<Website>('/pages/list/all', Website);
     private static folderProvider: Provider<Folder> = new Provider<Folder>('/pages/folder/list/all', Folder);
+
+    static async findFoldersContaining(ressource: Website): Promise<Folder[]> {
+        let folders = await this.folders();
+        const founded = folders.filter((f) => {
+            return f.hasAttachedRessource(ressource._id);
+        });
+        return founded;
+    }
 
     static async websites(): Promise<Website[]> {
         let websites: Website[];
