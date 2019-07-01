@@ -244,12 +244,15 @@ export class Folder extends HierarchicalFolder implements Shareable{
     }
     async toTrash(): Promise<void> {
         this.trashed = true;
+        //be sure tu sync ressources and children before trash recursive
+        await this.sync();
         await this.websites.toTrash();
         await this.saveChanges();
         for(let child of this.children.all){
             await child.toTrash();
         }
         await Folders.trash.sync();
+        //sync after trash
         await this.sync();
     }
 
