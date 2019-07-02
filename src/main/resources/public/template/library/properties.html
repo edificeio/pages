@@ -1,36 +1,38 @@
-<h1><i18n>properties</i18n></h1>
-<div class="four cell clip height-four three-mobile">
-    <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
-</div>
-<div class="eight cell horizontal-spacing-twice flex-row f-column">
-    <div class="flex-row">
-        <input type="text" ng-model="website.title" required i18n-placeholder="title" class="flex-all-remains" />
+<form ng-submit="saveProperties()" name="pageForm">
+    <h1><i18n>properties</i18n></h1>
+    <div class="four cell clip height-four three-mobile">
+        <image-select ng-model="website.icon" default="/img/illustrations/pages-default.png"></image-select>
     </div>
-    <div ng-if="website.visibility == 'PUBLIC'">
-        <div class="top-spacing flex-row align-baseline" ng-show="website.enablePublic">
-            <a class="url-ellipsis" href="javascript:void(0)" ng-attr-title="[[website.slugDomain]]">[[website.slugDomain]]</a>
-            <div class="cell" style="flex:1;max-width: 500px">
-                <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
-                    i18n-placeholder="website.url.title" />
-                <span class="warning-color italic-text" ng-if="display.warningDuplicate">
-                    <i18n>website.slug.duplicate.errmsg</i18n>
-                </span>
+    <div class="eight cell horizontal-spacing-twice flex-row f-column">
+        <div class="flex-row">
+            <input type="text" ng-model="website.title" required i18n-placeholder="title" class="flex-all-remains" />
+        </div>
+        <div ng-if="website.visibility == 'PUBLIC'">
+            <div class="top-spacing flex-row align-baseline" ng-show="website.enablePublic">
+                <a class="url-ellipsis" href="javascript:void(0)" ng-attr-title="[[website.slugDomain]]">[[website.slugDomain]]</a>
+                <div class="cell" style="flex:1;max-width: 500px">
+                    <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
+                        i18n-placeholder="website.url.title" />
+                    <span class="warning-color italic-text" ng-if="display.warningDuplicate">
+                        <i18n>website.slug.duplicate.errmsg</i18n>
+                    </span>
+                </div>
+            </div>
+            <div class="twelve">
+                <a class="cell right-magnet top-spacing-four" ng-click="copyToClipboard()">
+                    <i18n>website.url.copy</i18n>
+                </a>
             </div>
         </div>
-        <div class="twelve">
-            <a class="cell right-magnet top-spacing-four" ng-click="copyToClipboard()">
-                <i18n>website.url.copy</i18n>
-            </a>
-        </div>
     </div>
-</div>
-<div class="row">
-    <i class="loading left-spacing right-magnet top-spacing-twice"  ng-if="display.saving"></i>
-    <button class="right-magnet text-flow" ng-click="saveProperties()" ng-disabled="display.saving">
-        <i18n>save</i18n>
-    </button>
-    <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
-</div>
+    <div class="row">
+        <i class="loading left-spacing right-magnet top-spacing-twice"  ng-if="display.saving"></i>
+        <button class="right-magnet text-flow" ng-click="saveProperties()" ng-disabled="display.saving || pageForm.$invalid">
+            <i18n>save</i18n>
+        </button>
+        <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
+    </div>
+</form>
 <!--LIGHTBOX-->
 <lightbox show="display.warningEditPage" on-close="display.warningEditPage=false">
 	<div class="horizontal-spacing-twice">

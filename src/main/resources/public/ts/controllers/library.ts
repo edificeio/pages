@@ -39,6 +39,7 @@ export interface LibraryControllerScope {
     openRoot(): void
     createWebsiteView(): void
     createWebsite(): void
+    canCreateWebsite(): boolean
     copyToClipboard(): void
     viewSite(website: Website): void
     open(item: Website | Folder): void
@@ -215,6 +216,10 @@ export let library = ng.controller('LibraryController', [
         $scope.website.initNewPage();
         $scope.lightbox('newSite');
     };
+
+    $scope.canCreateWebsite = () => {
+        return $scope.website.safeSlug && $scope.website.safeSlug.length > 0;
+    }
 
     $scope.createWebsite = async () => {
         try {

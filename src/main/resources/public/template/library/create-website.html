@@ -1,5 +1,5 @@
 <div class="create-website">
-    <wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()" goto-step="display.wizardStep">
+    <wizard on-cancel="lightbox('newSite')" on-finish="createWebsite()" finish-condition="canCreateWebsite()" goto-step="display.wizardStep">
         <step internal-next>
             <h1><i18n>wizard.type.title</i18n></h1>
 
