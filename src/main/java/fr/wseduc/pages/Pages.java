@@ -22,6 +22,7 @@
 
 package fr.wseduc.pages;
 
+import fr.wseduc.mongodb.MongoDb;
 import fr.wseduc.pages.controllers.PagesController;
 import fr.wseduc.pages.controllers.FoldersController;
 import fr.wseduc.pages.service.impl.PagesRepositoryEvents;
@@ -39,7 +40,7 @@ public class Pages extends BaseServer {
 		
 		setDefaultResourceFilter(new ShareAndOwner());
 		setRepositoryEvents(new PagesRepositoryEvents(vertx));
-		addController(new PagesController());
+		addController(new PagesController(MongoDb.getInstance()));
         addController(new FoldersController("pagesFolders"));
 
 		MongoDbConf.getInstance().setCollection("pages");

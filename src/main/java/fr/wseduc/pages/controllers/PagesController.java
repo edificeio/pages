@@ -22,8 +22,10 @@
 
 package fr.wseduc.pages.controllers;
 
+import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 import fr.wseduc.bus.BusAddress;
+import fr.wseduc.mongodb.MongoDb;
 import fr.wseduc.mongodb.MongoQueryBuilder;
 import fr.wseduc.pages.Pages;
 import fr.wseduc.pages.filters.PageReadFilter;
@@ -36,6 +38,7 @@ import fr.wseduc.webutils.I18n;
 import fr.wseduc.webutils.Utils;
 import fr.wseduc.webutils.http.Renders;
 import fr.wseduc.webutils.request.RequestUtils;
+import io.vertx.core.json.JsonArray;
 import org.entcore.common.controller.ControllerHelper;
 import org.entcore.common.events.EventStore;
 import org.entcore.common.events.EventStoreFactory;
@@ -53,9 +56,7 @@ import io.vertx.core.json.JsonObject;
 import org.vertx.java.core.http.RouteMatcher;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.entcore.common.bus.BusResponseHandler.busResponseHandler;
 
@@ -64,6 +65,7 @@ public class PagesController extends MongoDbControllerHelper {
 	private EventStore eventStore;
 	private enum PagesEvent { ACCESS }
 	public static final String PAGES_COLLECTION = "pages";
+	private final MongoDb mongo;
 	@Override
 	public void init(Vertx vertx, JsonObject config, RouteMatcher rm,
 					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
@@ -71,8 +73,9 @@ public class PagesController extends MongoDbControllerHelper {
 		eventStore = EventStoreFactory.getFactory().getEventStore(Pages.class.getSimpleName());
 	}
 
-	public PagesController() {
+	public PagesController(MongoDb mongo) {
 		super("pages");
+		this.mongo = mongo;
 	}
 
 	@Get("")
@@ -249,6 +252,36 @@ public class PagesController extends MongoDbControllerHelper {
 
 					shareJsonSubmit(request, "pages.shared", false, params, "title");
 				}
+			}
+		});
+	}
+
+	private void cleanFolders(String id, UserInfos user, List<String> recipientIds){
+		//owner style keep the reference to the ressource
+		JsonArray jsonRecipients = new JsonArray(recipientIds).add(user.getUserId());
+		JsonObject query = MongoQueryBuilder.build(QueryBuilder.start("websitesIds").is(id).and("owner.userId").notIn(jsonRecipients));
+		JsonObject update = new JsonObject().put("$pull", new JsonObject().put("websitesIds", new JsonObject().put("$nin",jsonRecipients)));
+		mongo.update("pagesFolders", query, update, message -> {
+			JsonObject body = message.body();
+			if (!"ok".equals(body.getString("status"))) {
+				String err = body.getString("error", body.getString("message", "unknown cleanFolder Error"));
+				log.error("[cleanFolders] failed to clean folder because of: "+err);
+			}
+		});
+	}
+
+	@Override
+	public void doShareSucceed(HttpServerRequest request, String id, UserInfos user,JsonObject sharePayload, JsonObject result, boolean sendNotify){
+		super.doShareSucceed(request, id, user, sharePayload, result, sendNotify);
+		Set<String> userIds = sharePayload.getJsonObject("users").getMap().keySet();
+		Set<String> groupIds = sharePayload.getJsonObject("users").getMap().keySet();
+		UserUtils.getUserIdsForGroupIds(groupIds,user.getUserId(),this.eb, founded->{
+			if(founded.succeeded()){
+				List<String> userToKeep = new ArrayList<>(userIds);
+				userToKeep.addAll(founded.result());
+				cleanFolders(id, user, userToKeep);
+			}else{
+				log.error("[doShareSucceed] failed to found recipient because:",founded.cause());
 			}
 		});
 	}
