@@ -26,7 +26,7 @@
             <div class="eight cell horizontal-spacing-twice flex-row f-column">
                 <input type="text" ng-model="website.dynTitle" required i18n-placeholder="title" class="flex-all-remains" />
                 <div ng-if="website.visibility == 'PUBLIC'">
-                    <div class="top-spacing flex-row align-baseline" ng-show="website.enablePublic">
+                    <div class="top-spacing flex-row align-center" ng-show="website.enablePublic">
                         <a class="url-ellipsis" href="javascript:void(0)" ng-attr-title="[[website.slugDomain]]">[[website.slugDomain]]</a>
                         <div class="cell" style="flex:1;max-width: 500px">
                             <input type="text" class="twelve no-margin" ng-model="website.safeSlug" ng-required="website.enablePublic"
