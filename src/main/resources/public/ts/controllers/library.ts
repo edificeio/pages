@@ -30,7 +30,9 @@ export interface LibraryControllerScope {
     searchGroups(item: Group): void
     saveProperties(): void
     lightbox(name: string): void
+    closeLightbox(lightboxName: string):void
     editWebsiteProperties(): void
+    closeWebsiteProperties(): void;
     openFolder(folder: Folder): void
     openPublish(): void
     createFolder(): void
@@ -165,9 +167,15 @@ export let library = ng.controller('LibraryController', [
     }
 
     $scope.editWebsiteProperties = () => {
+        $scope.display.warningDuplicate = false;
+        $scope.display.warningEditPage = false;
         $scope.website = $scope.currentFolder.selection[0] as Website;
         $scope.lightbox('properties');
     };
+
+    $scope.closeWebsiteProperties = () => {
+        $scope.closeLightbox('properties');
+    }
 
     $scope.openFolder = (folder) => {
         template.open('library/folder-content', 'library/folder-content');

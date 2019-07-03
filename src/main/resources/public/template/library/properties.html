@@ -27,10 +27,10 @@
     </div>
     <div class="row">
         <i class="loading left-spacing right-magnet top-spacing-twice"  ng-if="display.saving"></i>
-        <button class="right-magnet text-flow" ng-click="saveProperties()" ng-disabled="display.saving || pageForm.$invalid">
+        <button type="button" class="right-magnet text-flow" ng-click="saveProperties()" ng-disabled="display.saving || pageForm.$invalid">
             <i18n>save</i18n>
         </button>
-        <button class="cancel right-magnet" ng-click="lightbox('properties')"><i18n>cancel</i18n></button>
+        <button type="button" class="cancel right-magnet" ng-click="closeWebsiteProperties()"><i18n>cancel</i18n></button>
     </div>
 </form>
 <!--LIGHTBOX-->
