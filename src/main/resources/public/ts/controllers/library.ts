@@ -226,7 +226,15 @@ export let library = ng.controller('LibraryController', [
     };
 
     $scope.canCreateWebsite = () => {
-        return $scope.website.safeSlug && $scope.website.safeSlug.length > 0;
+        if(!$scope.website.title){
+            return false;
+        }
+        if($scope.website.enablePublic){
+            if(!$scope.website.safeSlug || $scope.website.safeSlug.length == 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     $scope.createWebsite = async () => {
