@@ -273,17 +273,19 @@ public class PagesController extends MongoDbControllerHelper {
 	@Override
 	public void doShareSucceed(HttpServerRequest request, String id, UserInfos user,JsonObject sharePayload, JsonObject result, boolean sendNotify){
 		super.doShareSucceed(request, id, user, sharePayload, result, sendNotify);
-		Set<String> userIds = sharePayload.getJsonObject("users").getMap().keySet();
-		Set<String> groupIds = sharePayload.getJsonObject("users").getMap().keySet();
-		UserUtils.getUserIdsForGroupIds(groupIds,user.getUserId(),this.eb, founded->{
-			if(founded.succeeded()){
-				List<String> userToKeep = new ArrayList<>(userIds);
-				userToKeep.addAll(founded.result());
-				cleanFolders(id, user, userToKeep);
-			}else{
-				log.error("[doShareSucceed] failed to found recipient because:",founded.cause());
-			}
-		});
+		if(sharePayload!=null){
+			Set<String> userIds = sharePayload.getJsonObject("users", new JsonObject()).getMap().keySet();
+			Set<String> groupIds = sharePayload.getJsonObject("groups", new JsonObject()).getMap().keySet();
+			UserUtils.getUserIdsForGroupIds(groupIds,user.getUserId(),this.eb, founded->{
+				if(founded.succeeded()){
+					List<String> userToKeep = new ArrayList<>(userIds);
+					userToKeep.addAll(founded.result());
+					cleanFolders(id, user, userToKeep);
+				}else{
+					log.error("[doShareSucceed] failed to found recipient because:",founded.cause());
+				}
+			});
+		}
 	}
 
 	@Put("/share/resource/:id")
