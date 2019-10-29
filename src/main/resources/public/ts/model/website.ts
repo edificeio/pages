@@ -3,7 +3,7 @@ import { Pages, Page, Row, Cell, SnipletSource } from './index';
 import { Structure, Group, Publication, Application, Role } from './publish';
 import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'entcore-toolkit';
 import http from "axios";
-import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON } from 'entcore';
+import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON, idiom as lang } from 'entcore';
 import { _ } from 'entcore';
 import { moment } from 'entcore';
 
@@ -377,7 +377,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     copy(): Website {
         let data = JSON.parse(JSON.stringify(this));
         data.published = undefined;
-        data.title = "Copie_" + data.title;
+        data.title = data.title + lang.translate('website.copy');
         return Mix.castAs(Website, data);
     }
 }
