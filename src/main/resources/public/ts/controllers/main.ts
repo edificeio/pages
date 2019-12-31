@@ -87,7 +87,13 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             applyIfNeeded();
         }
     });
-
+    $scope.redirectToLink=(path:string)=>{
+        if(path.startsWith("http") || path.startsWith("www")){
+            window.open(path)
+        }else{
+            $scope.redirectTo(path.split('#')[1])
+        }
+    }
     $scope.redirectTo = (path) => {
         if (window.location.href.indexOf('/p/') === -1 || (window as any).notLoggedIn) {
             $location.path(path);
