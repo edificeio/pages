@@ -54,6 +54,12 @@ export interface LibraryControllerScope {
     addPage(): void
     move(): void
     previewPath(website: Website): void
+    isRootFolderEmpty(): boolean
+    isSubFolderEmpty(): boolean
+    areFilterResultsEmpty(): boolean
+    isTrashFolder(): boolean
+    isTrashFolderEmpty(): boolean
+    areAllFiltersDeselected(): boolean
     $apply: any
 }
 
@@ -120,6 +126,54 @@ export let library = ng.controller('LibraryController', [
 
         $scope.$apply();
     });
+
+    function isRootFolder(folder: Folder | Root): boolean {
+        return folder && folder.name === 'root';
+    }
+
+    function hasNoChildrenFolders(folder: Folder | Root): boolean {
+        return folder.children && folder.children.all && folder.children.all.length < 1;
+    }
+
+    function hasNoWebsites(folder: Folder | Root): boolean {
+        return folder.websites && folder.websites.all && folder.websites.all.length < 1
+    }
+
+    $scope.isRootFolderEmpty = (): boolean => {
+        return isRootFolder($scope.currentFolder) 
+            && hasNoWebsites($scope.currentFolder) 
+            && hasNoChildrenFolders($scope.currentFolder);
+    }
+
+    $scope.isSubFolderEmpty = (): boolean => {
+        return !isRootFolder($scope.currentFolder)
+            && hasNoWebsites($scope.currentFolder)
+            && hasNoChildrenFolders($scope.currentFolder);
+    }
+
+    $scope.areFilterResultsEmpty = (): boolean => {
+        return $scope.currentFolder.websites.filtered
+            && $scope.currentFolder.websites.filtered.length < 1
+            && hasNoChildrenFolders($scope.currentFolder);
+    }
+
+    $scope.areAllFiltersDeselected = (): boolean => {
+        return !$scope.filters.protected 
+            && !$scope.filters.public 
+            && hasNoChildrenFolders($scope.currentFolder)
+            && !$scope.isSubFolderEmpty()
+            && !$scope.isTrashFolderEmpty();
+    }
+    
+    $scope.isTrashFolder = (): boolean => {
+        return $scope.currentFolder && $scope.currentFolder.name === 'trash';
+    }
+
+    $scope.isTrashFolderEmpty = (): boolean => {
+        return $scope.isTrashFolder() 
+            && hasNoWebsites($scope.currentFolder)
+            && hasNoChildrenFolders($scope.currentFolder);
+    }
 
     $scope.searchGroups = (item: Group) => {
         let found = $scope.display.searchGroups && idiom.removeAccents(item.name.toLowerCase()).indexOf(
