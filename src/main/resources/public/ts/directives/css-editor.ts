@@ -26,7 +26,7 @@ export let cssEditor = ng.directive('cssEditor', function () {
                 </div>
             </div>
             <div class="css-editor">
-                <textarea ng-model="content"></textarea>
+                <textarea ng-model="content" spellcheck="false" ng-trim="false"></textarea>
                 <pre><code class="language-css"></code></pre>
             </div>
         `,

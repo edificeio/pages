@@ -662,6 +662,8 @@ css-editor {
         }
 
         textarea {
+            color: transparent;
+            caret-color: black;
             position: absolute;
             top: 0;
             left: 0;
