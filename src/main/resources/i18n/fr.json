@@ -1,7 +1,7 @@
 {
   "pages.title": "Pages",
   "pages.project": "Projets",
-  "pages.app.title": "Pages",  
+  "pages.app.title": "Pages",
   "pages.widget.title": "pages",
   "pages.widget.empty": "Aucune page n'a été créée",
   "group.HeadTeacher": "Professeurs principaux de {0}.",
@@ -114,6 +114,7 @@
   "folder.new": "Nouveau dossier",
   "folder.new.create": "Créer un nouveau dossier",
   "pages.list.title": "Projets",
+  "pages.copy": "Copie",
   "pages.share.varyingrights": "Attention, vous allez modifier des droits de partage sur plusieurs projets : tous les projets sélectionnés seront affectés et disposeront uniquement du nouveau partage.",
 
 
@@ -200,5 +201,5 @@
   "website.copy.clipboard": "L'adresse a été ajoutée au presse papier.",
   "website.slug.duplicate.title": "URL de page déjà existante",
   "website.slug.duplicate.body": "<strong>Attention !&nbsp;</strong>&nbsp;Cette URL de site a déjà été utilisée, veuillez en choisir une autre pour pouvoir valider !"
-  
+
 }

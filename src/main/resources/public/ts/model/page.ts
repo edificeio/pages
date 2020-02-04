@@ -84,7 +84,7 @@ export class Page implements Selectable {
         this.rows.empty();
         website.eventer.off('page-added');
         let row = this.addRow();
-        
+
         let navigation = new Cell();
         navigation.media.type = 'sniplet';
         row.addCell(navigation);
@@ -169,7 +169,7 @@ export class Page implements Selectable {
         let data = JSON.parse(JSON.stringify(this));
         let duplicate: Page = Mix.castAs(Page, data);
         duplicate.website = this.website;
-        duplicate.title = this.title + ' (Copie)';
+        duplicate.title = this.title + ' (' + lang.translate('pages.copy') +')';
         duplicate.setTitleLink();
         this.website.pages.push(duplicate);
     }
