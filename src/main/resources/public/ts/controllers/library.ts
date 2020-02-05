@@ -54,6 +54,7 @@ export interface LibraryControllerScope {
     addPage(): void
     move(): void
     previewPath(website: Website): void
+    hasNoChildrenFolders(): boolean
     isRootFolderEmpty(): boolean
     isSubFolderEmpty(): boolean
     areFilterResultsEmpty(): boolean
@@ -127,42 +128,42 @@ export let library = ng.controller('LibraryController', [
         $scope.$apply();
     });
 
-    function isRootFolder(folder: Folder | Root): boolean {
-        return folder && folder.name === 'root';
+    function isRootFolder(): boolean {
+        return $scope.currentFolder && $scope.currentFolder.name === 'root';
     }
 
-    function hasNoChildrenFolders(folder: Folder | Root): boolean {
-        return folder.children && folder.children.all && folder.children.all.length < 1;
+    function hasNoWebsites(): boolean {
+        return $scope.currentFolder.websites 
+            && $scope.currentFolder.websites.all 
+            && $scope.currentFolder.websites.all.length < 1
     }
 
-    function hasNoWebsites(folder: Folder | Root): boolean {
-        return folder.websites && folder.websites.all && folder.websites.all.length < 1
+    $scope.hasNoChildrenFolders = (): boolean => {
+        return $scope.currentFolder.children 
+            && $scope.currentFolder.children.all 
+            && $scope.currentFolder.children.all.length < 1;
     }
 
     $scope.isRootFolderEmpty = (): boolean => {
-        return isRootFolder($scope.currentFolder) 
-            && hasNoWebsites($scope.currentFolder) 
-            && hasNoChildrenFolders($scope.currentFolder);
+        return isRootFolder() 
+            && hasNoWebsites() 
+            && $scope.hasNoChildrenFolders();
     }
 
     $scope.isSubFolderEmpty = (): boolean => {
-        return !isRootFolder($scope.currentFolder)
-            && hasNoWebsites($scope.currentFolder)
-            && hasNoChildrenFolders($scope.currentFolder);
+        return !isRootFolder()
+            && hasNoWebsites()
+            && $scope.hasNoChildrenFolders();
     }
 
     $scope.areFilterResultsEmpty = (): boolean => {
         return $scope.currentFolder.websites.filtered
-            && $scope.currentFolder.websites.filtered.length < 1
-            && hasNoChildrenFolders($scope.currentFolder);
+            && $scope.currentFolder.websites.filtered.length < 1;
     }
 
     $scope.areAllFiltersDeselected = (): boolean => {
         return !$scope.filters.protected 
-            && !$scope.filters.public 
-            && hasNoChildrenFolders($scope.currentFolder)
-            && !$scope.isSubFolderEmpty()
-            && !$scope.isTrashFolderEmpty();
+            && !$scope.filters.public;
     }
     
     $scope.isTrashFolder = (): boolean => {
@@ -171,8 +172,8 @@ export let library = ng.controller('LibraryController', [
 
     $scope.isTrashFolderEmpty = (): boolean => {
         return $scope.isTrashFolder() 
-            && hasNoWebsites($scope.currentFolder)
-            && hasNoChildrenFolders($scope.currentFolder);
+            && hasNoWebsites()
+            && $scope.hasNoChildrenFolders();
     }
 
     $scope.searchGroups = (item: Group) => {

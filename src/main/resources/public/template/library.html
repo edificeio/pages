@@ -128,8 +128,13 @@
                     <img class="emptyscreen-image" src="/assets/themes/entcore-css-lib/images/empty-trash.svg">
                 </div>
             </div>
-            <!-- filters: no result -->
-            <div class="twelve cell" ng-if="areFilterResultsEmpty() && !areAllFiltersDeselected() && !isSubFolderEmpty()">
+            <!-- filters: no result filters -->
+            <div class="twelve cell" 
+                ng-if="areFilterResultsEmpty() 
+                    && hasNoChildrenFolders() 
+                    && !areAllFiltersDeselected() 
+                    && !isTrashFolderEmpty() 
+                    && !isSubFolderEmpty()">
                 <div class="emptyscreen">
                     <h2 class="emptyscreen-header">
                         <i18n>empty.search.title</i18n>
@@ -138,7 +143,10 @@
                 </div>
             </div>
             <!-- deselected all filters -->
-            <div class="twelve cell" ng-if="areAllFiltersDeselected()">
+            <div class="twelve cell" 
+                ng-if="areAllFiltersDeselected() 
+                    && hasNoChildrenFolders()
+                    && !isSubFolderEmpty()">
                 <div class="emptyscreen">
                     <h2 class="emptyscreen-header">
                         <i18n>empty.filters.title</i18n>
@@ -146,6 +154,21 @@
                     <img class="emptyscreen-image__mini" src="/assets/themes/entcore-css-lib/images/empty-filters.svg">
                     <p class="emptyscreen-footer">
                         <i18n>empty.filters</i18n>
+                    </p>
+                </div>
+            </div>
+            <!-- search: no results -->
+            <div class="twelve cell" 
+                ng-if="!areFilterResultsEmpty() && !areAllFiltersDeselected() && hasNoChildrenFolders()
+                    && display.searchWebsites && display.searchWebsites.length > 0 
+                    && currentFolder.websites && (currentFolder.websites.filtered | filter:searchWebsites).length == 0">
+                <div class="emptyscreen">
+                    <h2 class="emptyscreen-header">
+                        <i18n>empty.search.title</i18n>
+                    </h2>
+                    <img class="emptyscreen-image__mini" src="/assets/themes/entcore-css-lib/images/empty-search.svg">
+                    <p class="emptyscreen-footer">
+                        <i18n>empty.search</i18n>
                     </p>
                 </div>
             </div>
