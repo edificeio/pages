@@ -17,7 +17,8 @@ export interface LibraryControllerScope {
         currentTemplate: string
         targetFolder: Folder
         wizardStep:number;
-        saving: boolean
+        saving: boolean;
+        empty: boolean;
     }
     localAdmin: typeof LocalAdmin
     currentFolder: Folder | Root
@@ -116,7 +117,17 @@ export let library = ng.controller('LibraryController', [
     template.open('library/properties', 'library/properties');
     template.open('library/move', 'library/move');
 
-    BaseFolder.eventer.on('refresh', () => $scope.$apply());
+    function isEmpty(): boolean {
+        return !Folders.root.websites.all.length
+            && !Folders.root.children.all.length
+            && !Folders.trash.websites.all.length
+            && !Folders.trash.children.all.length
+    }
+
+    BaseFolder.eventer.on('refresh', async () => {
+        $scope.display.empty = isEmpty();
+        $scope.$apply();
+    });
     Website.eventer.on('save', () => $scope.$apply());
 
     $rootScope.$on('share-updated', async (event, changes) => {

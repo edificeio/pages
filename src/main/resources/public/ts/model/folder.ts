@@ -241,6 +241,7 @@ export class Folder extends HierarchicalFolder implements Shareable{
         for(let res of cRes){
             await res.restore();
         }
+        await Folders.root.sync();
     }
     async toTrash(): Promise<void> {
         this.trashed = true;

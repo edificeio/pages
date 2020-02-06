@@ -15,7 +15,7 @@
                 </section>
             </explorer>
         </div>
-        <div ng-repeat="website in currentFolder.websites.filtered | filter:searchMatch">
+        <div ng-repeat="website in currentFolder.websites.filtered | filter:searchWebsites">
             <explorer ng-model="website.selected" class="item">
                 <section class="domino" dragstart ng-model="website._id">
                     <div class="top">

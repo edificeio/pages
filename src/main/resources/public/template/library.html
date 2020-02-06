@@ -20,7 +20,7 @@
 			<h1 class="cell"><a data-reload><i18n>pages.app.title</i18n></a></h1>
 		</app-title>
 
-        <div class="cell right-magnet zero-mobile" workflow="pages.create" ng-if="!isRootFolderEmpty()">
+        <div class="cell right-magnet zero-mobile" workflow="pages.create" ng-if="!display.empty">
 			<button ng-click="createWebsiteView()" class="right-magnet">
 				<i18n>website.create</i18n>
 			</button>
@@ -29,7 +29,7 @@
     
     <div class="row">
         <!-- Emptyscreen Consultation -->
-        <div class="emptyscreen" ng-if="isRootFolderEmpty()" workflow-not="pages.create">
+        <div class="emptyscreen" ng-if="display.empty" workflow-not="pages.create">
             <h2 class="emptyscreen-header">
                 <i18n>empty.pages.consultation.title</i18n>
             </h2>
@@ -40,7 +40,7 @@
         </div>
 
         <!-- Emptyscreen Creation -->
-        <div class="emptyscreen" ng-if="isRootFolderEmpty()" workflow="pages.create">
+        <div class="emptyscreen" ng-if="display.empty" workflow="pages.create">
             <h2 class="emptyscreen-header">
                 <i18n>empty.pages.creation.title</i18n>
             </h2>
@@ -54,7 +54,7 @@
         </div>
 	</div>
 
-	<div class="row rigid-grid" ng-if="!isRootFolderEmpty()">
+	<div class="row rigid-grid" ng-if="!display.empty">
 		<section class="four cell">
 			<div class="margin-two row">
 				<input type="search" class="eleven cell" i18n-placeholder="search" ng-model="display.searchWebsites" />
@@ -91,7 +91,12 @@
                         </a>
                     </li>
 				</ul>
-				<a class="classic-link" ng-click="lightbox('newFolder')" workflow="pages.createFolder"><i18n>folder.new</i18n></a>
+                <a class="classic-link" 
+                    ng-click="lightbox('newFolder')" 
+                    workflow="pages.createFolder"
+                    ng-if="!isTrashFolder()">
+                    <i18n>folder.new</i18n>
+                </a>
 			</nav>
 		</section>
 		<section class="margin-four">
