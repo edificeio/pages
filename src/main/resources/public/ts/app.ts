@@ -5,6 +5,7 @@ import { library } from './controllers/library';
 import { edit } from './controllers/edit';
 import { view } from './controllers/view';
 import { main } from './controllers/main';
+import { print } from './controllers/print';
 
 import { gridCell } from './directives/grid-cell';
 import { gridRow } from './directives/grid-row';
@@ -17,6 +18,7 @@ ng.controllers.push(library);
 ng.controllers.push(edit);
 ng.controllers.push(view);
 ng.controllers.push(main);
+ng.controllers.push(print);
 
 ng.directives.push(gridCell);
 ng.directives.push(gridRow);
@@ -41,6 +43,9 @@ routes.define(function ($routeProvider) {
         })
         .when('/list-sites', {
             action: 'listSites'
+        })
+        .when('/print/:siteId', {
+            action: 'print'
         })
         .otherwise({
             redirectTo: '/list-sites'

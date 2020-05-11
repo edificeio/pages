@@ -62,6 +62,7 @@ export interface LibraryControllerScope {
     isTrashFolder(): boolean
     isTrashFolderEmpty(): boolean
     areAllFiltersDeselected(): boolean
+    printPages(website: Website): void
     $apply: any
 }
 
@@ -440,5 +441,10 @@ export let library = ng.controller('LibraryController', [
         else {
             return '/pages#/preview/' + website._id;
         }
+    };
+    
+    $scope.printPages = (website) => {
+        console.log(website);
+        window.open(`/pages/print/pages#/print/${website._id}`, '_blank');
     };
 }]);

@@ -1,0 +1,49 @@
+<div class="row" ng-controller="PrintController">
+    <div class="row">
+        <app-title>
+            <h1 class="breadcrumbs"><i class="pages"></i> [[website.title]]</h1>
+        </app-title>
+    </div>
+
+    <div class="twelve cell" ng-repeat="page in website.pages.all" ng-init="pageIndex = $index">
+        <h1 class="vertical-spacing">[[page.title]]</h1>
+        <drawing-grid class="view pages-grid">
+            <div class="row" ng-repeat="row in page.rows.all">
+                <grid-row index="row.index">
+                    <grid-cell ng-repeat="cell in row.cells.all" class="media cell editor-media"
+                                w="cell.width" h="cell.height" class-name="cell.className" drop-item="dropContent(row, cell, $item)"
+                               cell="cell" row="row">
+                        <div ng-if="cell.media.type === 'text'" class="text-wrapper">
+                            <div bind-html="cell.media.source"></div>
+                        </div>
+                        <div ng-if="cell.media.type === 'video'" class="video-wrapper">
+                            <div bind-html="cell.media.source"></div>
+                        </div>
+                        <div ng-if="cell.media.type === 'image'" class="image-wrapper">
+                            <img ng-src="[[cell.media.source]]?thumbnail=1600x0" ng-if="cell.media.source" />
+                            <img skin-src="/img/illustrations/pages-default.png" ng-if="!cell.media.source" />
+                        </div>
+                        <div ng-if="cell.media.type === 'sound'" class="audio-wrapper">
+                            <audio ng-src="[[cell.media.source]]" controls></audio>
+                        </div>
+                        <div ng-if="cell.media.type === 'sniplet' && cell.media.source && cell.media.source.template != 'navigation'">
+                            <div ng-if="cell.media.source.source">
+                                <sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>
+                            </div>
+                        </div>
+                        <div ng-if="cell.media.type === 'sniplet' && cell.media.source && cell.media.source.template == 'navigation' && pageIndex == 0">
+                            <div ng-if="cell.media.source.source">
+                                <sniplet template="[[cell.media.source.template]]" application="[[cell.media.source.application]]" source="cell.media.source.source"></sniplet>
+                            </div>
+                        </div>
+                        <div ng-if="cell.media.type === 'grid'">
+                            <div ng-init="page = cell.media.source">
+                                <container template="view/grid"></container>
+                            </div>
+                        </div>
+                    </grid-cell>
+                </grid-row>
+            </div>
+        </drawing-grid>
+    </div>
+</div>

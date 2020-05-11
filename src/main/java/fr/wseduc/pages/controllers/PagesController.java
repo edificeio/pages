@@ -353,6 +353,12 @@ public class PagesController extends MongoDbControllerHelper {
 		}
 	}
 
+	@Get("/print/pages")
+	@SecuredAction("pages.print")
+	public void print(HttpServerRequest request) {
+		renderView(request, null,"print.html", null);
+	}
+
 	private void hasConflict(Optional<String> pageId, HttpServerRequest request, Handler<Boolean> handler){
 		RequestUtils.bodyToJson(request, data -> {
 			String slug = data.getString("slug");

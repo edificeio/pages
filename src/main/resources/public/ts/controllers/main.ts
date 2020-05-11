@@ -32,11 +32,15 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         }
         $scope.snipletResource = website;
         await website.rights.fromBehaviours();
-        if (website.myRights['update'] && !params.preview && $(window).width() > ui.breakpoints.tablette) {
+        if (website.myRights['update'] 
+            && !params.preview 
+            && !params.print 
+            && $(window).width() > ui.breakpoints.tablette) {
             template.open('main', 'page-editor');
-        }
-        else {
+        } else if (params.preview) {
             template.open('main', 'page-viewer');
+        } else if (params.print) {
+            template.open('main', 'page-print');
         }
         setTimeout(() => model.trigger('route-changed'), 500);
         $scope.$apply();
@@ -83,6 +87,14 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
             Autosave.unwatchAll();
             params.preview = true;
+            openSite(params);
+            applyIfNeeded();
+        },
+        print: async (params) => {
+            await sniplets.load();
+            $scope.sniplets = _.reject(sniplets.sniplets, (s) => s.sniplet.hidden);
+            Autosave.unwatchAll();
+            params.print = true;
             openSite(params);
             applyIfNeeded();
         }

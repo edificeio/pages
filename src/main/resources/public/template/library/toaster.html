@@ -42,6 +42,13 @@
         <div>
             <!-- Both -->
             <button ng-click="lightbox('move')" ng-if="can('update')" workflow="pages.createFolder"><i18n>move</i18n></button>
+            
+            <button ng-if="currentFolder.selection.length === 1"
+                    ng-click="printPages(currentFolder.selection[0])"
+                    workflow="pages.print">
+                <i18n>print</i18n>
+            </button>
+            
             <button ng-click="lightbox('confirmRemove')" ng-if="can('remove')"><i18n>remove</i18n></button>
         </div>
     </div>
