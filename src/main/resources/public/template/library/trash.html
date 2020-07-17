@@ -1,40 +1,36 @@
 ﻿<div class="row">
     <div class="fallen dominos">
-        <div ng-repeat="folder in currentFolder.children.all">
-            <explorer ng-model="folder.selected" class="folder item">
-                <section class="domino" dragstart ng-model="folder._id">
-                    <div class="top">
-                        <i class="folder-large"></i>
+        <explorer ng-model="folder.selected" class="folder item" ng-repeat="folder in currentFolder.children.all">
+            <section class="domino" dragstart ng-model="folder._id">
+                <div class="top">
+                    <i class="folder-large"></i>
+                </div>
+                <div class="bottom">
+                    <div class="content">
+                        <strong>[[folder.shortenedName]]</strong>
                     </div>
-                    <div class="bottom">
-                        <div class="content">
-                            <strong>[[folder.shortenedName]]</strong>
-                        </div>
 
-                    </div>
-                </section>
-            </explorer>
-        </div>
-        <div ng-repeat="website in currentFolder.websites.filtered | filter:searchWebsites">
-            <explorer ng-model="website.selected" class="item">
-                <section class="domino" dragstart ng-model="website._id">
-                    <div class="top">
-                        <img skin-src="/img/illustrations/pages-default.png" alt="thumbnail" ng-if="!website.icon" class="absolute">
-                        <img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" class="absolute" />
-                    </div>
-                    <div class="bottom">
-                        <div class="content">
-                            <strong class="block overflow-hd">[[website.shortenedTitle]]</strong>
-                            <span class="cell-ellipsis block">Modifié le [[website.lastModified]]</span>
-                            <br />
-                            <div class="right-magnet">
-                                <i ng-if="website.visibility === 'PUBLIC'" class="public"></i>
-                            </div>
+                </div>
+            </section>
+        </explorer>
+        <explorer ng-model="website.selected" class="item" ng-repeat="website in currentFolder.websites.filtered | filter:searchWebsites">
+            <section class="domino" dragstart ng-model="website._id">
+                <div class="top">
+                    <img skin-src="/img/illustrations/pages-default.png" alt="thumbnail" ng-if="!website.icon" class="absolute">
+                    <img ng-src="[[website.icon]]?thumbnail=150x150" alt="thumbnail" ng-if="website.icon" class="absolute" />
+                </div>
+                <div class="bottom">
+                    <div class="content">
+                        <strong class="block overflow-hd">[[website.shortenedTitle]]</strong>
+                        <span class="cell-ellipsis block">Modifié le [[website.lastModified]]</span>
+                        <br />
+                        <div class="right-magnet">
+                            <i ng-if="website.visibility === 'PUBLIC'" class="public"></i>
                         </div>
                     </div>
-                </section>
-            </explorer>
-        </div>
+                </div>
+            </section>
+        </explorer>
     </div>
 </div>
 
