@@ -37,7 +37,7 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             && !params.print 
             && $(window).width() > ui.breakpoints.tablette) {
             template.open('main', 'page-editor');
-        } else if (params.preview) {
+        } else if (params.preview || website.myRights['read']) {
             template.open('main', 'page-viewer');
         } else if (params.print) {
             template.open('main', 'page-print');
@@ -131,5 +131,5 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
         $scope.display.currentTemplate = undefined;
     };
 
-    $scope.$apply();
+    applyIfNeeded();
 }]);
