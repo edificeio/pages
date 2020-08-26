@@ -37,10 +37,12 @@ export let main = ng.controller('MainController', ['$scope', 'model', 'route', '
             && !params.print 
             && $(window).width() > ui.breakpoints.tablette) {
             template.open('main', 'page-editor');
-        } else if (params.preview || website.myRights['read']) {
+        } else if (params.preview) {
             template.open('main', 'page-viewer');
         } else if (params.print) {
             template.open('main', 'page-print');
+        } else {
+            template.open('main', 'page-viewer');
         }
         setTimeout(() => model.trigger('route-changed'), 500);
         $scope.$apply();
