@@ -40,6 +40,7 @@ import fr.wseduc.webutils.http.Renders;
 import fr.wseduc.webutils.request.RequestUtils;
 import io.vertx.core.json.JsonArray;
 import org.entcore.common.controller.ControllerHelper;
+import org.entcore.common.events.EventHelper;
 import org.entcore.common.events.EventStore;
 import org.entcore.common.events.EventStoreFactory;
 import org.entcore.common.http.filter.ResourceFilter;
@@ -61,21 +62,23 @@ import java.util.*;
 import static org.entcore.common.bus.BusResponseHandler.busResponseHandler;
 
 public class PagesController extends MongoDbControllerHelper {
+	static final String PRIVATE_RESOURCE_NAME = "pages_internal";
+	static final String PUBLIC_RESOURCE_NAME = "pages_public";
 
-	private EventStore eventStore;
-	private enum PagesEvent { ACCESS }
+	private final EventHelper eventHelper;
 	public static final String PAGES_COLLECTION = "pages";
 	private final MongoDb mongo;
 	@Override
 	public void init(Vertx vertx, JsonObject config, RouteMatcher rm,
 					 Map<String, fr.wseduc.webutils.security.SecuredAction> securedActions) {
 		super.init(vertx, config, rm, securedActions);
-		eventStore = EventStoreFactory.getFactory().getEventStore(Pages.class.getSimpleName());
 	}
 
 	public PagesController(MongoDb mongo) {
 		super("pages");
 		this.mongo = mongo;
+		final EventStore eventStore = EventStoreFactory.getFactory().getEventStore(Pages.class.getSimpleName());
+		this.eventHelper = new EventHelper(eventStore);
 	}
 
 	@Get("")
@@ -83,7 +86,7 @@ public class PagesController extends MongoDbControllerHelper {
 	@SecuredAction("pages.view")
 	public void view(HttpServerRequest request) {
 		renderView(request);
-		eventStore.createAndStoreEvent(PagesEvent.ACCESS.name(), request);
+		eventHelper.onAccess(request);
 	}
 
 	@Get("/p/website")
@@ -113,12 +116,13 @@ public class PagesController extends MongoDbControllerHelper {
 		return body;
 	}
 
-	protected void doCreate(HttpServerRequest request){
+	protected void doCreate(HttpServerRequest request, final String resourceName){
 		UserUtils.getUserInfos(this.eb, request, user -> {
 			if (user != null) {
 				RequestUtils.bodyToJson(request, object -> {
 					object = beforeSave(object);
-					crudService.create(object, user, DefaultResponseHandler.notEmptyResponseHandler(request));
+					final Handler<Either<String,JsonObject>> handler = DefaultResponseHandler.notEmptyResponseHandler(request);
+					crudService.create(object, user, eventHelper.onCreateResource(request, resourceName, handler));
 				});
 			} else {
 				ControllerHelper.log.debug("User not found in session.");
@@ -150,7 +154,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if(res){
 				conflict(request);
 			}else{
-				doCreate(request);
+				doCreate(request, PRIVATE_RESOURCE_NAME);
 			}
 		});
 	}
@@ -163,7 +167,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if(res){
 				conflict(request);
 			}else{
-				doCreate(request);
+				doCreate(request, PUBLIC_RESOURCE_NAME);
 			}
 		});
 	}
