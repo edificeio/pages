@@ -3,7 +3,7 @@ import { Pages, Page, Row, Cell, SnipletSource } from './index';
 import { Structure, Group, Publication, Application, Role } from './publish';
 import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'entcore-toolkit';
 import http from "axios";
-import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON, idiom as lang } from 'entcore';
+import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON, idiom as lang, EditTrackingEvent, trackingService } from 'entcore';
 import { _ } from 'entcore';
 import { moment } from 'entcore';
 
@@ -25,6 +25,7 @@ const slugify = function(string:string) {
 
 export class Website extends Model<Website> implements Selectable, Shareable {
     static eventer = new Eventer();
+    tracker: EditTrackingEvent;
     selected: boolean;
     pages: Pages;
     newPage: Page;
@@ -166,7 +167,15 @@ export class Website extends Model<Website> implements Selectable, Shareable {
     }
 
     watchChanges(){
-        Autosave.watch(() => this.update(), this);
+        Autosave.watch(async () =>{
+            try{
+                this.getTracker().onStop();
+                await this.update();
+                this.getTracker().onFinish(true);
+            }catch(e){
+                this.getTracker().onFinish(false);
+            }
+        }, this);
     }
 
     url(params?: { relative?: boolean }): string {
@@ -239,20 +248,34 @@ export class Website extends Model<Website> implements Selectable, Shareable {
         Folders.provideWebsite(this);
     }
 
+    private getTracker(){
+        if(!this.tracker){
+            this.tracker = trackingService.trackEdition({resourceId: this._id, resourceUri: `/pages/${this._id}`})
+        }
+        return this.tracker;
+    }
+
     async save(): Promise<void> {
-        if (this._backup === JSON.stringify(this)) {
-            return;
-        }
-        this._backup = JSON.stringify(this);
+        try{
+            this.getTracker().onStop();
+            if (this._backup === JSON.stringify(this)) {
+                return;
+            }
+            this._backup = JSON.stringify(this);
 
-        if (this._id) {
-            await this.update();
-        }
-        else {
-            await this.createWebsite();
-        }
+            if (this._id) {
+                await this.update();
+            }
+            else {
+                await this.createWebsite();
+            }
 
-        Website.eventer.trigger('save');
+            Website.eventer.trigger('save');
+            this.getTracker().onFinish(true);
+        }catch(e){
+            this.getTracker().onFinish(false);
+            throw e;
+        }
     }
 
     async remove(): Promise<void> {

@@ -24,7 +24,7 @@
                 <div ng-if="cell.media.type === 'text'" class="text-wrapper" style="cursor: initial" ng-click="focusEditor(cell, $event)">
                     <div bind-html="cell.media.source" ng-if="cell.media.source && !cell.focus" style="border: none" contenteditable="true"></div>
                     <div ng-if="!cell.media.source || cell.focus">
-                        <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()"></editor>
+                        <editor ng-model="cell.media.source" placeholder="page.texte.placeholder" visibility="currentVisibility()" track-input-event="website.getTracker()"></editor>
                     </div>
 
                 </div>

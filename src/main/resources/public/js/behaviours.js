@@ -91,7 +91,8 @@
 	            create: 'fr.wseduc.pages.controllers.PagesController|add',
 	            createFolder: 'fr.wseduc.pages.controllers.FoldersController|add',
 	            createPublic: 'fr.wseduc.pages.controllers.PagesController|addPublic',
-	            share: 'fr.wseduc.pages.controllers.PagesController|share'
+	            share: 'fr.wseduc.pages.controllers.PagesController|share',
+	            print: 'fr.wseduc.pages.controllers.PagesController|print'
 	        },
 	        resource: {
 	            update: { right: 'fr-wseduc-pages-controllers-PagesController|update' },
