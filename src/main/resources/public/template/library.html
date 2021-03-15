@@ -102,15 +102,15 @@
 		<section class="margin-four">
             <!-- filters -->
 			<div class="twelve cell chips" ng-if="!isSubFolderEmpty()">
-                <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.protected }" class="chip">
+                <label ng-class="{ selected: filters.protected }" class="chip">
                     <i class="mine" tooltip="pages.filters.mine"></i>
                     <i18n>filters.privateSites</i18n>
-                    <input type="checkbox" ng-model="filters.protected" />
+                    <input type="checkbox" ng-change="currentFolder.websites.refreshFilters()" ng-model="filters.protected" />
                 </label>
-                <label ng-click="currentFolder.websites.refreshFilters()" ng-class="{ selected: filters.public }" class="chip">
+                <label ng-class="{ selected: filters.public }" class="chip">
                     <i class="public" tooltip="pages.filters.publicSites"></i>
                     <i18n>pages.filters.publicSites</i18n>
-                    <input type="checkbox" ng-model="filters.public" />
+                    <input type="checkbox" ng-change="currentFolder.websites.refreshFilters()" ng-model="filters.public" />
                 </label>
 
                 <container template="library/folder-content"></container>
