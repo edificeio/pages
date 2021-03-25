@@ -36,7 +36,7 @@ Behaviours.register('pages', {
 				website.thumbnail = website.thumbnail + '?thumbnail=48x48';
 			}
 			else{
-				website.thumbnail = '/img/illustrations/pages-default.png'
+				website.thumbnail = '/img/illustrations/pages.svg'
 			}
 			website = {
 				pages: website.pages,

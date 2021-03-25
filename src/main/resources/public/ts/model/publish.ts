@@ -57,7 +57,7 @@ export class Structure {
     }
 
     async makeApplication(website: Website) {
-        let icon = "/img/illustrations/pages-default.png"
+        let icon = "/img/illustrations/pages.svg"
         if (website.icon) {
             icon = website.icon + '?thumbnail=150x150'
         }

@@ -203,7 +203,7 @@ export class Website extends Model<Website> implements Selectable, Shareable {
 
         if (model.me.functions.ADMIN_LOCAL && this.published) {
             for (var structureId in this.published) {
-                let icon = "/img/illustrations/pages-default.png"
+                let icon = "/img/illustrations/pages.svg"
                 if (this.icon) {
                     icon = this.icon + '?thumbnail=150x150'
                 }
