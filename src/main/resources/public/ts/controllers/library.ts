@@ -49,6 +49,7 @@ export interface LibraryControllerScope {
     dropTo(targetItem: string | Folder, $originalEvent): void
     selectionContains(folder: Folder): void
     managePagesView(website: Website): void
+    enableDuplicateWebsites(): boolean
     duplicateWebsites(): void
     closeManagePages(): void
     restore(): void
@@ -415,6 +416,11 @@ export let library = ng.controller('LibraryController', [
         await $scope.website.useNewPage();
         $scope.$apply();
     };
+
+    $scope.enableDuplicateWebsites = () => {
+        let folder = $scope.currentFolder as Folder;
+        return folder.websites.enableDuplicateSelection();
+    }
 
     $scope.duplicateWebsites = async () => {
         let folder = $scope.currentFolder as Folder;

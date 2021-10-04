@@ -33,7 +33,7 @@
                     <i18n>properties</i18n>
                 </button>
             </resource-right>
-            <div workflow="pages.create">
+            <div workflow="pages.create" ng-if="enableDuplicateWebsites()">
                 <button class="zero-mobile" ng-click="duplicateWebsites()">
                     <i18n>duplicate</i18n>
                 </button>

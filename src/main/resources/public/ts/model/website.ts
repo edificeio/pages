@@ -429,6 +429,16 @@ export class Websites {
         this.refreshFilters();
     }
 
+    enableDuplicateSelection(): boolean {
+        for (let website of this.sel.selected) {
+            if (website.enablePublic) {
+                // Public websites can't be duplicated
+                return false;
+            }
+        }
+        return true;
+    }
+
     async duplicateSelection(): Promise<void> {
         for (let website of this.sel.selected) {
             let copy = website.copy();
