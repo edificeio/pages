@@ -29,7 +29,7 @@
 
                 </div>
                 <div ng-if="cell.media.type === 'video'" class="video-wrapper">
-                    <embedder ng-model="cell.media.source" on-change="applyHtml()" show="cell.media.showEmbedder"></embedder>
+                    <embedder file-format="'video'" ng-model="cell.media.source" ng-change="applyHtml(cell)" show="cell.media.showEmbedder" visibility="currentVisibility()"></embedder>
                     <button ng-if="!cell.media.source" ng-click="cell.media.showEmbedder=true;">
                         <i18n>video.pick</i18n>
                     </button>

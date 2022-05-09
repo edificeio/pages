@@ -172,4 +172,9 @@ export let edit = ng.controller('EditController', [
             $scope.display.data.row.removeCell($scope.display.data.cell);
             $scope.lightbox('confirmRemoveCell');
         }
+
+        $scope.applyHtml = (cell) => {
+            $scope.page.eventer.trigger('save');
+            cell.media.showEmbedder = false;
+        }
 }])
