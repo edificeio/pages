@@ -22,7 +22,8 @@
     "yargs": "^8.0.2"
   },
   "devDependencies": {
-    "@types/jquery": "^2.0.34"
+    "@types/jquery": "^2.0.34",
+    "gulp-replace": "^1.1.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
