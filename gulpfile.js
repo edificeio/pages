@@ -1,7 +1,7 @@
 ﻿var gulp = require('gulp');
 var webpack = require('webpack-stream');
 var merge = require('merge2');
-const replace = require('gulp-replace');
+var replace = require('gulp-replace');
 var clean = require('gulp-clean');
 var sourcemaps = require('gulp-sourcemaps');
 var argv = require('yargs').argv;
@@ -20,7 +20,7 @@ gulp.task('webpack', ['drop-cache'], () => {
         })
         .pipe(gulp.dest('./src/main/resources/public/dist'));
 });
-gulp.task('build', [], () => {
+gulp.task('build', ['webpack'], () => {
     var refs = gulp.src("./src/main/resources/view-src/**/*.+(html|json)")
         .pipe(replace('@@VERSION', Date.now()))
         .pipe(gulp.dest("./src/main/resources/view"));
