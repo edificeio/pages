@@ -1,13 +1,5 @@
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "name": "fr.wseduc~pages~1.13.3",
-=======
-      "name": "fr.wseduc~pages~1.13-SNAPSHOT",
->>>>>>> 48097a5 (chore: prepare next iteration)
-=======
-      "name": "fr.wseduc~pages~1.13-dev-produit-SNAPSHOT",
->>>>>>> b45358a (chore: prepare next iteration)
+      "name": "fr.wseduc~pages~1.13-feat-produit-SNAPSHOT",
       "config": {
         "main" : "fr.wseduc.pages.Pages",
         "port" : 8025,
