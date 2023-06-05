@@ -1,5 +1,5 @@
     {
-      "name": "fr.wseduc~pages~1.13-feat-explorer-SNAPSHOT",
+      "name": "fr.wseduc~pages~1.13-dev-SNAPSHOT",
       "config": {
         "main" : "fr.wseduc.pages.Pages",
         "port" : 8025,
