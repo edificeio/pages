@@ -8,12 +8,12 @@
     "awesome-typescript-loader": "3.2.1",
     "axios": "0.16.2",
     "core-js": "2.4.1",
-    "entcore": "~4.8.0-dev",
+    "entcore": "~4.8.0-develop-pedago",
     "entcore-toolkit": "^1.0.1",
-    "gulp": "3.9.1",
-    "gulp-clean": "^0.3.2",
+    "gulp": "4.0.2",
+    "gulp-clean": "0.4.0",
     "gulp-sourcemaps": "^2.6.0",
-    "merge2": "^1.1.0",
+    "merge2": "1.1.0",
     "ts-loader": "^3.2.0",
     "typescript": "2.4.1",
     "webpack": "3.1.0",
@@ -36,5 +36,9 @@
   "bugs": {
     "url": "https://github.com/web-education/pages/issues"
   },
-  "homepage": "https://github.com/web-education/pages"
+  "homepage": "https://github.com/web-education/pages",
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": "16 || 18"
+  }
 }
