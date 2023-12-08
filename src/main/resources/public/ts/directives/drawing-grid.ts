@@ -1,7 +1,5 @@
-﻿import { ng, angular } from 'entcore';
-import { $ } from 'entcore';
-import { Row, Cell, Media, Page } from '../model';
-import http from 'axios';
+﻿import { ng, angular, $ } from 'entcore';
+import { Cell, Page } from '../model';
 
 export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
     return {
@@ -50,7 +48,7 @@ export let drawingGrid = ng.directive('drawingGrid', function ($compile) {
                         height: 'calc(100% - 85px)'
                     });
                     element.find('editor-toolbar, editor > popover').offset({
-                        top: initialPosition
+                        top: '156px'
                     });
                 }
             };
