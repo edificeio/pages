@@ -40,3 +40,5 @@ rev-manifest.json
 node_modules
 bower_components
 gradle*
+.env
+dependency-reduced-pom.xml
