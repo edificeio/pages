@@ -22,8 +22,7 @@
 
 package fr.wseduc.pages.controllers;
 
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
+import com.mongodb.client.model.Filters;
 import fr.wseduc.bus.BusAddress;
 import fr.wseduc.mongodb.MongoDb;
 import fr.wseduc.mongodb.MongoQueryBuilder;
@@ -39,6 +38,7 @@ import fr.wseduc.webutils.Utils;
 import fr.wseduc.webutils.http.Renders;
 import fr.wseduc.webutils.request.RequestUtils;
 import io.vertx.core.json.JsonArray;
+import org.bson.conversions.Bson;
 import org.entcore.common.controller.ControllerHelper;
 import org.entcore.common.events.EventHelper;
 import org.entcore.common.events.EventStore;
@@ -263,7 +263,7 @@ public class PagesController extends MongoDbControllerHelper {
 	private void cleanFolders(String id, UserInfos user, List<String> recipientIds){
 		//owner style keep the reference to the ressource
 		JsonArray jsonRecipients = new JsonArray(recipientIds).add(user.getUserId());
-		JsonObject query = MongoQueryBuilder.build(QueryBuilder.start("websitesIds").is(id).and("owner.userId").notIn(jsonRecipients));
+		JsonObject query = MongoQueryBuilder.build(Filters.and(Filters.eq("websitesIds", id), Filters.nin("owner.userId", jsonRecipients)));
 		JsonObject update = new JsonObject().put("$pull", new JsonObject().put("websitesIds", new JsonObject().put("$nin",jsonRecipients)));
 		mongo.update("pagesFolders", query, update, message -> {
 			JsonObject body = message.body();
@@ -369,9 +369,9 @@ public class PagesController extends MongoDbControllerHelper {
 			String visibility = data.getString("visibility");
 			//validate slug only for public pages
 			if (VisibilityFilter.PUBLIC.name().equals(visibility)) {
-				QueryBuilder queryM = QueryBuilder.start("slug").is(slug);
+				Bson queryM = Filters.eq("slug", slug);
 				if (pageId.isPresent()) {
-					queryM = queryM.and("_id").notEquals(pageId.get());
+					queryM = Filters.and(queryM, Filters.ne("_id", pageId));
 				}
 				JsonObject query = MongoQueryBuilder.build(queryM);
 				mongo.count(PAGES_COLLECTION, query, event -> {
@@ -386,7 +386,7 @@ public class PagesController extends MongoDbControllerHelper {
 
 	private void getPublicBySlugOrId(String slug, HttpServerRequest request) {
 		// get by public first then by id (legacy links)
-		QueryBuilder querySlug = QueryBuilder.start("slug").is(slug);
+		Bson querySlug = Filters.eq("slug", slug);
 		mongo.findOne(PAGES_COLLECTION, MongoQueryBuilder.build(querySlug),event -> {
 			Either<String,JsonObject> eitherPage = Utils.validResult(event);
 			if(eitherPage.isRight()){
