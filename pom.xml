@@ -63,7 +63,6 @@
             <groupId>org.entcore</groupId>
             <artifactId>common</artifactId>
             <version>${entcore.version}</version>
-            <classifier>fat</classifier>
             <scope>compile</scope>
         </dependency>
     </dependencies>
