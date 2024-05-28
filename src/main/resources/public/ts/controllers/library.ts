@@ -19,6 +19,10 @@ export interface LibraryControllerScope {
         wizardStep:number;
         saving: boolean;
         empty: boolean;
+        paging: {
+            limit: number;
+            pageSize: number;
+        }
     }
     localAdmin: typeof LocalAdmin
     currentFolder: Folder | Root
@@ -64,6 +68,8 @@ export interface LibraryControllerScope {
     isTrashFolderEmpty(): boolean
     areAllFiltersDeselected(): boolean
     printPages(website: Website): void
+    showMore(): void
+    showShowMoreButton(): void
     $apply: any
 }
 
@@ -112,6 +118,10 @@ export let library = ng.controller('LibraryController', [
     $scope.filters = Filters;
     $scope.filters.protected = true;
     $scope.display.wizardStep = 0;
+    $scope.display.paging = {
+        limit: 50,
+        pageSize: 50,
+    }
 
     template.open('library/create-website', 'library/create-website');
     template.open('library/toaster', 'library/toaster');
@@ -453,4 +463,15 @@ export let library = ng.controller('LibraryController', [
         console.log(website);
         window.open(`/pages/print/pages#/print/${website._id}`, '_blank');
     };
+
+    $scope.showMore = () => {
+        $scope.display.paging.limit = $scope.display.paging.limit + $scope.display.paging.pageSize;
+    }
+
+    $scope.showShowMoreButton = () => {
+        if ($scope.currentFolder.websites.filtered) {
+            return $scope.display.paging.limit < $scope.currentFolder.websites.filtered.length
+        }
+        return false;
+    }
 }]);
