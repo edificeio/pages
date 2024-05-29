@@ -12,7 +12,7 @@
                 </div>
             </section>
         </explorer>
-        <explorer ng-model="website.selected" on-open="viewSite(website)" class="item" ng-repeat="website in currentFolder.websites.filtered | filter:searchWebsites">
+        <explorer ng-model="website.selected" on-open="viewSite(website)" class="item" ng-repeat="website in currentFolder.websites.filtered | orderBy:'modified.$date':true | limitTo: display.paging.limit | filter:searchWebsites">
             <section class="domino" dragstart ng-model="website._id">
                 <div class="top">
                     <img skin-src="/img/illustrations/pages.svg" alt="thumbnail" ng-if="!website.icon" class="absolute">
@@ -35,6 +35,9 @@
                 </div>
             </section>
         </explorer>
+    </div>
+    <div class="center-component p-12">
+        <a role="button" ng-if="showShowMoreButton()" ng-click="showMore()"><i18n>pages.paging.showMore</i18n></a>
     </div>
 </div>
 
