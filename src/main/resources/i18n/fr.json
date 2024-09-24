@@ -44,6 +44,7 @@
   "modified.on": "Modifié le",
   "pages.modified.on": "Modifié le [[website.lastModified]]",
   "pages.publish.title": "Afficher dans les applications",
+  "pages.publish.groups.adml": "En tant qu’administrateur local, vous devez au préalable être connecté à la console d’administration pour utiliser cette fonctionnalité.",
   "pages.publish.groups.info": "Sélectionner les groupes utilisateurs (vous y compris) qui disposeront de l'application",
   "pages.publish.reconnexion": "Ce changement sera effectif lors de votre prochaine connexion",
   "cell.add.text": "Ajouter du texte",
@@ -51,7 +52,7 @@
   "cell.removeBackground": "Supprimer la couleur de fond",
   "cell.set.title": "Choisir un titre",
   "cell.change.title": "Modifier le titre",
-  "cell.remove.title":  "Supprimer le titre",
+  "cell.remove.title": "Supprimer le titre",
   "website.title": "Titre",
   "pages.publish": "Publier dans les applications",
   "rename": "Renommer",
@@ -117,56 +118,40 @@
   "pages.list.title": "Projets",
   "pages.copy": "Copie",
   "pages.share.varyingrights": "Attention, vous allez modifier des droits de partage sur plusieurs projets : tous les projets sélectionnés seront affectés et disposeront uniquement du nouveau partage.",
-
-
-
   "blocks.search-block-style": "Rechercher un style de modèle",
-
   "blocks.title-block.title": "Titre",
   "blocks.title-block.description": "Ajoutez un titre simple",
   "blocks.title-block.keywords": "entête titre h format",
-
   "blocks.title-text.title": "Titre avec texte",
   "blocks.title-text.description": "Ajoutez un titre accompagné d'un texte",
   "blocks.title-text.keywords": "entête titre h format texte paragraphe intro",
-
   "blocks.title-image.title": "Titre avec une image",
   "blocks.title-image.description": "Ajoutez un titre accompagné d'une image",
   "blocks.title-image.keywords": "entête titre h format texte paragraphe intro illustration image img",
-
   "blocks.text-card.title": "Texte dans carte",
   "blocks.text-card.description": "Ajoutez du texte à l'interieur d'une carte",
   "blocks.text-card.keywords": "texte paragraphe carte carton fiche card contour",
-
   "blocks.image.title": "Illustration",
   "blocks.image.description": "Ajoutez une illustration seule",
   "blocks.image.keywords": "illustration image img",
-
   "blocks.image-left.title": "Texte avec image à gauche",
   "blocks.image-left.description": "Ajoutez un texte accompagné d'une illustration",
   "blocks.image-left.keywords": "left gauche illustration image img texte paragraphe",
-
   "blocks.image-right.title": "Texte avec image à droite",
   "blocks.image-right.description": "Ajoutez un texte accompagné d'une illustration",
   "blocks.image-right.keywords": "right droite illustration image img texte paragraphe",
-
   "blocks.image-col.title": "Colonne image et texte",
   "blocks.image-col.description": "Ajoutez une colonne composée d'une image suivie de texte",
   "blocks.image-col.keywords": "colonne texte image img paragraphe",
-
   "blocks.quote.title": "Citation",
   "blocks.quote.description": "Ajoutez une citation",
   "blocks.quote.keywords": "texte paragraphe citation",
-
   "blocks.quote-left.title": "Citation avec image à droite",
   "blocks.quote-left.description": "Ajoutez une citation accompagnée d'une image",
   "blocks.quote-left.keywords": "texte paragraphe citation illustration image droite",
-
   "blocks.quote-right.title": "Citation avec image à gauche",
   "blocks.quote-right.description": "Ajoutez une citation accompagnée d'une image",
   "blocks.quote-right.keywords": "texte paragraphe citation illustration image gauche",
-
-
   "tooltip.grid": "Afficher/masquer la grille",
   "tooltip.newpage": "Créer une page",
   "panel.help.title": "Ajouter du contenu",

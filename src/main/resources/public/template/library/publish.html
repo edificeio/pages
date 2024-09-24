@@ -1,38 +1,56 @@
-<lightbox show="display.lightbox.showPublish" on-close="lightbox('showPublish')">
-    <div class="share publish" ng-if="display.lightbox.showPublish">
-        <div class="row line">
-            <h2><i18n>pages.publish.title</i18n></h2>
+<lightbox
+  show="display.lightbox.showPublish"
+  on-close="lightbox('showPublish')"
+>
+  <div class="share publish" ng-if="display.lightbox.showPublish">
+    <div class="row line">
+      <h2><i18n>pages.publish.title</i18n></h2>
 
-            <div class="groups-list">
-                <table>
-                    <tbody ng-repeat="structure in localAdmin.structures.all">
-                        <tr ng-repeat="group in website.published[structure.id].groups | orderBy:'index':true">
-                            <td>[[group.name]]</td>
-                            <td class="drop-line" ng-click="structure.removeRoleForGroup(website, group)"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-        </div>
-        <div class="row">
-            <h2><i18n>pages.publish.groups.info</i18n></h2>
-            <input type="text" ng-model="display.searchGroups" i18n-placeholder="share.search.placeholder" />
-            <div class="found-users-list">
-                <div ng-repeat="structure in localAdmin.structures.all">
-                    <div ng-repeat="group in structure.groups.all | filter:searchGroups | orderBy:'name'" class="row autocomplete">
-                        <em ng-click="structure.publishForGroup(website, group)" class="row">
-                            <span class="cell reduce-block-two">[[group.name]]</span>
-                        </em>
-                    </div>
-                </div>
-            </div>
-
-            <div class="twelve cell warning vertical-spacing-twice">
-                <i18n>pages.publish.reconnexion</i18n>
-            </div>
-        </div>
+      <div class="groups-list">
+        <table>
+          <tbody ng-repeat="structure in e.structures.all">
+            <tr
+              ng-repeat="group in website.published[structure.id].groups | orderBy:'index':true"
+            >
+              <td>[[group.name]]</td>
+              <td
+                class="drop-line"
+                ng-click="structure.removeRoleForGroup(website, group)"
+              ></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</lightbox>
+    <div class="row">
+      <div class="twelve cell alert vertical-spacing-twice" ng-if="isAdml()">
+        <i18n>pages.publish.groups.adml</i18n>
+      </div>
+      <h2><i18n>pages.publish.groups.info</i18n></h2>
+      <input
+        type="text"
+        ng-model="display.searchGroups"
+        i18n-placeholder="share.search.placeholder"
+      />
+      <div class="found-users-list">
+        <div ng-repeat="structure in localAdmin.structures.all">
+          <div
+            ng-repeat="group in structure.groups.all | filter:searchGroups | orderBy:'name'"
+            class="row autocomplete"
+          >
+            <em
+              ng-click="structure.publishForGroup(website, group)"
+              class="row"
+            >
+              <span class="cell reduce-block-two">[[group.name]]</span>
+            </em>
+          </div>
+        </div>
+      </div>
 
+      <div class="twelve cell warning vertical-spacing-twice">
+        <i18n>pages.publish.reconnexion</i18n>
+      </div>
+    </div>
+  </div>
+</lightbox>
