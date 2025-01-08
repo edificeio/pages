@@ -29,9 +29,9 @@
     </repositories>
 
     <properties><!-- Reporter les versions des dépendances de gradle.properties -->
-        <entcore.version>6.1-SNAPSHOT</entcore.version>
-        <web-utils.version>3.1-SNAPSHOT</web-utils.version>
-        <mongodb-helper.version>3.0-SNAPSHOT</mongodb-helper.version>
+        <entcore.version>6.0-develop-pedago-SNAPSHOT</entcore.version>
+        <web-utils.version>3.0-SNAPSHOT</web-utils.version>
+        <mongodb-helper.version>3.0-develop-pedago-SNAPSHOT</mongodb-helper.version>
     </properties>
 
     <dependencies><!-- Reporter les dépendances qui étaient dans build.gradle > dependencies -->
