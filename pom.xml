@@ -12,7 +12,7 @@
 
     <groupId>fr.wseduc</groupId>
     <artifactId>pages</artifactId>
-    <version>2.0-SNAPSHOT</version>
+    <version>2.0.2</version>
 
     <scm><!-- Adapter avec l'url du repertoire (github, gitlab...) -->
         <connection>scm:git:https://github.com/edificeio/pages.git</connection>
@@ -29,9 +29,9 @@
     </repositories>
 
     <properties><!-- Reporter les versions des dépendances de gradle.properties -->
-        <entcore.version>6.0-SNAPSHOT</entcore.version>
-        <web-utils.version>3.0-SNAPSHOT</web-utils.version>
-        <mongodb-helper.version>3.0-SNAPSHOT</mongodb-helper.version>
+        <entcore.version>6.1.0</entcore.version>
+        <web-utils.version>3.1.0</web-utils.version>
+        <mongodb-helper.version>3.0.1</mongodb-helper.version>
     </properties>
 
     <dependencies><!-- Reporter les dépendances qui étaient dans build.gradle > dependencies -->
