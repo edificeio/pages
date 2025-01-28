@@ -371,7 +371,7 @@ public class PagesController extends MongoDbControllerHelper {
 			if (VisibilityFilter.PUBLIC.name().equals(visibility)) {
 				Bson queryM = Filters.eq("slug", slug);
 				if (pageId.isPresent()) {
-					queryM = Filters.and(queryM, Filters.ne("_id", pageId));
+					queryM = Filters.and(queryM, Filters.ne("_id", pageId.get()));
 				}
 				JsonObject query = MongoQueryBuilder.build(queryM);
 				mongo.count(PAGES_COLLECTION, query, event -> {
