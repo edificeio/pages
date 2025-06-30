@@ -1,6 +1,6 @@
 {
   "pages": "Pages",
+  "pages.push.notif.shared": "Pages: Une page vous a été partagée",
   "pages.shared": "Partage d'une Page",
-  "timeline.page.has.shared" : "vous a partagé la page",
-  "pages.push.notif.shared": "Pages: Une page vous a été partagée"
+  "timeline.page.has.shared": "vous a partagé la page"
 }
