@@ -29,7 +29,7 @@
     </repositories>
 
     <properties><!-- Reporter les versions des dépendances de gradle.properties -->
-        <entcore.version>6.6-SNAPSHOT</entcore.version>
+        <entcore.version>6.7-SNAPSHOT</entcore.version>
         <web-utils.version>3.1-SNAPSHOT</web-utils.version>
         <mongodb-helper.version>3.0-SNAPSHOT</mongodb-helper.version>
     </properties>
