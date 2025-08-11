@@ -1,3 +1,10 @@
+# À propos de l'application pages
+    
+* Licence : [AGPL v3](http://www.gnu.org/licenses/agpl.txt) - Copyright Edifice
+* Financeur(s) : Edifice
+* Développeur(s) : Edifice
+* Description : module de création de sites et d'espaces collaboratifs avec mise en page libre.
+
 # Notes d'utilisation
 
 ## Installation
