@@ -37,8 +37,19 @@ public class Pages extends BaseServer {
 
 	@Override
 	public void start(final Promise<Void> startPromise) throws Exception {
-		super.start(startPromise);
-		
+		final Promise<Void> promise = Promise.promise();
+		super.start(promise);
+		promise.future().onSuccess(init -> {
+			try {
+				initPages(startPromise);
+			} catch (Exception e) {
+				startPromise.fail(e);
+				log.error("Error when start Pages", e);
+			}
+		}).onFailure(ex -> log.error("Error when start Pages server super classes", ex));
+
+	}
+	public void initPages(final Promise<Void> startPromise) throws Exception {
 		setDefaultResourceFilter(new ShareAndOwner());
 		setRepositoryEvents(new PagesRepositoryEvents(vertx));
 		addController(new PagesController(MongoDb.getInstance()));
