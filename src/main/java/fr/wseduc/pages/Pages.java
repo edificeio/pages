@@ -27,6 +27,7 @@ import fr.wseduc.pages.controllers.PagesController;
 import fr.wseduc.pages.controllers.FoldersController;
 import fr.wseduc.pages.service.impl.PagesRepositoryEvents;
 import fr.wseduc.rs.ApiPrefixDoc;
+import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import org.entcore.common.http.BaseServer;
 import org.entcore.common.http.filter.ShareAndOwner;
@@ -37,15 +38,22 @@ public class Pages extends BaseServer {
 
 	@Override
 	public void start(final Promise<Void> startPromise) throws Exception {
-		super.start(startPromise);
-		
+		final Promise<Void> promise = Promise.promise();
+		super.start(promise);
+		promise.future()
+				.compose(init -> initPages())
+				.onComplete(startPromise);
+
+	}
+
+	public Future<Void> initPages() {
 		setDefaultResourceFilter(new ShareAndOwner());
 		setRepositoryEvents(new PagesRepositoryEvents(vertx));
 		addController(new PagesController(MongoDb.getInstance()));
         addController(new FoldersController("pagesFolders"));
 
 		MongoDbConf.getInstance().setCollection("pages");
-		startPromise.tryComplete();
+		return Future.succeededFuture();
 	}
 
 }
