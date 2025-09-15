@@ -29,7 +29,7 @@
     </repositories>
 
     <properties><!-- Reporter les versions des dépendances de gradle.properties -->
-        <entcore.version>6.6-zookeeper-SNAPSHOT</entcore.version>
+        <entcore.version>6.8-zookeeper-SNAPSHOT</entcore.version>
         <mongodb-helper.version>3.0-SNAPSHOT</mongodb-helper.version>
     </properties>
 
