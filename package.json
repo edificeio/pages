@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/core-js": "0.9.42",
     "awesome-typescript-loader": "3.2.1",
-    "axios": "0.16.2",
+    "axios": "0.30.2",
     "core-js": "2.4.1",
     "entcore": "4.8.14",
     "entcore-toolkit": "^1.0.1",
