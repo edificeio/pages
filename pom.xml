@@ -30,7 +30,7 @@
 
     <properties><!-- Reporter les versions des dépendances de gradle.properties -->
         <entcore.version>6.10-zookeeper-SNAPSHOT</entcore.version>
-        <mongodb-helper.version>3.0-SNAPSHOT</mongodb-helper.version>
+        <mongodb-helper.version>3.0-zookeeper-SNAPSHOT</mongodb-helper.version>
     </properties>
 
     <dependencies><!-- Reporter les dépendances qui étaient dans build.gradle > dependencies -->
