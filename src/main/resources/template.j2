@@ -1,0 +1,18 @@
+{
+  "name": "fr.wseduc~pages",
+  "config": {
+    "main": "fr.wseduc.pages.Pages",
+    "port": 8025,
+    "app-name": "Pages",
+    "app-address": "/pages",
+    "app-icon": "pages-large",
+    "app-type" : "END_USER",
+    "host": "https://{{ host }}",
+    "ssl": true,
+    {% if overrideTheme %} "override-theme": {{ override2d }}, {% endif %}
+    "auto-redeploy": false,
+    "userbook-host": "https://{{ host }}",
+    "integration-mode": "{{ integration_mode|default('HTTP') }}",
+    "mode": "prod"
+  }
+}
