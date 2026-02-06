@@ -1,6 +1,6 @@
 {
   "name": "pages",
-  "version": "2.1.2",
+  "version": "2.1.2-dev.0",
   "description": "This application allows users to create websites.",
   "main": "gulpfile.js",
   "dependencies": {
@@ -8,7 +8,7 @@
     "awesome-typescript-loader": "3.2.1",
     "axios": "0.16.2",
     "core-js": "2.4.1",
-    "entcore": "4.8.14",
+    "entcore": "dev",
     "entcore-toolkit": "^1.0.1",
     "gulp": "4.0.2",
     "gulp-clean": "0.4.0",
