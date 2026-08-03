@@ -10,7 +10,7 @@
   </parent>
   <groupId>fr.wseduc</groupId>
   <artifactId>pages</artifactId>
-  <version>2.2.4</version>
+  <version>2.2-SNAPSHOT</version>
   <scm>
     <!-- Adapter avec l'url du repertoire (github, gitlab...) -->
     <connection>scm:git:https://github.com/edificeio/pages.git</connection>
@@ -26,11 +26,11 @@
   </repositories>
 
     <properties>
-    <mongodb-helper.version>3.1.1</mongodb-helper.version>
-    <modMongoVersion>4.2.0</modMongoVersion>
-    <modJsonSchemaValidatorVersion>2.2.0</modJsonSchemaValidatorVersion>
-    <entCoreLibsVersion>6.16.2</entCoreLibsVersion>
-    <entCoreVersion>6.16.3</entCoreVersion>
+    <mongodb-helper.version>3.1-SNAPSHOT</mongodb-helper.version>
+    <modMongoVersion>4.2-SNAPSHOT</modMongoVersion>
+    <modJsonSchemaValidatorVersion>2.2-SNAPSHOT</modJsonSchemaValidatorVersion>
+    <entCoreLibsVersion>6.16-SNAPSHOT</entCoreLibsVersion>
+    <entCoreVersion>6.16-SNAPSHOT</entCoreVersion>
   </properties>
   <dependencies>
     <!-- Reporter les dépendances qui étaient dans build.gradle > dependencies -->
