@@ -478,14 +478,6 @@ awesome-typescript-loader@^3.2.1:
     mkdirp "^0.5.1"
     source-map-support "^0.5.3"
 
-axios@0.16.2:
-  version "0.16.2"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.16.2.tgz"
-  integrity sha512-IMYFDrcVbUksQhsMYtWCM6KdNaDpr1NY56dpzaIgj92ecPVI29bf2sOgAf8aGTiq8UoixJD61Pj0Ahej5DPv7w==
-  dependencies:
-    follow-redirects "^1.2.3"
-    is-buffer "^1.1.5"
-
 axios@^0.15.2, axios@^0.15.3:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
@@ -1645,7 +1637,12 @@ enhanced-resolve@~0.9.0:
     memory-fs "^0.2.0"
     tapable "^0.1.8"
 
-entcore-toolkit@^1.0.0, entcore-toolkit@^1.0.1:
+entcore-toolkit@2.0.0-dev.1:
+  version "2.0.0-dev.1"
+  resolved "https://registry.yarnpkg.com/entcore-toolkit/-/entcore-toolkit-2.0.0-dev.1.tgz#5969f3b7286193a329e2f6452ce666effec2d13f"
+  integrity sha512-ijEmThGCgQMHYUQ9/Ydp9/w3WrEZ0QcXex7BKMscoHLeYJ/x6SuEFzLiLysOZq2anN623enYSlJFquh4rIWKSg==
+
+entcore-toolkit@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/entcore-toolkit/-/entcore-toolkit-1.2.0.tgz#01ca517b0193db7917e6fcfe0d3cc7ff0756fb7f"
   integrity sha512-xyZBu6lQMLKfTiZIR3bkEgp58NwTR7NO4kqUOpeMk7BFvHUXUMGEfj0y/61S0Nv4RD3wVzabe6aXcV3P0A+UiQ==
@@ -2116,11 +2113,6 @@ follow-redirects@1.0.0:
   integrity sha512-7s+wBk4z5xTwVJuozRBAyRofWKjD3uG2CUjZfZTrw9f+f+z8ZSxOjAqfIDLtc0Hnz+wGK2Y8qd93nGGjXBYKsQ==
   dependencies:
     debug "^2.2.0"
-
-follow-redirects@^1.2.3:
-  version "1.15.9"
-  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.9.tgz"
-  integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"

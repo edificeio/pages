@@ -1,6 +1,5 @@
 import { ng } from 'entcore';
 import { Media, Cell, Row, cellSizes } from '../model';
-import http from 'axios';
 import { $ } from 'entcore';
 
 export let gridRow = ng.directive('gridRow', function($compile){
