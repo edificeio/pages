@@ -3,7 +3,6 @@ import { $ } from 'entcore';
 import { _ } from 'entcore';
 import { Row, Media, Blocks, Cell, cellSizes } from '../model';
 import { Mix } from 'entcore-toolkit';
-import http from 'axios';
 
 declare function setSpectrum (): void;
 declare let angular: any;

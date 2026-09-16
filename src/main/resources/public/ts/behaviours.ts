@@ -1,7 +1,7 @@
 console.log('pages behaviours file')
 
 import { Behaviours, model, idiom as lang } from 'entcore';
-import http from 'axios';
+import { http } from 'entcore-toolkit';
 import { _ } from 'entcore';
 
 Behaviours.register('pages', {

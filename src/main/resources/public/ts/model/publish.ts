@@ -1,5 +1,4 @@
-﻿import { Eventer } from 'entcore-toolkit';
-import http from 'axios';
+﻿import { Eventer, http } from 'entcore-toolkit';
 import { model, notify } from 'entcore';
 import { _ } from 'entcore';
 import { Website } from './website';

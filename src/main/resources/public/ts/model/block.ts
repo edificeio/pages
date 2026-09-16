@@ -1,4 +1,4 @@
-﻿import http from "axios";
+﻿import { http } from "entcore-toolkit";
 import { _ } from 'entcore';
 import { idiom } from 'entcore';
 
