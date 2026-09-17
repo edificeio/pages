@@ -1637,10 +1637,10 @@ enhanced-resolve@~0.9.0:
     memory-fs "^0.2.0"
     tapable "^0.1.8"
 
-entcore-toolkit@2.0.0-dev.1:
-  version "2.0.0-dev.1"
-  resolved "https://registry.yarnpkg.com/entcore-toolkit/-/entcore-toolkit-2.0.0-dev.1.tgz#5969f3b7286193a329e2f6452ce666effec2d13f"
-  integrity sha512-ijEmThGCgQMHYUQ9/Ydp9/w3WrEZ0QcXex7BKMscoHLeYJ/x6SuEFzLiLysOZq2anN623enYSlJFquh4rIWKSg==
+entcore-toolkit@2.0.0-dev.3:
+  version "2.0.0-dev.3"
+  resolved "https://registry.yarnpkg.com/entcore-toolkit/-/entcore-toolkit-2.0.0-dev.3.tgz#1e64ab8f231a04114b35ec9f1c5853cb36b6e1b7"
+  integrity sha512-l9kzMF8xfP5Z9qSLGEqoE2R8JNJZzZNQc2AFLCS+2IDhvmpPnN3XoTSPIPPQ98iFnS8pGQCfgm9P4jvl44j9+A==
 
 entcore-toolkit@^1.0.0:
   version "1.2.0"
