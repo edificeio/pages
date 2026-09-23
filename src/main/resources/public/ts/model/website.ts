@@ -1,8 +1,7 @@
 import { Folder, Folders, Filters } from './folder';
 import { Pages, Page, Row, Cell, SnipletSource } from './index';
 import { Structure, Group, Publication, Application, Role } from './publish';
-import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave } from 'entcore-toolkit';
-import http from "axios";
+import { HttpResponse, Eventer, Mix, Selection, Selectable, TypedArray, Model, Autosave, http } from 'entcore-toolkit';
 import { model, notify, Behaviours, sniplets, Shareable, Rights, cleanJSON, idiom as lang, EditTrackingEvent, trackingService } from 'entcore';
 import { _ } from 'entcore';
 import { moment } from 'entcore';
