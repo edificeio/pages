@@ -1,13 +1,13 @@
 {
   "name": "pages",
-  "version": "2.2.5-dev.1",
+  "version": "2.2.0-develop-b2school.0",
   "description": "This application allows users to create websites.",
   "main": "gulpfile.js",
   "dependencies": {
     "@types/core-js": "0.9.42",
     "awesome-typescript-loader": "3.2.1",
     "core-js": "2.4.1",
-    "entcore": "dev",
+    "entcore": "develop-b2school",
     "entcore-toolkit": "2.0.0-dev.3",
     "gulp": "4.0.2",
     "gulp-clean": "0.4.0",
